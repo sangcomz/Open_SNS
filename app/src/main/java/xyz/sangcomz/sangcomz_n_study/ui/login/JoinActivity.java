@@ -1,15 +1,19 @@
 package xyz.sangcomz.sangcomz_n_study.ui.login;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 import xyz.sangcomz.sangcomz_n_study.R;
+import xyz.sangcomz.sangcomz_n_study.core.common.BaseActivity;
 
-public class LoginActivity extends AppCompatActivity {
+public class JoinActivity extends BaseActivity {
 
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
     }
 }
