@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
-import xyz.sangcomz.sangcomz_n_study.ui.login.JoinActivity;
+import xyz.sangcomz.sangcomz_n_study.ui.join.JoinActivity;
 import xyz.sangcomz.sangcomz_n_study.ui.main.MainActivity;
 
 /**
@@ -43,13 +43,11 @@ public class BaseActivity extends AppCompatActivity {
         final Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
-        finish();
     }
 
-    protected void redirectLoginActivity() {
+    protected void redirectJoinActivity() {
         final Intent intent = new Intent(this, JoinActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
-        finish();
     }
 }

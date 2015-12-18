@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Sangcomz_N_Study</string>
+    <string name="txt_logo_top">SNS</string>
+    <string name="txt_logo_bottom">Sangcomz_N_Study</string>
+    <string name="txt_login">로그인</string>
+    <string name="txt_join">회원가입</string>
+    <string name="txt_name">아이디</string>
+    <string name="txt_password">비밀번호</string>
+    <string name="txt_repassword">비밀번호 재입력</string>
 </resources>
