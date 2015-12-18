@@ -32,4 +32,6 @@ dependencies {
 
     compile 'com.loopj.android:android-async-http:1.4.9'
 
+    compile 'com.makeramen:roundedimageview:2.2.1'
+
 }
