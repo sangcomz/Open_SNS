@@ -1,21 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<?xml version="1.0" encoding="utf-8"?><!--<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--xmlns:app="http://schemas.android.com/apk/res-auto"--><!--android:fitsSystemWindows="true">-->
+
+<!--<android.support.design.widget.AppBarLayout--><!--android:id="@+id/app_bar"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content">-->
+
+<!--<android.support.v7.widget.Toolbar--><!--android:id="@+id/toolbar"--><!--android:layout_width="match_parent"--><!--android:layout_height="?attr/actionBarSize" />-->
+
+<!--</android.support.design.widget.AppBarLayout>-->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:fitsSystemWindows="true">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize" />
-
-    </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,7 +20,9 @@
         android:orientation="vertical"
         android:padding="40dp">
 
+
         <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/riv_profile"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:scaleType="fitCenter"
@@ -38,7 +35,7 @@
 
 
         <EditText
-            android:id="@+id/et_email"
+            android:id="@+id/et_nick_name"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginTop="10dp"
@@ -89,4 +86,15 @@
 
     </LinearLayout>
 
-</android.support.design.widget.CoordinatorLayout>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/ic_action_back" />
+
+</RelativeLayout>
+
+
+    <!--</android.support.design.widget.CoordinatorLayout>-->
