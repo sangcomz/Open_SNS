@@ -2,13 +2,18 @@ package xyz.sangcomz.sangcomz_n_study.util;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.util.TypedValue;
+
+import com.bumptech.glide.Glide;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by sangc on 2015-12-18.
@@ -45,5 +50,22 @@ public class Utils {
             }
         }
         return fileCacheItem;
+    }
+
+    public static Drawable drawableFromUrl(Context context, String url) throws IOException {
+        Bitmap myBitmap = null;
+        try {
+            myBitmap = Glide
+                    .with(context)
+                    .load(url)
+                    .asBitmap()
+                    .into(600, 600)
+                    .get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return new BitmapDrawable(null, myBitmap);
     }
 }

@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -14,6 +15,7 @@ import java.net.URLEncoder;
 import java.util.Locale;
 
 import cz.msebera.android.httpclient.Header;
+import xyz.sangcomz.sangcomz_n_study.core.SharedPref.SharedPref;
 import xyz.sangcomz.sangcomz_n_study.core.http.HttpClient;
 import xyz.sangcomz.sangcomz_n_study.define.UrlDefine;
 import xyz.sangcomz.sangcomz_n_study.util.Utils;
@@ -54,8 +56,18 @@ public class JoinController {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 System.out.println("onSuccess JSONObject :::: " + response.toString());
-                joinActivity.finish();
-                joinActivity.redirectMainActivity();
+                try {
+                    JSONObject jsonObject = response.getJSONObject("response");
+                    (new SharedPref(joinActivity)).setMemberPref(jsonObject.getString("member_srl"),
+                            jsonObject.getString("member_name"),
+                            jsonObject.getString("member_profile"),
+                            jsonObject.getString("member_profile_bg"));
+                    joinActivity.finish();
+                    joinActivity.redirectMainActivity();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
 
             @Override

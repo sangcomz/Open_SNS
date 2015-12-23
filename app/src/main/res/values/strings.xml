@@ -2,9 +2,16 @@
     <string name="app_name">Sangcomz_N_Study</string>
     <string name="txt_logo_top">SNS</string>
     <string name="txt_logo_bottom">Sangcomz_N_Study</string>
+    <string name="txt_timeline">타임라인</string>
+    <string name="txt_friends">친구</string>
+    <string name="txt_search_friend">친구찾기</string>
+    <string name="txt_setting">설정</string>
     <string name="txt_login">로그인</string>
     <string name="txt_join">회원가입</string>
     <string name="txt_name">아이디</string>
     <string name="txt_password">비밀번호</string>
     <string name="txt_repassword">비밀번호 재입력</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

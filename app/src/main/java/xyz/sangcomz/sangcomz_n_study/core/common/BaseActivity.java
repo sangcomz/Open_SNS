@@ -2,8 +2,11 @@ package xyz.sangcomz.sangcomz_n_study.core.common;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import xyz.sangcomz.sangcomz_n_study.core.SharedPref.SharedPref;
 import xyz.sangcomz.sangcomz_n_study.ui.join.JoinActivity;
 import xyz.sangcomz.sangcomz_n_study.ui.main.MainActivity;
 
@@ -12,6 +15,13 @@ import xyz.sangcomz.sangcomz_n_study.ui.main.MainActivity;
  */
 public class BaseActivity extends AppCompatActivity {
     protected static Activity self;
+    protected static SharedPref sharedPref;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        sharedPref = new SharedPref(this);
+    }
 
     @Override
     protected void onResume() {

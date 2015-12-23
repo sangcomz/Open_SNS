@@ -11,4 +11,5 @@ public class UrlDefine {
     public static final String SERVER_HOST = "sangcomz.xyz/sangcomz_n_study";
 
     public static final String URL_ACCOUNT_JOIN = HTTP + SERVER_HOST + "/account/join.php";
+    public static final String URL_ACCOUNT_LOGIN = HTTP + SERVER_HOST + "/account/login.php";
 }

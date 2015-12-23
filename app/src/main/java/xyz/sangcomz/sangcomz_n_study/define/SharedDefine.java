@@ -8,5 +8,6 @@ public class SharedDefine {
     public static final String SHARED_MEMBER_NAME = "member_name";
     public static final String SHARED_MEMBER_SRL = "member_srl";
     public static final String SHARED_MEMBER_PROFILE = "member_profile";
+    public static final String SHARED_MEMBER_PROFILE_BG = "member_profile_bg";
 }
 

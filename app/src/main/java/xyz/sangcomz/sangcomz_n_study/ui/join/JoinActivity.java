@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -29,6 +30,7 @@ public class JoinActivity extends BaseActivity {
     EditText etPassword;
     EditText etRePassword;
     Button btnJoin;
+    ImageButton btnBack;
     Bitmap bitProfile;
 
 
@@ -43,6 +45,7 @@ public class JoinActivity extends BaseActivity {
         etPassword = (EditText) findViewById(R.id.et_password);
         etRePassword = (EditText) findViewById(R.id.et_repassword);
         btnJoin = (Button) findViewById(R.id.btn_join);
+        btnBack = (ImageButton) findViewById(R.id.btn_back);
 
         roundedImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +65,13 @@ public class JoinActivity extends BaseActivity {
                 if (!checkEt())
                     return;
                 joinController.Join(etNickName.getText().toString(), etPassword.getText().toString(), bitProfile);
+            }
+        });
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 
