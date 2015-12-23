@@ -1,13 +1,12 @@
 package xyz.sangcomz.sangcomz_n_study.ui.splash;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.view.ViewCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-
-import java.io.IOException;
 
 import xyz.sangcomz.sangcomz_n_study.R;
 import xyz.sangcomz.sangcomz_n_study.core.common.BaseActivity;
@@ -66,42 +65,42 @@ public class SplashActivity extends BaseActivity {
 //            e.printStackTrace();
 //        }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    GlobalApplication.setDrawableBg((Utils.drawableFromUrl(SplashActivity.this, sharedPref.getStringPref(SharedDefine.SHARED_MEMBER_PROFILE_BG))));
-//                    final Drawable drawable = (Utils.drawableFromUrl(SplashActivity.this, sharedPref.getStringPref(SharedDefine.SHARED_MEMBER_PROFILE)));
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-
-                            if (memberSrl != null && memberSrl.length() > 0) {
-                                splashController.Login(memberSrl);
-                            } else {
-                                animLogo();
-                            }
-
-                        }
-                    });
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-
-
-//        if (memberSrl != null && memberSrl.length() > 0) {
-//            splashController.Login(memberSrl);
-//        } else {
-//            new Handler().postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-//                    animLogo();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//
+////                    final Drawable drawable = (Utils.drawableFromUrl(SplashActivity.this, sharedPref.getStringPref(SharedDefine.SHARED_MEMBER_PROFILE)));
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//
+//                            if (memberSrl != null && memberSrl.length() > 0) {
+//                                splashController.Login(memberSrl);
+//                            } else {
+//                                animLogo();
+//                            }
+//
+//                        }
+//                    });
+//
+//                } catch (IOException e) {
+//                    e.printStackTrace();
 //                }
-//            }, 2000);
-//        }
+//            }
+//        }).start();
+
+
+        if (memberSrl != null && memberSrl.length() > 0) {
+            splashController.Login(memberSrl);
+        } else {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    animLogo();
+                }
+            }, 2000);
+        }
 
 
     }

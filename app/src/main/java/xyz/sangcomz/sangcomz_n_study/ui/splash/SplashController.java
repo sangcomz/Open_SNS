@@ -6,14 +6,18 @@ import com.loopj.android.http.RequestParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Locale;
 
 import cz.msebera.android.httpclient.Header;
 import xyz.sangcomz.sangcomz_n_study.core.SharedPref.SharedPref;
+import xyz.sangcomz.sangcomz_n_study.core.common.GlobalApplication;
 import xyz.sangcomz.sangcomz_n_study.core.http.HttpClient;
+import xyz.sangcomz.sangcomz_n_study.define.SharedDefine;
 import xyz.sangcomz.sangcomz_n_study.define.UrlDefine;
+import xyz.sangcomz.sangcomz_n_study.util.Utils;
 
 import static xyz.sangcomz.sangcomz_n_study.core.Security.Security.MD5;
 
@@ -43,8 +47,19 @@ public class SplashController {
                 try {
                     int stat = response.getInt("stat");
                     if (stat == 1) {
-                        splashActivity.redirectMainActivity();
-                        splashActivity.finish();
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    GlobalApplication.setDrawableBg((Utils.drawableFromUrl(splashActivity,
+                                            (new SharedPref(splashActivity)).getStringPref(SharedDefine.SHARED_MEMBER_PROFILE_BG))));
+                                    splashActivity.redirectMainActivity();
+                                    splashActivity.finish();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }).start();
                     } else {
                         splashActivity.animLogo();
                     }
@@ -83,16 +98,28 @@ public class SplashController {
                     if (stat == 1) {
                         JSONObject jsonObject = null;
 
-
                         jsonObject = response.getJSONObject("response");
                         (new SharedPref(splashActivity)).setMemberPref(jsonObject.getString("member_srl"),
                                 jsonObject.getString("member_name"),
                                 jsonObject.getString("member_profile"),
                                 jsonObject.getString("member_profile_bg"));
 
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    GlobalApplication.setDrawableBg((Utils.drawableFromUrl(splashActivity,
+                                            (new SharedPref(splashActivity)).getStringPref(SharedDefine.SHARED_MEMBER_PROFILE_BG))));
 
-                        splashActivity.redirectMainActivity();
-                        splashActivity.finish();
+                                    splashActivity.redirectMainActivity();
+                                    splashActivity.finish();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }).start();
+
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -1,8 +1,11 @@
 package xyz.sangcomz.sangcomz_n_study.ui.main;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,11 +38,14 @@ import xyz.sangcomz.sangcomz_n_study.ui.main.fragments.ProfileFragment;
 import xyz.sangcomz.sangcomz_n_study.ui.main.fragments.SearchFriendFragment;
 import xyz.sangcomz.sangcomz_n_study.ui.main.fragments.SettingFragment;
 import xyz.sangcomz.sangcomz_n_study.ui.main.fragments.TimeLineFragment;
+import xyz.sangcomz.sangcomz_n_study.ui.post.AddPostActivity;
+import xyz.sangcomz.sangcomz_n_study.util.AnimUtils;
 
 public class MainActivity extends BaseActivity {
 
     Toolbar toolbar;
     FrameLayout areaFragment;
+    FloatingActionButton fab;
 
     Fragment timeLineFragment;
     Fragment friendsFragment;
@@ -60,6 +66,14 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         areaFragment = (FrameLayout) findViewById(R.id.area_fragment);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, AddPostActivity.class);
+                startActivity(i);
+            }
+        });
 
         timeLineFragment = new TimeLineFragment();
         friendsFragment = new FriendsFragment();
@@ -152,8 +166,10 @@ public class MainActivity extends BaseActivity {
                 .withOnMiniDrawerItemClickListener(new BaseDrawerAdapter.OnClickListener() {
                     @Override
                     public void onClick(View v, int position, IDrawerItem item) {
-                        System.out.println("mini :::: " + position);
+//                        System.out.println("mini :::: " + position);
+                        result.setSelectionAtPosition(position);
                         setFragment(position);
+
                         crossfadeDrawerLayout.closeDrawers();
 //                        if (position == 0) {
 //                            crossfadeDrawerLayout.crossfade();
@@ -214,21 +230,57 @@ public class MainActivity extends BaseActivity {
     private void setFragment(int position) {
         switch (position) {
             case 0:
+                fab.setVisibility(View.GONE);
                 getFragmentManager().beginTransaction().replace(areaFragment.getId(), profileFragment).commit();//초기화
                 break;
             case 1:
+                fab.setVisibility(View.VISIBLE);
                 getFragmentManager().beginTransaction().replace(areaFragment.getId(), timeLineFragment).commit();//초기화
                 break;
             case 2:
+                fab.setVisibility(View.GONE);
                 getFragmentManager().beginTransaction().replace(areaFragment.getId(), friendsFragment).commit();//초기화
                 break;
             case 3:
+                fab.setVisibility(View.GONE);
                 getFragmentManager().beginTransaction().replace(areaFragment.getId(), searchFriendFragment).commit();//초기화
                 break;
             case 4:
+                fab.setVisibility(View.GONE);
                 getFragmentManager().beginTransaction().replace(areaFragment.getId(), settingFragment).commit();//초기화
                 break;
         }
+    }
+
+
+    /**
+     * 스케일 애니메이션
+     *
+     * @param scale 0 = 사라짐 1 = 원래 크기
+     */
+    private void animFab(final float scale) {
+        ViewCompat.animate(fab)
+//                .setInterpolator(AnimUtils.FAST_OUT_SLOW_IN_INTERPOLATOR) //사라지는 모양
+                .setInterpolator(AnimUtils.FAST_OUT_LINEAR_IN_INTERPOLATOR)
+//                .setInterpolator(AnimUtils.LINEAR_OUT_SLOW_IN_INTERPOLATOR)
+                .scaleX(scale)
+                .scaleY(scale)
+                .withStartAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (scale == 1) fab.setVisibility(View.VISIBLE);
+                    }
+                })
+                .withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (scale == 0) fab.setVisibility(View.GONE);
+                    }
+                })
+                .setDuration(250)   //기간
+                .withLayer()        //Software Type Hardware Type
+                .start();
+
     }
 
 }

@@ -30,4 +30,13 @@ public class SharedPref {
     public String getStringPref(String key) {
         return pref.getString(key, null);
     }
+
+    public void clearPref() {
+        editor.clear();
+        editor.commit();
+    }
+
+
+
+
 }

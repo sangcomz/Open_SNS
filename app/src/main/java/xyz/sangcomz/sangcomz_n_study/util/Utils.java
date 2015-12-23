@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Environment;
 import android.util.TypedValue;
 
@@ -14,6 +15,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.concurrent.ExecutionException;
+
+import xyz.sangcomz.sangcomz_n_study.R;
 
 /**
  * Created by sangc on 2015-12-18.
@@ -53,19 +56,29 @@ public class Utils {
     }
 
     public static Drawable drawableFromUrl(Context context, String url) throws IOException {
-        Bitmap myBitmap = null;
-        try {
-            myBitmap = Glide
-                    .with(context)
-                    .load(url)
-                    .asBitmap()
-                    .into(600, 600)
-                    .get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+        System.out.println("url ::::: " + url);
+        if (url == null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                return context.getResources().getDrawable(R.drawable.bg_drawer, null);
+            } else {
+                return context.getResources().getDrawable(R.drawable.bg_drawer);
+            }
+        } else {
+            Bitmap myBitmap = null;
+            try {
+                myBitmap = Glide
+                        .with(context)
+                        .load(url)
+                        .asBitmap()
+                        .into(800, 400)
+                        .get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+            return new BitmapDrawable(null, myBitmap);
         }
-        return new BitmapDrawable(null, myBitmap);
+
     }
 }
