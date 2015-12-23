@@ -39,7 +39,7 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    protected void redirectMainActivity() {
+    public void redirectMainActivity() {
         final Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
