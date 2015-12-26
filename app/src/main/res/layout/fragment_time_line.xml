@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
+    android:background="@color/colorBackground"
     tools:context="xyz.sangcomz.sangcomz_n_study.ui.main.fragments.TimeLineFragment">
 
     <!-- TODO: Update blank fragment layout -->
