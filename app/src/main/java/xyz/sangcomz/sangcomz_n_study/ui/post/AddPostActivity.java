@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -28,7 +30,9 @@ public class AddPostActivity extends BaseActivity {
     Toolbar toolbar;
     RelativeLayout areaPhoto;
     ImageView imgPost;
-    Bitmap bitPost;
+    Bitmap bitPost = null;
+    EditText etContent;
+    AddPostController addPostController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +41,12 @@ public class AddPostActivity extends BaseActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getString(R.string.txt_add_post));
+        addPostController = new AddPostController(this);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         imgPost = (ImageView) findViewById(R.id.img_post);
+
+        etContent = (EditText) findViewById(R.id.et_content);
 
         areaPhoto = (RelativeLayout) findViewById(R.id.area_photo);
         areaPhoto.setOnClickListener(new View.OnClickListener() {
@@ -93,38 +100,17 @@ public class AddPostActivity extends BaseActivity {
         int id = item.getItemId();
         if (id == android.R.id.home)
             finish();
-        else if (id==R.id.action_done) {
-            finish();
+        else if (id == R.id.action_done) {
+            if (bitPost != null && etContent.getText().toString().length() > 0) {
+                addPostController.AddPost(etContent.getText().toString(), bitPost);
+            } else {
+                Snackbar.make(etContent, getString(R.string.msg_insert_image_or_content), Snackbar.LENGTH_SHORT).show();
+            }
+
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-
-    //    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//        if (id == R.id.action_ok) {
-//            if (pickedImageBeans.size() == 0) {
-//                Toast.makeText(this, getString(R.string.msg_no_slected), Toast.LENGTH_SHORT).show();
-////                Snackbar.make(recyclerView, getString(R.string.msg_no_slected), Snackbar.LENGTH_SHORT).show();
-//            } else {
-//                ArrayList<String> path = new ArrayList<>();
-//                for (int i = 0; i < pickedImageBeans.size(); i++) {
-//                    path.add(pickedImageBeans.get(i).getImgPath());
-//                }
-//                Intent i = new Intent();
-//                i.putStringArrayListExtra(Define.INTENT_PATH, path);
-//                setResult(RESULT_OK, i);
-//                finish();
-//            }
-//            return true;
-//        } else if (id == android.R.id.home)
-//            finish();
-//        return super.onOptionsItemSelected(item);
-//    }
 
 }

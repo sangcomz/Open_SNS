@@ -12,4 +12,5 @@ public class UrlDefine {
 
     public static final String URL_ACCOUNT_JOIN = HTTP + SERVER_HOST + "/account/join.php";
     public static final String URL_ACCOUNT_LOGIN = HTTP + SERVER_HOST + "/account/login.php";
+    public static final String URL_POST_CREATE = HTTP + SERVER_HOST + "/post/create.php";
 }
