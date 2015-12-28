@@ -80,12 +80,10 @@ public class MainActivity extends BaseActivity {
         searchFriendFragment = new SearchFriendFragment();
         settingFragment = new SettingFragment();
         profileFragment = new ProfileFragment();
-
-        setFragment(1);
-
-
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getString(R.string.txt_timeline));
+
+        setFragment(1);
         // Create a few sample profile
         // NOTE you have to define the loader logic too. See the CustomApplication for more details
         try {
@@ -231,22 +229,27 @@ public class MainActivity extends BaseActivity {
         switch (position) {
             case 0:
                 fab.setVisibility(View.GONE);
+                getSupportActionBar().setTitle(getString(R.string.txt_my_profile));
                 getFragmentManager().beginTransaction().replace(areaFragment.getId(), profileFragment).commit();//초기화
                 break;
             case 1:
                 fab.setVisibility(View.VISIBLE);
+                getSupportActionBar().setTitle(getString(R.string.txt_timeline));
                 getFragmentManager().beginTransaction().replace(areaFragment.getId(), timeLineFragment).commit();//초기화
                 break;
             case 2:
                 fab.setVisibility(View.GONE);
+                getSupportActionBar().setTitle(getString(R.string.txt_friends));
                 getFragmentManager().beginTransaction().replace(areaFragment.getId(), friendsFragment).commit();//초기화
                 break;
             case 3:
                 fab.setVisibility(View.GONE);
+                getSupportActionBar().setTitle(getString(R.string.txt_search_friend));
                 getFragmentManager().beginTransaction().replace(areaFragment.getId(), searchFriendFragment).commit();//초기화
                 break;
             case 4:
                 fab.setVisibility(View.GONE);
+                getSupportActionBar().setTitle(getString(R.string.txt_setting));
                 getFragmentManager().beginTransaction().replace(areaFragment.getId(), settingFragment).commit();//초기화
                 break;
         }
