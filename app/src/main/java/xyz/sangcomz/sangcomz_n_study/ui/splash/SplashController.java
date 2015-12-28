@@ -7,8 +7,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Locale;
 
 import cz.msebera.android.httpclient.Header;
@@ -80,11 +78,9 @@ public class SplashController {
     protected void Login(String memberName, String memberPassword) {
 
         RequestParams params = new RequestParams();
-        try {
-            params.put("member_name", URLEncoder.encode(memberName, "UTF-8"));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+
+        params.put("member_name", memberName);
+
         params.put("member_pwd", MD5(memberPassword, "").toLowerCase(Locale.getDefault()));
 
         HttpClient.post(UrlDefine.URL_ACCOUNT_LOGIN, params, new JsonHttpResponseHandler() {

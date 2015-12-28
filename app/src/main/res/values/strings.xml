@@ -19,9 +19,16 @@
     <string name="txt_done">확인</string>
     <string name="msg_insert_image_or_content">이미지 혹은 내용을 입력해주세요.</string>
 
+    <string name="txt_following">팔로잉</string>
+    <string name="txt_follower">팔로워</string>
+
+    <string name="txt_add_follow">팔로우+</string>
+    <string name="txt_del_follow">팔로잉</string>
+
     <string name="txt_device_version">Device Version : </string>
     <string name="txt_current_version">Current Version : </string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search_hint">닉네임을 입력해주세요.</string>
 </resources>

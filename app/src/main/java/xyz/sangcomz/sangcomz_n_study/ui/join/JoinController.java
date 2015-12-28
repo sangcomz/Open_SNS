@@ -10,8 +10,6 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Locale;
 
 import cz.msebera.android.httpclient.Header;
@@ -36,11 +34,9 @@ public class JoinController {
     public void Join(String nickName, String password, Bitmap bitProfile) {
 
         RequestParams params = new RequestParams();
-        try {
-            params.put("member_name", URLEncoder.encode(nickName, "UTF-8"));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+
+        params.put("member_name", nickName);
+
         params.put("member_pwd", MD5(password, "").toLowerCase(Locale.getDefault()));
 
         File file = Utils.BitmapToFileCache(bitProfile);

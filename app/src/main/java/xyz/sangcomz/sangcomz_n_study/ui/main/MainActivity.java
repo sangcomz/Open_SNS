@@ -1,12 +1,19 @@
 package xyz.sangcomz.sangcomz_n_study.ui.main;
 
 import android.app.Fragment;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewCompat;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -40,10 +47,12 @@ import xyz.sangcomz.sangcomz_n_study.ui.main.fragments.SettingFragment;
 import xyz.sangcomz.sangcomz_n_study.ui.main.fragments.TimeLineFragment;
 import xyz.sangcomz.sangcomz_n_study.ui.post.AddPostActivity;
 import xyz.sangcomz.sangcomz_n_study.util.AnimUtils;
+import xyz.sangcomz.sangcomz_n_study.util.Utils;
 
 public class MainActivity extends BaseActivity {
 
     Toolbar toolbar;
+    TabLayout tabLayout;
     FrameLayout areaFragment;
     FloatingActionButton fab;
 
@@ -60,11 +69,21 @@ public class MainActivity extends BaseActivity {
     private CrossfadeDrawerLayout crossfadeDrawerLayout = null;
     private IProfile profile = null;
 
+    int curPosition = 1;
+    Fragment curFragment = null;
+
+    SearchView searchView;
+
+    MainController mainController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mainController = new MainController(this);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setSelectedTabIndicatorHeight(Utils.convertDP(this, 4));
         areaFragment = (FrameLayout) findViewById(R.id.area_fragment);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -203,6 +222,8 @@ public class MainActivity extends BaseActivity {
                 return crossfadeDrawerLayout.isCrossfaded();
             }
         });
+
+//        handleIntent(getIntent());
     }
 
     @Override
@@ -224,31 +245,42 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    public void setupTabinViewPager(ViewPager viewPager) {
+        tabLayout.setupWithViewPager(viewPager);
+    }
+
 
     private void setFragment(int position) {
+        curPosition = position;
+        invalidateOptionsMenu();
         switch (position) {
             case 0:
                 fab.setVisibility(View.GONE);
+                tabLayout.setVisibility(View.GONE);
                 getSupportActionBar().setTitle(getString(R.string.txt_my_profile));
                 getFragmentManager().beginTransaction().replace(areaFragment.getId(), profileFragment).commit();//초기화
                 break;
             case 1:
                 fab.setVisibility(View.VISIBLE);
+                tabLayout.setVisibility(View.GONE);
                 getSupportActionBar().setTitle(getString(R.string.txt_timeline));
                 getFragmentManager().beginTransaction().replace(areaFragment.getId(), timeLineFragment).commit();//초기화
                 break;
             case 2:
                 fab.setVisibility(View.GONE);
+                tabLayout.setVisibility(View.VISIBLE);
                 getSupportActionBar().setTitle(getString(R.string.txt_friends));
                 getFragmentManager().beginTransaction().replace(areaFragment.getId(), friendsFragment).commit();//초기화
                 break;
             case 3:
                 fab.setVisibility(View.GONE);
+                tabLayout.setVisibility(View.GONE);
                 getSupportActionBar().setTitle(getString(R.string.txt_search_friend));
                 getFragmentManager().beginTransaction().replace(areaFragment.getId(), searchFriendFragment).commit();//초기화
                 break;
             case 4:
                 fab.setVisibility(View.GONE);
+                tabLayout.setVisibility(View.GONE);
                 getSupportActionBar().setTitle(getString(R.string.txt_setting));
                 getFragmentManager().beginTransaction().replace(areaFragment.getId(), settingFragment).commit();//초기화
                 break;
@@ -286,4 +318,44 @@ public class MainActivity extends BaseActivity {
 
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (curPosition == 3) {
+            getMenuInflater().inflate(R.menu.menu_main, menu);
+
+            // Associate searchable configuration with the SearchView
+            SearchManager searchManager =
+                    (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+            SearchView searchView =
+                    (SearchView) menu.findItem(R.id.menu_search).getActionView();
+            searchView.setSearchableInfo(
+                    searchManager.getSearchableInfo(getComponentName()));
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    System.out.println("onQueryTextSubmit :::: " + query);
+                    ((SearchFriendFragment)searchFriendFragment).searchMember(query, 1);
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    return false;
+                }
+            });
+
+        } else {
+            return false;
+        }
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        return super.onOptionsItemSelected(item);
+    }
 }
