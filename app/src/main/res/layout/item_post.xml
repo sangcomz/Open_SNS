@@ -48,7 +48,7 @@
         android:layout_below="@+id/area_profile"
         android:layout_marginBottom="5dp" />
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/area_comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -57,20 +57,42 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:background="@drawable/ic_action_ic_comment_black_24dp" />
-
-        <TextView
-            android:id="@+id/txt_comment_count"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:textColor="@color/colorPrimaryText" />
+            android:background="@drawable/back_button_black_selector"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@drawable/ic_action_ic_comment_black_24dp" />
+
+            <TextView
+                android:id="@+id/txt_comment_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/colorPrimaryText" />
+        </LinearLayout>
 
 
-    </LinearLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/back_button_black_selector">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="right"
+                android:background="@drawable/ic_more_vert_black_24dp" />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/line"

@@ -48,12 +48,15 @@ public class TimeLineController {
                 System.out.println("onSuccess JSONObject :::: " + response.toString());
                 try {
                     JSONArray jsonArray = response.getJSONArray("posts");
+                    JSONObject page = response.getJSONObject("page");
                     Gson gson = new Gson();
                     String jsonOutput = jsonArray.toString();
 
                     Type listType = new TypeToken<List<Post>>() {
                     }.getType();
                     List<Post> posts = (List<Post>) gson.fromJson(jsonOutput, listType);
+
+                    timeLineFragment.setTotalPage(page.getInt("total_page"));
 
 
                     timeLineFragment.setPosts((ArrayList<Post>) posts);

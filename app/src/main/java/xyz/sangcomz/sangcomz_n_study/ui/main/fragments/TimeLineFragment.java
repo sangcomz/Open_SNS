@@ -31,8 +31,13 @@ public class TimeLineFragment extends Fragment {
     NoDataController noDataController;
 
     SwipeRefreshLayout swipeRefreshLayout;
+    LinearLayoutManager linearLayoutManager;
+
+    int pastVisiblesItems, visibleItemCount, totalItemCount;
 
     int curPage = 1;
+
+    private int totalPage;
 
     public TimeLineFragment() {
         // Required empty public constructor
@@ -47,21 +52,43 @@ public class TimeLineFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_time_line, container, false);
         timeLineController = new TimeLineController(getActivity(), this);
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh);
-
+        linearLayoutManager = new LinearLayoutManager(getActivity());
         areaNoData = (RelativeLayout) rootView.findViewById(R.id.area_nodata);
         noDataController = new NoDataController(areaNoData, getActivity());
         noDataController.setNodata(R.drawable.ic_public_black_24dp, getString(R.string.msg_no_search));
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(linearLayoutManager);
 
-        timeLineController.GetPost(curPage);
+        postAdapter = new PostAdapter(getActivity(), posts);
+        recyclerView.setAdapter(postAdapter);
+
+        timeLineController.GetPost(curPage++);
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                posts.clear();
                 curPage = 1;
                 swipeRefreshLayout.setRefreshing(false);
-                timeLineController.GetPost(curPage);
+                timeLineController.GetPost(curPage++);
+            }
+        });
+
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+                visibleItemCount = linearLayoutManager.getChildCount();
+                totalItemCount = linearLayoutManager.getItemCount();
+                pastVisiblesItems = linearLayoutManager.findFirstVisibleItemPosition();
+
+                if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                    if (curPage <= totalPage) {
+                        timeLineController.GetPost(curPage++);
+                    }
+                }
+
             }
         });
 
@@ -69,14 +96,16 @@ public class TimeLineFragment extends Fragment {
     }
 
     public void setPosts(ArrayList<Post> posts) {
-        this.posts = posts;
+        this.posts.addAll(posts);
         if (posts.size() > 0) {
             areaNoData.setVisibility(View.GONE);
-            postAdapter = new PostAdapter(getActivity(), posts);
-            recyclerView.setAdapter(postAdapter);
+            postAdapter.notifyDataSetChanged();
         } else {
             areaNoData.setVisibility(View.VISIBLE);
         }
     }
 
+    public void setTotalPage(int totalPage) {
+        this.totalPage = totalPage;
+    }
 }

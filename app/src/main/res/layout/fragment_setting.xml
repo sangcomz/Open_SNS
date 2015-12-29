@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
     android:padding="30dp"
+    android:layout_marginBottom="56dp"
     tools:context="xyz.sangcomz.sangcomz_n_study.ui.main.fragments.SettingFragment">
 
     <LinearLayout
@@ -98,7 +99,6 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="100dp"
             android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
             android:text="@string/txt_current_version"
