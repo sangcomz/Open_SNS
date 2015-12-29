@@ -14,6 +14,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.TimeZone;
 import java.util.concurrent.ExecutionException;
 
 import xyz.sangcomz.sangcomz_n_study.R;
@@ -80,5 +83,31 @@ public class Utils {
             return new BitmapDrawable(null, myBitmap);
         }
 
+    }
+
+
+    public static String getDateString(Context con, String form, int time) {
+
+        if (con != null) {
+            int curTime = (int) (System.currentTimeMillis() / 1000L);
+            int diffTime = (curTime - time);
+
+
+            if (diffTime > 0 & diffTime / 60 < 60) {
+                return diffTime / 60 + con.getResources().getString(R.string.date_minutes_ago);
+            } else if (diffTime > 0 & diffTime / 60 / 60 < 24) {
+                return diffTime / 60 / 60 + con.getResources().getString(R.string.date_hours_ago);
+            }
+//        else if(diffTime>0 & diffTime/60/60/24 < 7){
+//            return diffTime/60/60/24+r.getString(R.string.date_days_ago);
+//        }
+            else {
+                Date timestampDate = new Date(time * 1000L);
+                SimpleDateFormat format = new SimpleDateFormat(form);
+                format.setTimeZone(TimeZone.getDefault());
+                return format.format(timestampDate);
+            }
+        }
+        return "-";
     }
 }

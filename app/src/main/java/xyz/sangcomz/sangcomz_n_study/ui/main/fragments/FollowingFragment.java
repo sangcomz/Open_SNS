@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import xyz.sangcomz.sangcomz_n_study.Adapter.FollowAdapter;
 import xyz.sangcomz.sangcomz_n_study.R;
 import xyz.sangcomz.sangcomz_n_study.bean.Member;
+import xyz.sangcomz.sangcomz_n_study.util.ItemDecoration.DividerItemDecoration;
 import xyz.sangcomz.sangcomz_n_study.util.NoDataController;
 
 /**
@@ -41,7 +42,6 @@ public class FollowingFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_following, container, false);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
         areaNoData = (RelativeLayout) rootView.findViewById(R.id.area_nodata);
         noDataController = new NoDataController(areaNoData, getActivity());
         noDataController.setNodata(R.drawable.ic_people_black_24dp, getString(R.string.msg_no_following));
@@ -57,8 +57,9 @@ public class FollowingFragment extends Fragment {
         this.members = members;
         if (members.size() > 0) {
             areaNoData.setVisibility(View.GONE);
-            followAdapter = new FollowAdapter(getActivity(), members);
+            followAdapter = new FollowAdapter(getActivity(), members, true);
             recyclerView.setAdapter(followAdapter);
+            recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         } else {
             areaNoData.setVisibility(View.VISIBLE);
         }

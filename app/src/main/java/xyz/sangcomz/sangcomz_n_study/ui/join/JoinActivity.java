@@ -12,7 +12,6 @@ import android.widget.ImageButton;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.makeramen.roundedimageview.RoundedImageView;
 import com.sangcomz.fishbun.FishBun;
 import com.sangcomz.fishbun.define.Define;
 
@@ -20,6 +19,7 @@ import java.util.ArrayList;
 
 import xyz.sangcomz.sangcomz_n_study.R;
 import xyz.sangcomz.sangcomz_n_study.core.common.BaseActivity;
+import xyz.sangcomz.sangcomz_n_study.util.custom.RoundedImageView;
 
 public class JoinActivity extends BaseActivity {
 //    Toolbar toolbar;

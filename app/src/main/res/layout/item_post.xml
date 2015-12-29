@@ -1,0 +1,94 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="20dp"
+    android:background="@drawable/background_shadow">
+
+    <LinearLayout
+        android:id="@+id/area_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <xyz.sangcomz.sangcomz_n_study.util.custom.RoundedImageView
+            android:id="@+id/riv_profile"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="8dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/default_profile2"
+            app:border_color="#ffffff"
+            app:border_width="1dp"
+            app:corner_radius="10dp"
+            app:oval="true" />
+
+        <TextView
+            android:id="@+id/txt_member_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="no Name"
+            android:textColor="@color/colorPrimaryText" />
+
+        <TextView
+            android:id="@+id/txt_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:text="no Name"
+            android:textColor="@color/colorPrimaryText" />
+    </LinearLayout>
+
+    <xyz.sangcomz.sangcomz_n_study.util.custom.SquareImageView
+        android:id="@+id/siv_post_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/area_profile"
+        android:layout_marginBottom="5dp" />
+
+    <LinearLayout
+        android:id="@+id/area_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/siv_post_image"
+        android:layout_margin="5dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/ic_action_ic_comment_black_24dp" />
+
+        <TextView
+            android:id="@+id/txt_comment_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/colorPrimaryText" />
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/area_comment"
+        android:layout_margin="5dp"
+        android:background="@color/colorBlurDivider" />
+
+    <TextView
+        android:id="@+id/txt_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/line"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/colorPrimaryText" />
+
+
+</RelativeLayout>

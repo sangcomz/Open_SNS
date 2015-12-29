@@ -21,17 +21,17 @@
         android:padding="40dp">
 
 
-        <com.makeramen.roundedimageview.RoundedImageView
+        <xyz.sangcomz.sangcomz_n_study.util.custom.RoundedImageView
             android:id="@+id/riv_profile"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:scaleType="fitCenter"
             android:src="@drawable/default_profile2"
-            app:riv_border_color="#ffffff"
-            app:riv_border_width="1dp"
-            app:riv_corner_radius="30dp"
-            app:riv_mutate_background="true"
-            app:riv_oval="true" />
+            app:border_color="#ffffff"
+            app:border_width="1dp"
+            app:corner_radius="30dp"
+            app:mutate_background="true"
+            app:oval="true" />
 
 
         <EditText

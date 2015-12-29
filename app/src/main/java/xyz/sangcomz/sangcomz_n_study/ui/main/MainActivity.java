@@ -1,12 +1,13 @@
 package xyz.sangcomz.sangcomz_n_study.ui.main;
 
-import android.app.Fragment;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
@@ -51,6 +52,7 @@ import xyz.sangcomz.sangcomz_n_study.util.Utils;
 
 public class MainActivity extends BaseActivity {
 
+    AppBarLayout appBarLayout;
     Toolbar toolbar;
     TabLayout tabLayout;
     FrameLayout areaFragment;
@@ -84,6 +86,8 @@ public class MainActivity extends BaseActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setSelectedTabIndicatorHeight(Utils.convertDP(this, 4));
+        appBarLayout = (AppBarLayout) findViewById(R.id.appbar);    //appBarLayout xml 아이디 연걸
+
         areaFragment = (FrameLayout) findViewById(R.id.area_fragment);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -101,6 +105,7 @@ public class MainActivity extends BaseActivity {
         profileFragment = new ProfileFragment();
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getString(R.string.txt_timeline));
+
 
         setFragment(1);
         // Create a few sample profile
@@ -185,7 +190,7 @@ public class MainActivity extends BaseActivity {
                     public void onClick(View v, int position, IDrawerItem item) {
 //                        System.out.println("mini :::: " + position);
                         result.setSelectionAtPosition(position);
-                        setFragment(position);
+//                        setFragment(position);
 
                         crossfadeDrawerLayout.closeDrawers();
 //                        if (position == 0) {
@@ -224,6 +229,22 @@ public class MainActivity extends BaseActivity {
         });
 
 //        handleIntent(getIntent());
+
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (curPosition == 1) {
+                    if (verticalOffset < 0)
+                        animFab(0);
+                    else
+                        animFab(1);
+
+                }
+
+            }
+        });
+
+
     }
 
     @Override
@@ -255,34 +276,35 @@ public class MainActivity extends BaseActivity {
         invalidateOptionsMenu();
         switch (position) {
             case 0:
-                fab.setVisibility(View.GONE);
+                animFab(0);
                 tabLayout.setVisibility(View.GONE);
                 getSupportActionBar().setTitle(getString(R.string.txt_my_profile));
-                getFragmentManager().beginTransaction().replace(areaFragment.getId(), profileFragment).commit();//초기화
+                getSupportFragmentManager().beginTransaction().replace(areaFragment.getId(), profileFragment).commit();
+//                getFragmentManager().beginTransaction().replace(areaFragment.getId(), profileFragment).commit();//초기화
                 break;
             case 1:
-                fab.setVisibility(View.VISIBLE);
+                animFab(1);
                 tabLayout.setVisibility(View.GONE);
                 getSupportActionBar().setTitle(getString(R.string.txt_timeline));
-                getFragmentManager().beginTransaction().replace(areaFragment.getId(), timeLineFragment).commit();//초기화
+                getSupportFragmentManager().beginTransaction().replace(areaFragment.getId(), timeLineFragment).commit();//초기화
                 break;
             case 2:
-                fab.setVisibility(View.GONE);
+                animFab(0);
                 tabLayout.setVisibility(View.VISIBLE);
                 getSupportActionBar().setTitle(getString(R.string.txt_friends));
-                getFragmentManager().beginTransaction().replace(areaFragment.getId(), friendsFragment).commit();//초기화
+                getSupportFragmentManager().beginTransaction().replace(areaFragment.getId(), friendsFragment).commit();//초기화
                 break;
             case 3:
-                fab.setVisibility(View.GONE);
+                animFab(0);
                 tabLayout.setVisibility(View.GONE);
                 getSupportActionBar().setTitle(getString(R.string.txt_search_friend));
-                getFragmentManager().beginTransaction().replace(areaFragment.getId(), searchFriendFragment).commit();//초기화
+                getSupportFragmentManager().beginTransaction().replace(areaFragment.getId(), searchFriendFragment).commit();//초기화
                 break;
             case 4:
-                fab.setVisibility(View.GONE);
+                animFab(0);
                 tabLayout.setVisibility(View.GONE);
                 getSupportActionBar().setTitle(getString(R.string.txt_setting));
-                getFragmentManager().beginTransaction().replace(areaFragment.getId(), settingFragment).commit();//초기화
+                getSupportFragmentManager().beginTransaction().replace(areaFragment.getId(), settingFragment).commit();//초기화
                 break;
         }
     }
@@ -335,7 +357,7 @@ public class MainActivity extends BaseActivity {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
                     System.out.println("onQueryTextSubmit :::: " + query);
-                    ((SearchFriendFragment)searchFriendFragment).searchMember(query, 1);
+                    ((SearchFriendFragment) searchFriendFragment).searchMember(query, 1);
                     return false;
                 }
 

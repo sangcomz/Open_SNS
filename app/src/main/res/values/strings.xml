@@ -15,6 +15,7 @@
     <string name="txt_password">비밀번호</string>
     <string name="txt_repassword">비밀번호 재입력</string>
     <string name="txt_push_alarm">푸시 알람</string>
+    <string name="txt_searchable">검색 허용</string>
     <string name="txt_content_hint">내용을 입력해주세요.</string>
     <string name="txt_done">확인</string>
     <string name="msg_insert_image_or_content">이미지 혹은 내용을 입력해주세요.</string>
@@ -31,4 +32,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search_hint">닉네임을 입력해주세요.</string>
+
+
+    <string name="date_minutes_ago">분전</string>
+    <string name="date_hours_ago">시간전</string>
 </resources>

@@ -5,7 +5,7 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.IntentCompat;
 import android.view.LayoutInflater;
 import android.view.View;

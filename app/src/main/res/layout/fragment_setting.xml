@@ -7,6 +7,7 @@
     tools:context="xyz.sangcomz.sangcomz_n_study.ui.main.fragments.SettingFragment">
 
     <LinearLayout
+        android:id="@+id/area_push_alarm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -37,17 +38,41 @@
             android:thumbTextPadding="10dp"
             android:track="@drawable/switch_background" />
 
-        <RelativeLayout
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/area_push_alarm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_notifications_black_24dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_searchable"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="20dp" />
+
+        <Switch
+            android:id="@+id/sw_searchable"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:switchMinWidth="50dp"
+            android:textOff=" "
+            android:textOn=" "
+            android:thumb="@drawable/switch_selector"
+            android:thumbTextPadding="10dp"
+            android:track="@drawable/switch_background" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@mipmap/ic_launcher" />
-
-
-        </RelativeLayout>
     </LinearLayout>
 
     <LinearLayout

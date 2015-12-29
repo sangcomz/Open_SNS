@@ -56,6 +56,7 @@ public class FollowController {
                     followAdapter.refreshFollowYn(position, "Y");
                 else
                     followAdapter.refreshFollowYn(position, "N");
+
             }
 
             @Override

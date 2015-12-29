@@ -27,7 +27,38 @@
 
 
         <Switch
-            android:id="@+id/post_sw"
+            android:id="@+id/sw_push_alarm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:thumbTextPadding="10dp"
+            android:track="@drawable/switch_background" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/area_push_alarm"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_search_black_24dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_searchable"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="18dp" />
+
+
+        <Switch
+            android:id="@+id/sw_searchable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:thumbTextPadding="10dp"
@@ -60,7 +91,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="100dp"
             android:gravity="center_horizontal"
             android:text="@string/txt_current_version"
             android:textColor="@color/colorPrimaryText"

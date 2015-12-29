@@ -8,6 +8,7 @@
     <color name="colorPrimaryText">#212121</color>
     <color name="colorSecondaryText">#727272</color>
     <color name="colorDivider">#b6b6b6</color>
+    <color name="colorBlurDivider">#b0b6b6b6</color>
     <color name="colorBackground">#EEEEEE</color>
     <color name="colorFollow">#303F9F</color>
     <color name="colorFollowing">#4BAD4F</color>

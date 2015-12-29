@@ -17,4 +17,5 @@ public class UrlDefine {
     public static final String URL_FOLLOW = HTTP + SERVER_HOST + "/follow/add.php";
     public static final String URL_UNFOLLOW = HTTP + SERVER_HOST + "/follow/delete.php";
     public static final String URL_GET_FOLLOW = HTTP + SERVER_HOST + "/follow/get_list.php";
+    public static final String URL_GET_POST = HTTP + SERVER_HOST + "/post/get_post.php";
 }

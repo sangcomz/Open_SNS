@@ -1,7 +1,7 @@
 package xyz.sangcomz.sangcomz_n_study.ui.main.fragments;
 
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -35,13 +35,14 @@ public class FriendsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_friends, container, false);
         viewPager = (ViewPager) rootView.findViewById(R.id.viewpager);
         mainActivity = (MainActivity) getActivity();
+        followFragmentAdapter = new FollowFragmentAdapter(getChildFragmentManager());
+//        followFragmentAdapter = new FollowFragmentAdapter();
 
         setUpViewPager(viewPager, followFragmentAdapter);
         mainActivity.setupTabinViewPager(viewPager);
 
         return rootView;
     }
-
     /**
      * viewPager에 adapter를 설정해준다.
      */

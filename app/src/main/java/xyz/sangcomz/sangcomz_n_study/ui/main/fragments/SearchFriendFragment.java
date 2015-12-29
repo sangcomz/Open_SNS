@@ -2,7 +2,7 @@ package xyz.sangcomz.sangcomz_n_study.ui.main.fragments;
 
 
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -52,7 +52,7 @@ public class SearchFriendFragment extends Fragment {
         this.members = members;
         if (members.size() > 0) {
             areaNoData.setVisibility(View.GONE);
-            followAdapter = new FollowAdapter(getActivity(), members);
+            followAdapter = new FollowAdapter(getActivity(), members, false);
             recyclerView.setAdapter(followAdapter);
         } else {
             areaNoData.setVisibility(View.VISIBLE);

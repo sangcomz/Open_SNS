@@ -10,13 +10,13 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
 
 import xyz.sangcomz.sangcomz_n_study.R;
 import xyz.sangcomz.sangcomz_n_study.bean.Member;
 import xyz.sangcomz.sangcomz_n_study.ui.main.fragments.FollowController;
+import xyz.sangcomz.sangcomz_n_study.util.custom.RoundedImageView;
 
 /**
  * Created by sangc on 2015-12-28.
@@ -27,12 +27,14 @@ public class FollowAdapter
     ArrayList<Member> members = new ArrayList<>();
     Context context;
     FollowController followController;
+    private boolean isRemove;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public final RoundedImageView rivProfile;
         public final TextView txtMemberName;
         public final Button btnFollow;
+
 
         public ViewHolder(View view) {
             super(view);
@@ -42,9 +44,10 @@ public class FollowAdapter
         }
     }
 
-    public FollowAdapter(Context context, ArrayList<Member> members) {
+    public FollowAdapter(Context context, ArrayList<Member> members, boolean isRemove) {
         this.context = context;
         this.members = members;
+        this.isRemove = isRemove;
         followController = new FollowController(context, this);
     }
 
@@ -100,6 +103,14 @@ public class FollowAdapter
     public void refreshFollowYn(int position, String followYN) {
         members.get(position).setFollowYN(followYN);
         notifyItemChanged(position);
+        if (isRemove)
+            deleteMember(position);
+    }
+
+    public void deleteMember(int position) {
+        members.remove(position);
+        notifyItemRemoved(position);
+//        notifyDataSetChanged();
     }
 
 
