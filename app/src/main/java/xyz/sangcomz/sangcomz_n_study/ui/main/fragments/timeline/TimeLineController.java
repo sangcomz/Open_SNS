@@ -1,4 +1,4 @@
-package xyz.sangcomz.sangcomz_n_study.ui.main.fragments;
+package xyz.sangcomz.sangcomz_n_study.ui.main.fragments.timeline;
 
 import android.content.Context;
 
@@ -16,48 +16,51 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
-import xyz.sangcomz.sangcomz_n_study.bean.Member;
+import xyz.sangcomz.sangcomz_n_study.bean.Post;
 import xyz.sangcomz.sangcomz_n_study.core.SharedPref.SharedPref;
 import xyz.sangcomz.sangcomz_n_study.core.http.HttpClient;
 import xyz.sangcomz.sangcomz_n_study.define.SharedDefine;
 import xyz.sangcomz.sangcomz_n_study.define.UrlDefine;
 
 /**
- * Created by sangc on 2015-12-28.
+ * Created by sangc on 2015-12-29.
  */
-public class SeachController {
+public class TimeLineController {
     Context context;
-    SearchFriendFragment searchFriendFragment;
+    TimeLineFragment timeLineFragment;
 
-    public SeachController(Context context, SearchFriendFragment searchFriendFragment) {
+
+    public TimeLineController(Context context, TimeLineFragment timeLineFragment) {
         this.context = context;
-        this.searchFriendFragment = searchFriendFragment;
+        this.timeLineFragment = timeLineFragment;
     }
 
-
-    public void SearchMember(String query, int page) {
+    public void GetPost(int page) {
         RequestParams params = new RequestParams();
-
-        params.put("query", query);
 
         params.put("member_srl", (new SharedPref(context)).getStringPref(SharedDefine.SHARED_MEMBER_SRL));
         params.put("page", page);
-        HttpClient.get(UrlDefine.URL_SEARCH, params, new JsonHttpResponseHandler() {
+
+        HttpClient.get(UrlDefine.URL_GET_POST, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 System.out.println("onSuccess JSONObject :::: " + response.toString());
-
                 try {
-                    JSONArray jsonArray = response.getJSONArray("members");
+                    JSONArray jsonArray = response.getJSONArray("posts");
+                    JSONObject page = response.getJSONObject("page");
                     Gson gson = new Gson();
                     String jsonOutput = jsonArray.toString();
 
-                    Type listType = new TypeToken<List<Member>>() {
+                    Type listType = new TypeToken<List<Post>>() {
                     }.getType();
-                    List<Member> members = (List<Member>) gson.fromJson(jsonOutput, listType);
+                    List<Post> posts = (List<Post>) gson.fromJson(jsonOutput, listType);
 
-                    searchFriendFragment.setMembers((ArrayList<Member>) members);
+                    timeLineFragment.setTotalPage(page.getInt("total_page"));
+
+
+                    timeLineFragment.setPosts((ArrayList<Post>) posts);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

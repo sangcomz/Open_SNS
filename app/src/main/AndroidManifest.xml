@@ -15,11 +15,12 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ui.main.MainActivity">
 
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.SEARCH" />-->
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
-            <!--</intent-filter>-->
-            <meta-data android:name="android.app.searchable"
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.SEARCH" /> -->
+            <!-- <category android:name="android.intent.category.DEFAULT" /> -->
+            <!-- </intent-filter> -->
+            <meta-data
+                android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
         <activity
@@ -34,7 +35,9 @@
         <activity
             android:name=".ui.join.JoinActivity"
             android:theme="@style/TranslucentStatusAppTheme" />
-        <activity android:name=".ui.post.AddPostActivity"></activity>
+        <activity android:name=".ui.post.AddPostActivity" />
+        <activity android:name=".ui.comment.CommentActivity"
+            android:theme="@style/Theme.AppCompat.Translucent" />
     </application>
 
 </manifest>

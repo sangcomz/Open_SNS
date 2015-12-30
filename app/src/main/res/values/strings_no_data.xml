@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="msg_no_search">검색결과가 없습니다.</string>
-    <string name="msg_no_post">포스트가 없습니다. 회원들을 팔로우 하세요!</string>
+    <string name="msg_no_post">포스트가 없습니다.\n회원들을 팔로우 하세요!</string>
     <string name="msg_no_follower">팔로잉한 회원이 없습니다.</string>
     <string name="msg_no_following">팔로우한 회원이 없습니다.</string>
 </resources>

@@ -1,4 +1,4 @@
-package xyz.sangcomz.sangcomz_n_study.ui.main.fragments;
+package xyz.sangcomz.sangcomz_n_study.ui.main.fragments.friends;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
-import xyz.sangcomz.sangcomz_n_study.Adapter.FollowAdapter;
+import xyz.sangcomz.sangcomz_n_study.adapter.FollowAdapter;
 import xyz.sangcomz.sangcomz_n_study.bean.Member;
 import xyz.sangcomz.sangcomz_n_study.core.SharedPref.SharedPref;
 import xyz.sangcomz.sangcomz_n_study.core.http.HttpClient;

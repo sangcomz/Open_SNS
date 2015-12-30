@@ -4,12 +4,26 @@ android {
     compileSdkVersion 23
     buildToolsVersion '23.0.2'
 
+    productFlavors {
+        // Define separate dev and prod product flavors.
+        dev {
+            // dev utilizes minSDKVersion = 21 to allow the Android gradle plugin
+            // to pre-dex each module and produce an APK that can be tested on
+            // Android Lollipop without time consuming dex merging processes.
+            minSdkVersion 21
+        }
+        prod {
+            // The actual minSdkVersion for the application.
+            minSdkVersion 15
+        }
+    }
+
     defaultConfig {
         applicationId "xyz.sangcomz.sangcomz_n_study"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
         multiDexEnabled true
     }
     buildTypes {
@@ -17,6 +31,13 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    dexOptions {
+        // dex의 크기를 늘리기 위한 설정(2^16개 초과)
+        jumboMode true
+        // 앱 구동 시 자바 할당 힙을 지정
+        javaMaxHeapSize "4g"
     }
 }
 

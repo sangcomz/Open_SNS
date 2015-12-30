@@ -39,7 +39,7 @@ public class SplashController {
 
         HttpClient.post(UrlDefine.URL_ACCOUNT_LOGIN, params, new JsonHttpResponseHandler() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+            public void onSuccess(int statusCode, Header[] headers, final JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 System.out.println("onSuccess JSONObject :::: " + response.toString());
                 try {
@@ -51,9 +51,18 @@ public class SplashController {
                                 try {
                                     GlobalApplication.setDrawableBg((Utils.drawableFromUrl(splashActivity,
                                             (new SharedPref(splashActivity)).getStringPref(SharedDefine.SHARED_MEMBER_PROFILE_BG))));
+                                    JSONObject jsonObject = null;
+
+                                    jsonObject = response.getJSONObject("response");
+
+                                    (new SharedPref(splashActivity)).setSettings(jsonObject.getString("setting_push_on_off"),
+                                            jsonObject.getString("setting_searchable"));
+
                                     splashActivity.redirectMainActivity();
                                     splashActivity.finish();
                                 } catch (IOException e) {
+                                    e.printStackTrace();
+                                } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                             }
@@ -99,6 +108,9 @@ public class SplashController {
                                 jsonObject.getString("member_name"),
                                 jsonObject.getString("member_profile"),
                                 jsonObject.getString("member_profile_bg"));
+
+                        (new SharedPref(splashActivity)).setSettings(jsonObject.getString("setting_push_on_off"),
+                                jsonObject.getString("setting_searchable"));
 
                         new Thread(new Runnable() {
                             @Override

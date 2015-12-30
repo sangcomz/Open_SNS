@@ -1,4 +1,4 @@
-package xyz.sangcomz.sangcomz_n_study.Adapter;
+package xyz.sangcomz.sangcomz_n_study.adapter;
 
 import android.content.Context;
 import android.os.Build;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 import xyz.sangcomz.sangcomz_n_study.R;
 import xyz.sangcomz.sangcomz_n_study.bean.Member;
-import xyz.sangcomz.sangcomz_n_study.ui.main.fragments.FollowController;
+import xyz.sangcomz.sangcomz_n_study.ui.main.fragments.friends.FollowController;
 import xyz.sangcomz.sangcomz_n_study.util.custom.RoundedImageView;
 
 /**

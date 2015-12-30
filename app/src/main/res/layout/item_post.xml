@@ -49,7 +49,7 @@
         android:layout_marginBottom="5dp" />
 
     <RelativeLayout
-        android:id="@+id/area_comment"
+        android:id="@+id/area_more"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/siv_post_image"
@@ -58,6 +58,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/area_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/back_button_black_selector"
@@ -98,7 +99,7 @@
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@+id/area_comment"
+        android:layout_below="@+id/area_more"
         android:layout_margin="5dp"
         android:background="@color/colorBlurDivider" />
 

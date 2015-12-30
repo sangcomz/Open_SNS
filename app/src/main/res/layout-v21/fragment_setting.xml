@@ -5,7 +5,7 @@
     android:layout_marginBottom="56dp"
     android:background="@color/colorBackground"
     android:padding="30dp"
-    tools:context="xyz.sangcomz.sangcomz_n_study.ui.main.fragments.SettingFragment">
+    tools:context=".ui.main.fragments.setting.SettingFragment">
 
     <LinearLayout
         android:id="@+id/area_push_alarm"
@@ -72,6 +72,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:gravity="center"
         android:orientation="vertical">
 
         <ImageView
@@ -79,23 +80,58 @@
             android:layout_height="150dp"
             android:background="@mipmap/ic_launcher" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <LinearLayout
             android:layout_marginTop="10dp"
-            android:gravity="center_horizontal"
-            android:text="@string/txt_device_version"
-            android:textColor="@color/colorPrimaryText"
-            android:textSize="18dp" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/txt_device_version"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/txt_device_version"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:gravity="center_horizontal"
+                android:text="v0.0.0"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="18dp" />
+        </LinearLayout>
+
+
+        <LinearLayout
             android:layout_marginTop="10dp"
-            android:gravity="center_horizontal"
-            android:text="@string/txt_current_version"
-            android:textColor="@color/colorPrimaryText"
-            android:textSize="18dp" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/txt_current_version"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/txt_current_version"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="v0.0.0"
+                android:gravity="center_horizontal"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="18dp" />
+
+        </LinearLayout>
+
+
     </LinearLayout>
 
     <!-- TODO: Update blank fragment layout -->

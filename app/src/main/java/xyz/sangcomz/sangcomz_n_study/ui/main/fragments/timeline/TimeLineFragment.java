@@ -1,4 +1,4 @@
-package xyz.sangcomz.sangcomz_n_study.ui.main.fragments;
+package xyz.sangcomz.sangcomz_n_study.ui.main.fragments.timeline;
 
 
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
-import xyz.sangcomz.sangcomz_n_study.Adapter.PostAdapter;
+import xyz.sangcomz.sangcomz_n_study.adapter.PostAdapter;
 import xyz.sangcomz.sangcomz_n_study.R;
 import xyz.sangcomz.sangcomz_n_study.bean.Post;
 import xyz.sangcomz.sangcomz_n_study.util.NoDataController;
@@ -32,6 +32,8 @@ public class TimeLineFragment extends Fragment {
 
     SwipeRefreshLayout swipeRefreshLayout;
     LinearLayoutManager linearLayoutManager;
+
+
 
     int pastVisiblesItems, visibleItemCount, totalItemCount;
 
@@ -55,7 +57,7 @@ public class TimeLineFragment extends Fragment {
         linearLayoutManager = new LinearLayoutManager(getActivity());
         areaNoData = (RelativeLayout) rootView.findViewById(R.id.area_nodata);
         noDataController = new NoDataController(areaNoData, getActivity());
-        noDataController.setNodata(R.drawable.ic_public_black_24dp, getString(R.string.msg_no_search));
+        noDataController.setNodata(R.drawable.ic_public_black_24dp, getString(R.string.msg_no_post));
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(linearLayoutManager);
 

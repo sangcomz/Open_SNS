@@ -22,7 +22,6 @@ public class NoDataController {
 
     public void setNodata(int imgNoData, String txtNoData) {
         for (int i = 0; i < areaNodata.getChildCount(); i++) {
-            System.out.println("areaNodata.getChildAt(i) :::: " + areaNodata.getChildAt(i).toString());
             if (areaNodata.getChildAt(i) instanceof TextView)
                 ((TextView) areaNodata.getChildAt(i)).setText(txtNoData);
             else if (areaNodata.getChildAt(i) instanceof ImageView)

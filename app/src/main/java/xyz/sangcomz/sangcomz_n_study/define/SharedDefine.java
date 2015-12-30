@@ -9,5 +9,9 @@ public class SharedDefine {
     public static final String SHARED_MEMBER_SRL = "member_srl";
     public static final String SHARED_MEMBER_PROFILE = "member_profile";
     public static final String SHARED_MEMBER_PROFILE_BG = "member_profile_bg";
+
+    //settings
+    public static final String SHARED_PUSH_ON_OFF = "shared_push_on_off";
+    public static final String SHARED_SEARCHABLE = "shared_searchable";
 }
 

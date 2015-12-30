@@ -41,11 +41,10 @@ import xyz.sangcomz.sangcomz_n_study.R;
 import xyz.sangcomz.sangcomz_n_study.core.common.BaseActivity;
 import xyz.sangcomz.sangcomz_n_study.core.common.GlobalApplication;
 import xyz.sangcomz.sangcomz_n_study.define.SharedDefine;
-import xyz.sangcomz.sangcomz_n_study.ui.main.fragments.FriendsFragment;
-import xyz.sangcomz.sangcomz_n_study.ui.main.fragments.ProfileFragment;
-import xyz.sangcomz.sangcomz_n_study.ui.main.fragments.SearchFriendFragment;
-import xyz.sangcomz.sangcomz_n_study.ui.main.fragments.SettingFragment;
-import xyz.sangcomz.sangcomz_n_study.ui.main.fragments.TimeLineFragment;
+import xyz.sangcomz.sangcomz_n_study.ui.main.fragments.friends.FriendsFragment;
+import xyz.sangcomz.sangcomz_n_study.ui.main.fragments.search.SearchFriendFragment;
+import xyz.sangcomz.sangcomz_n_study.ui.main.fragments.setting.SettingFragment;
+import xyz.sangcomz.sangcomz_n_study.ui.main.fragments.timeline.TimeLineFragment;
 import xyz.sangcomz.sangcomz_n_study.ui.post.AddPostActivity;
 import xyz.sangcomz.sangcomz_n_study.util.AnimUtils;
 import xyz.sangcomz.sangcomz_n_study.util.Utils;
@@ -62,7 +61,7 @@ public class MainActivity extends BaseActivity {
     Fragment friendsFragment;
     Fragment searchFriendFragment;
     Fragment settingFragment;
-    Fragment profileFragment;
+//    Fragment profileFragment;
 
     //save our header or result
     private AccountHeader headerResult = null;
@@ -102,7 +101,7 @@ public class MainActivity extends BaseActivity {
         friendsFragment = new FriendsFragment();
         searchFriendFragment = new SearchFriendFragment();
         settingFragment = new SettingFragment();
-        profileFragment = new ProfileFragment();
+//        profileFragment = new ProfileFragment();
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getString(R.string.txt_timeline));
 
@@ -276,10 +275,10 @@ public class MainActivity extends BaseActivity {
         invalidateOptionsMenu();
         switch (position) {
             case 0:
-                animFab(0);
-                tabLayout.setVisibility(View.GONE);
-                getSupportActionBar().setTitle(getString(R.string.txt_my_profile));
-                getSupportFragmentManager().beginTransaction().replace(areaFragment.getId(), profileFragment).commit();
+//                animFab(0);
+//                tabLayout.setVisibility(View.GONE);
+//                getSupportActionBar().setTitle(getString(R.string.txt_my_profile));
+//                getSupportFragmentManager().beginTransaction().replace(areaFragment.getId(), profileFragment).commit();
 //                getFragmentManager().beginTransaction().replace(areaFragment.getId(), profileFragment).commit();//초기화
                 break;
             case 1:

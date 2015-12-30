@@ -1,10 +1,12 @@
-package xyz.sangcomz.sangcomz_n_study.Adapter;
+package xyz.sangcomz.sangcomz_n_study.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -13,6 +15,7 @@ import java.util.ArrayList;
 
 import xyz.sangcomz.sangcomz_n_study.R;
 import xyz.sangcomz.sangcomz_n_study.bean.Post;
+import xyz.sangcomz.sangcomz_n_study.ui.comment.CommentActivity;
 import xyz.sangcomz.sangcomz_n_study.util.Utils;
 import xyz.sangcomz.sangcomz_n_study.util.custom.RoundedImageView;
 import xyz.sangcomz.sangcomz_n_study.util.custom.SquareImageView;
@@ -34,6 +37,7 @@ public class PostAdapter
         public final SquareImageView sivPostImage;
         public final TextView txtContent;
         public final TextView txtCommentCount;
+        public final LinearLayout areaComment;
 
 
         public ViewHolder(View view) {
@@ -44,6 +48,7 @@ public class PostAdapter
             sivPostImage = (SquareImageView) view.findViewById(R.id.siv_post_image);
             txtContent = (TextView) view.findViewById(R.id.txt_content);
             txtCommentCount = (TextView) view.findViewById(R.id.txt_comment_count);
+            areaComment = (LinearLayout) view.findViewById(R.id.area_comment);
         }
     }
 
@@ -69,6 +74,14 @@ public class PostAdapter
         holder.txtCommentCount.setText(posts.get(position).getPostCommentCount());
         holder.txtDate.setText(Utils.getDateString(holder.txtDate.getContext(),
                 "yyyy.MM.dd", Integer.parseInt(posts.get(position).getPostDate())));
+
+        holder.areaComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(holder.areaComment.getContext(), CommentActivity.class);
+                context.startActivity(intent);
+            }
+        });
 
 //        setBtnColor(members.get(position).getFollowYN(), holder.btnFollow);
 //        holder.btnFollow.setOnClickListener(new View.OnClickListener() {

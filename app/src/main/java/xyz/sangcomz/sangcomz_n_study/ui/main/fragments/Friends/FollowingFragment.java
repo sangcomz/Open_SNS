@@ -1,4 +1,4 @@
-package xyz.sangcomz.sangcomz_n_study.ui.main.fragments;
+package xyz.sangcomz.sangcomz_n_study.ui.main.fragments.friends;
 
 
 import android.os.Bundle;
@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
-import xyz.sangcomz.sangcomz_n_study.Adapter.FollowAdapter;
+import xyz.sangcomz.sangcomz_n_study.adapter.FollowAdapter;
 import xyz.sangcomz.sangcomz_n_study.R;
 import xyz.sangcomz.sangcomz_n_study.bean.Member;
 import xyz.sangcomz.sangcomz_n_study.util.ItemDecoration.DividerItemDecoration;
@@ -21,16 +21,17 @@ import xyz.sangcomz.sangcomz_n_study.util.NoDataController;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FollowerFragment extends Fragment {
+public class FollowingFragment extends Fragment {
 
     FollowController followController;
     FollowAdapter followAdapter;
     ArrayList<Member> members = new ArrayList<>();
     RecyclerView recyclerView;
+
     RelativeLayout areaNoData;
     NoDataController noDataController;
 
-    public FollowerFragment() {
+    public FollowingFragment() {
         // Required empty public constructor
     }
 
@@ -38,17 +39,15 @@ public class FollowerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_follower, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_following, container, false);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-//        followAdapter = new FollowAdapter(getActivity(), members, false);
-        followController = new FollowController(getActivity(), followAdapter);
-        followController.GetFollow(false, 1, this);
-
         areaNoData = (RelativeLayout) rootView.findViewById(R.id.area_nodata);
         noDataController = new NoDataController(areaNoData, getActivity());
-        noDataController.setNodata(R.drawable.ic_people_black_24dp, getString(R.string.msg_no_follower));
+        noDataController.setNodata(R.drawable.ic_people_black_24dp, getString(R.string.msg_no_following));
+
+        followController = new FollowController(getActivity(), followAdapter);
+        followController.GetFollow(true, 1, this);
         // Inflate the layout for this fragment
 
         return rootView;
@@ -58,13 +57,12 @@ public class FollowerFragment extends Fragment {
         this.members = members;
         if (members.size() > 0) {
             areaNoData.setVisibility(View.GONE);
-            followAdapter = new FollowAdapter(getActivity(), members, false);
+            followAdapter = new FollowAdapter(getActivity(), members, true);
             recyclerView.setAdapter(followAdapter);
             recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         } else {
             areaNoData.setVisibility(View.VISIBLE);
         }
     }
-
 
 }

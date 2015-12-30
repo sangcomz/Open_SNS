@@ -17,6 +17,8 @@ public class SharedPref {
         this.context = context;
         pref = context.getSharedPreferences(SharedDefine.SHARED_INFO, context.MODE_PRIVATE);
         editor = pref.edit();
+
+
     }
 
     public void setMemberPref(String memberSrl, String memberName, String memberProfile, String memberProfileBg) {
@@ -27,6 +29,18 @@ public class SharedPref {
         editor.commit();
     }
 
+
+    public void setSettings(String pushOnOff, String searchable) {
+        if (pushOnOff == null)
+            pushOnOff = getStringPref(SharedDefine.SHARED_PUSH_ON_OFF);
+        if (searchable == null)
+            pushOnOff = getStringPref(SharedDefine.SHARED_SEARCHABLE);
+        editor.putString(SharedDefine.SHARED_PUSH_ON_OFF, pushOnOff);
+        editor.putString(SharedDefine.SHARED_SEARCHABLE, searchable);
+        editor.commit();
+    }
+
+
     public String getStringPref(String key) {
         return pref.getString(key, null);
     }
@@ -35,8 +49,6 @@ public class SharedPref {
         editor.clear();
         editor.commit();
     }
-
-
 
 
 }

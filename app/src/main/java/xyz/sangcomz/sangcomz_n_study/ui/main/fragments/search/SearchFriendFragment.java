@@ -1,4 +1,4 @@
-package xyz.sangcomz.sangcomz_n_study.ui.main.fragments;
+package xyz.sangcomz.sangcomz_n_study.ui.main.fragments.search;
 
 
 import android.os.Bundle;
@@ -12,26 +12,25 @@ import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
-import xyz.sangcomz.sangcomz_n_study.Adapter.FollowAdapter;
+import xyz.sangcomz.sangcomz_n_study.adapter.FollowAdapter;
 import xyz.sangcomz.sangcomz_n_study.R;
 import xyz.sangcomz.sangcomz_n_study.bean.Member;
-import xyz.sangcomz.sangcomz_n_study.util.ItemDecoration.DividerItemDecoration;
 import xyz.sangcomz.sangcomz_n_study.util.NoDataController;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FollowingFragment extends Fragment {
+public class SearchFriendFragment extends Fragment {
 
-    FollowController followController;
+    RecyclerView recyclerView;
     FollowAdapter followAdapter;
     ArrayList<Member> members = new ArrayList<>();
-    RecyclerView recyclerView;
-
+    SeachController seachController;
     RelativeLayout areaNoData;
     NoDataController noDataController;
 
-    public FollowingFragment() {
+
+    public SearchFriendFragment() {
         // Required empty public constructor
     }
 
@@ -39,17 +38,13 @@ public class FollowingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_following, container, false);
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        View rootView = inflater.inflate(R.layout.fragment_follower, container, false);
+        seachController = new SeachController(getActivity(), this);
         areaNoData = (RelativeLayout) rootView.findViewById(R.id.area_nodata);
         noDataController = new NoDataController(areaNoData, getActivity());
-        noDataController.setNodata(R.drawable.ic_people_black_24dp, getString(R.string.msg_no_following));
-
-        followController = new FollowController(getActivity(), followAdapter);
-        followController.GetFollow(true, 1, this);
-        // Inflate the layout for this fragment
-
+        noDataController.setNodata(R.drawable.ic_search_black_24dp, getString(R.string.msg_no_search));
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         return rootView;
     }
 
@@ -57,12 +52,14 @@ public class FollowingFragment extends Fragment {
         this.members = members;
         if (members.size() > 0) {
             areaNoData.setVisibility(View.GONE);
-            followAdapter = new FollowAdapter(getActivity(), members, true);
+            followAdapter = new FollowAdapter(getActivity(), members, false);
             recyclerView.setAdapter(followAdapter);
-            recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         } else {
             areaNoData.setVisibility(View.VISIBLE);
         }
     }
 
+    public void searchMember(String query, int page) {
+        seachController.SearchMember(query, page);
+    }
 }

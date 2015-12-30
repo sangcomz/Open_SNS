@@ -58,6 +58,9 @@ public class JoinController {
                             jsonObject.getString("member_name"),
                             jsonObject.getString("member_profile"),
                             jsonObject.getString("member_profile_bg"));
+
+                    (new SharedPref(joinActivity)).setSettings("Y", "Y");
+
                     joinActivity.finish();
                     joinActivity.redirectMainActivity();
                 } catch (JSONException e) {
