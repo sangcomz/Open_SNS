@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import xyz.sangcomz.sangcomz_n_study.R;
 import xyz.sangcomz.sangcomz_n_study.bean.Post;
 import xyz.sangcomz.sangcomz_n_study.ui.comment.CommentActivity;
+import xyz.sangcomz.sangcomz_n_study.ui.main.MainActivity;
 import xyz.sangcomz.sangcomz_n_study.util.Utils;
 import xyz.sangcomz.sangcomz_n_study.util.custom.RoundedImageView;
 import xyz.sangcomz.sangcomz_n_study.util.custom.SquareImageView;
@@ -78,8 +79,11 @@ public class PostAdapter
         holder.areaComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MainActivity mainActivity = (MainActivity) context;
                 Intent intent = new Intent(holder.areaComment.getContext(), CommentActivity.class);
-                context.startActivity(intent);
+                mainActivity.startActivity(intent);
+                mainActivity.overridePendingTransition(R.anim.slide_top_to_bottom, R.anim.slide_top_to_bottom);
+
             }
         });
 

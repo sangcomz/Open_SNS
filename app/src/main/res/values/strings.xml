@@ -38,4 +38,6 @@
 
     <string name="date_minutes_ago">분전</string>
     <string name="date_hours_ago">시간전</string>
+    <string name="txt_comment">댓글</string>
+    <string name="msg_comment_hint">댓글을 입력하세요...</string>
 </resources>
