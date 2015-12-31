@@ -1,27 +1,22 @@
 package xyz.sangcomz.sangcomz_n_study.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
+import me.drakeet.materialdialog.MaterialDialog;
 import xyz.sangcomz.sangcomz_n_study.R;
 import xyz.sangcomz.sangcomz_n_study.bean.Comment;
-import xyz.sangcomz.sangcomz_n_study.bean.Post;
-import xyz.sangcomz.sangcomz_n_study.ui.comment.CommentActivity;
 import xyz.sangcomz.sangcomz_n_study.ui.comment.CommentController;
-import xyz.sangcomz.sangcomz_n_study.ui.main.MainActivity;
 import xyz.sangcomz.sangcomz_n_study.util.Utils;
 import xyz.sangcomz.sangcomz_n_study.util.custom.RoundedImageView;
-import xyz.sangcomz.sangcomz_n_study.util.custom.SquareImageView;
 
 /**
  * Created by sangc on 2015-12-28.
@@ -32,6 +27,7 @@ public class CommentAdapter
     CommentController commentController;
     ArrayList<Comment> comments = new ArrayList<>();
     Context context;
+    MaterialDialog materialDialog;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -56,6 +52,7 @@ public class CommentAdapter
         this.context = context;
         this.comments = comments;
         this.commentController = commentController;
+        materialDialog = new MaterialDialog(context);
     }
 
     @Override
@@ -80,7 +77,41 @@ public class CommentAdapter
             holder.mView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    commentController.delComment(comments.get(position).getCommentSrl(), position, CommentAdapter.this);
+
+                    materialDialog.setTitle(context.getString(R.string.txt_comment_dialog_title))
+                            .setMessage(context.getString(R.string.msg_comment_dialog))
+                            .setPositiveButton(context.getString(R.string.txt_done), new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    commentController.delComment(comments.get(position).getCommentSrl(), position, CommentAdapter.this);
+                                    materialDialog.dismiss();
+                                }
+                            })
+                            .setNegativeButton(context.getString(R.string.txt_cancel), new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    materialDialog.dismiss();
+                                }
+                            }).show();
+//                    MaterialDialog mMaterialDialog = new MaterialDialog(this)
+//                            .setTitle("MaterialDialog")
+//                            .setMessage("Hello world!")
+//                            .setPositiveButton("OK", new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View v) {
+//                                    mMaterialDialog.dismiss();
+//                                    ...
+//                                }
+//                            })
+//                            .setNegativeButton("CANCEL", new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View v) {
+//                                    mMaterialDialog.dismiss();
+//                                    ...
+//                                }
+//                            });
+
+
                     return false;
                 }
             });
@@ -92,6 +123,8 @@ public class CommentAdapter
     public void delComment(int position) {
         comments.remove(position);
         notifyDataSetChanged();
+        if (comments.size() == 0)
+            commentController.setNodataVisibility(View.VISIBLE);
     }
 
 

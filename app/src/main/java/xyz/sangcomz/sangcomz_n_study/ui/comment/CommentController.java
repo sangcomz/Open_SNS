@@ -1,6 +1,6 @@
 package xyz.sangcomz.sangcomz_n_study.ui.comment;
 
-import android.graphics.Bitmap;
+import android.view.View;
 import android.widget.EditText;
 
 import com.google.gson.Gson;
@@ -12,24 +12,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import cz.msebera.android.httpclient.Header;
 import xyz.sangcomz.sangcomz_n_study.adapter.CommentAdapter;
 import xyz.sangcomz.sangcomz_n_study.bean.Comment;
-import xyz.sangcomz.sangcomz_n_study.bean.Post;
 import xyz.sangcomz.sangcomz_n_study.core.SharedPref.SharedPref;
 import xyz.sangcomz.sangcomz_n_study.core.http.HttpClient;
 import xyz.sangcomz.sangcomz_n_study.define.SharedDefine;
 import xyz.sangcomz.sangcomz_n_study.define.UrlDefine;
-import xyz.sangcomz.sangcomz_n_study.util.Utils;
-
-import static xyz.sangcomz.sangcomz_n_study.core.Security.Security.MD5;
 
 /**
  * Created by sangc on 2015-12-30.
@@ -37,12 +30,17 @@ import static xyz.sangcomz.sangcomz_n_study.core.Security.Security.MD5;
 public class CommentController {
     CommentActivity commentActivity;
     EditText etComment;
+    View areaNoData;
 
-    public CommentController(CommentActivity commentActivity, EditText etComment) {
+    public CommentController(CommentActivity commentActivity, EditText etComment, View areaNoData) {
         this.commentActivity = commentActivity;
         this.etComment = etComment;
+        this.areaNoData = areaNoData;
     }
 
+    public void setNodataVisibility(int visibility) {
+        areaNoData.setVisibility(visibility);
+    }
 
     public void addComment(String postSrl, String commentContent) {
 
@@ -154,6 +152,8 @@ public class CommentController {
             }
         });
     }
+
+
 
 
 }

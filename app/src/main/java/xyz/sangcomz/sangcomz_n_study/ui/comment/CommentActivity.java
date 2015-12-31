@@ -16,9 +16,7 @@ import java.util.ArrayList;
 
 import xyz.sangcomz.sangcomz_n_study.R;
 import xyz.sangcomz.sangcomz_n_study.adapter.CommentAdapter;
-import xyz.sangcomz.sangcomz_n_study.adapter.PostAdapter;
 import xyz.sangcomz.sangcomz_n_study.bean.Comment;
-import xyz.sangcomz.sangcomz_n_study.bean.Post;
 import xyz.sangcomz.sangcomz_n_study.core.common.BaseActivity;
 import xyz.sangcomz.sangcomz_n_study.util.ItemDecoration.DividerItemDecoration;
 import xyz.sangcomz.sangcomz_n_study.util.NoDataController;
@@ -61,11 +59,12 @@ public class CommentActivity extends BaseActivity {
         areaSend = (RelativeLayout) findViewById(R.id.area_send);
         areaBackground = (FrameLayout) findViewById(R.id.area_background);
         setAreaBackgroundColor(Color.BLACK);
-        commentController = new CommentController(this, etComment);
+
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
         linearLayoutManager = new LinearLayoutManager(this);
         areaNoData = (RelativeLayout) findViewById(R.id.area_nodata);
+        commentController = new CommentController(this, etComment, areaNoData);
         initAreaNoData();
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
@@ -127,6 +126,8 @@ public class CommentActivity extends BaseActivity {
         } else {
             areaNoData.setVisibility(View.VISIBLE);
         }
+
+
     }
 
     public void setTotalPage(int totalPage) {
@@ -137,4 +138,6 @@ public class CommentActivity extends BaseActivity {
     public void setCurPage(int curPage) {
         this.curPage = curPage;
     }
+
+
 }
