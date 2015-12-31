@@ -16,9 +16,17 @@ public class UrlDefine {
     public static final String URL_ACCOUNT_GET_APP_VERSION = HTTP + SERVER_HOST + "/account/get_app_version.php";
 
     public static final String URL_POST_CREATE = HTTP + SERVER_HOST + "/post/create.php";
+    public static final String URL_GET_POST = HTTP + SERVER_HOST + "/post/get_post.php";
+
     public static final String URL_SEARCH = HTTP + SERVER_HOST + "/search/search.php";
+
     public static final String URL_FOLLOW = HTTP + SERVER_HOST + "/follow/add.php";
     public static final String URL_UNFOLLOW = HTTP + SERVER_HOST + "/follow/delete.php";
     public static final String URL_GET_FOLLOW = HTTP + SERVER_HOST + "/follow/get_list.php";
-    public static final String URL_GET_POST = HTTP + SERVER_HOST + "/post/get_post.php";
+
+
+    public static final String URL_COMMENT_CREATE = HTTP + SERVER_HOST + "/post/comment/create.php";
+    public static final String URL_COMMENT_DELETE = HTTP + SERVER_HOST + "/post/comment/delete.php";
+    public static final String URL_COMMENT_GET = HTTP + SERVER_HOST + "/post/comment/get_comment.php";
+
 }

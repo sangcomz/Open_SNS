@@ -81,6 +81,7 @@ public class PostAdapter
             public void onClick(View v) {
                 MainActivity mainActivity = (MainActivity) context;
                 Intent intent = new Intent(holder.areaComment.getContext(), CommentActivity.class);
+                intent.putExtra("postSrl", posts.get(position).getPostSrl());
                 mainActivity.startActivity(intent);
                 mainActivity.overridePendingTransition(R.anim.slide_top_to_bottom, R.anim.slide_top_to_bottom);
 

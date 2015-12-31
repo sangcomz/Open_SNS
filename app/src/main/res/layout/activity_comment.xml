@@ -21,6 +21,7 @@
             android:padding="5dp">
 
             <ImageView
+                android:id="@+id/img_back"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:background="@drawable/ic_action_back_black" />
@@ -56,9 +57,7 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerview"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/colorBackground"
-                    android:padding="10dp" />
+                    android:layout_height="match_parent" />
 
 
             </android.support.v4.widget.SwipeRefreshLayout>
@@ -91,6 +90,7 @@
                 android:layout_weight="1">
 
                 <EditText
+                    android:id="@+id/et_comment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
@@ -104,6 +104,7 @@
 
 
             <RelativeLayout
+                android:id="@+id/area_send"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@drawable/back_button_white_selector">

@@ -56,8 +56,8 @@ public class TimeLineFragment extends Fragment {
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh);
         linearLayoutManager = new LinearLayoutManager(getActivity());
         areaNoData = (RelativeLayout) rootView.findViewById(R.id.area_nodata);
-        noDataController = new NoDataController(areaNoData, getActivity());
-        noDataController.setNodata(R.drawable.ic_public_black_24dp, getString(R.string.msg_no_post));
+        initAreaNoData();
+
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(linearLayoutManager);
 
@@ -95,6 +95,11 @@ public class TimeLineFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    protected void initAreaNoData(){
+        noDataController = new NoDataController(areaNoData, getActivity());
+        noDataController.setNodata(R.drawable.ic_public_black_24dp, getString(R.string.msg_no_post));
     }
 
     public void setPosts(ArrayList<Post> posts) {

@@ -6,6 +6,10 @@ import com.google.gson.annotations.SerializedName;
  * Created by sangc on 2015-12-29.
  */
 public class Post {
+
+    @SerializedName("post_srl")
+    String postSrl;
+
     @SerializedName("member_srl")
     String memberSrl;
 
@@ -27,7 +31,8 @@ public class Post {
     @SerializedName("post_comment_count")
     String postCommentCount;
 
-    public Post(String memberSrl, String memberName, String memberProfile, String postImage, String postContent, String postDate, String postCommentCount) {
+    public Post(String postSrl, String memberSrl, String memberName, String memberProfile, String postImage, String postContent, String postDate, String postCommentCount) {
+        this.postSrl = postSrl;
         this.memberSrl = memberSrl;
         this.memberName = memberName;
         this.memberProfile = memberProfile;
@@ -35,6 +40,14 @@ public class Post {
         this.postContent = postContent;
         this.postDate = postDate;
         this.postCommentCount = postCommentCount;
+    }
+
+    public String getPostSrl() {
+        return postSrl;
+    }
+
+    public void setPostSrl(String postSrl) {
+        this.postSrl = postSrl;
     }
 
     public String getMemberSrl() {
