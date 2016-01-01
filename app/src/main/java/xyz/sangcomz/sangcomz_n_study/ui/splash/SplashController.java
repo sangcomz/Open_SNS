@@ -1,5 +1,8 @@
 package xyz.sangcomz.sangcomz_n_study.ui.splash;
 
+import android.app.ProgressDialog;
+import android.view.Window;
+
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -32,6 +35,12 @@ public class SplashController {
 
     protected void Login(String memberSrl) {
 
+        // 프로그레스
+        final ProgressDialog progressDialog = new ProgressDialog(splashActivity, android.R.style.Theme_Material_Dialog);
+        progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        progressDialog.setProgressStyle(android.R.style.Widget_Material_ProgressBar);
+        progressDialog.show();
+
         RequestParams params = new RequestParams();
         params.put("member_srl", memberSrl);
 
@@ -41,6 +50,7 @@ public class SplashController {
             @Override
             public void onSuccess(int statusCode, Header[] headers, final JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
+                progressDialog.dismiss();
                 System.out.println("onSuccess JSONObject :::: " + response.toString());
                 try {
                     int stat = response.getInt("stat");
@@ -79,7 +89,7 @@ public class SplashController {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
-                System.out.println("onFailure responseString :::: " + throwable.toString());
+                progressDialog.dismiss();
             }
         });
     }
