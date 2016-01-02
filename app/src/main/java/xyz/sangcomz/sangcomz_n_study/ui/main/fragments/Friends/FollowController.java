@@ -1,7 +1,9 @@
 package xyz.sangcomz.sangcomz_n_study.ui.main.fragments.friends;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.v4.app.Fragment;
+import android.view.Window;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -17,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
+import xyz.sangcomz.sangcomz_n_study.R;
 import xyz.sangcomz.sangcomz_n_study.adapter.FollowAdapter;
 import xyz.sangcomz.sangcomz_n_study.bean.Member;
 import xyz.sangcomz.sangcomz_n_study.core.SharedPref.SharedPref;
@@ -37,7 +40,15 @@ public class FollowController {
     }
 
     public void Follow(String followMemberSrl, final boolean isFollow, final int position) {
+
+        // 프로그레스
+        final ProgressDialog progressDialog = new ProgressDialog(context, R.style.MyProgressBarDialog);
+        progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        progressDialog.setProgressStyle(android.R.style.Widget_Material_ProgressBar_Small);
+        progressDialog.show();
+
         RequestParams params = new RequestParams();
+
 
         params.put("member_srl", (new SharedPref(context)).getStringPref(SharedDefine.SHARED_MEMBER_SRL));
         params.put("follow_member_srl", followMemberSrl);
@@ -52,6 +63,7 @@ public class FollowController {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 System.out.println("onSuccess JSONObject :::: " + response.toString());
+                progressDialog.dismiss();
                 if (isFollow)
                     followAdapter.refreshFollowYn(position, "Y");
                 else
@@ -63,6 +75,7 @@ public class FollowController {
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
                 System.out.println("onFailure responseString :::: " + throwable.toString());
+                progressDialog.dismiss();
             }
         });
     }

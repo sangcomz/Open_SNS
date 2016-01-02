@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.Locale;
 
 import cz.msebera.android.httpclient.Header;
+import xyz.sangcomz.sangcomz_n_study.R;
 import xyz.sangcomz.sangcomz_n_study.core.SharedPref.SharedPref;
 import xyz.sangcomz.sangcomz_n_study.core.common.GlobalApplication;
 import xyz.sangcomz.sangcomz_n_study.core.http.HttpClient;
@@ -36,9 +37,9 @@ public class SplashController {
     protected void Login(String memberSrl) {
 
         // 프로그레스
-        final ProgressDialog progressDialog = new ProgressDialog(splashActivity, android.R.style.Theme_Material_Dialog);
+        final ProgressDialog progressDialog = new ProgressDialog(splashActivity, R.style.MyProgressBarDialog);
         progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        progressDialog.setProgressStyle(android.R.style.Widget_Material_ProgressBar);
+        progressDialog.setProgressStyle(android.R.style.Widget_Material_ProgressBar_Small);
         progressDialog.show();
 
         RequestParams params = new RequestParams();
