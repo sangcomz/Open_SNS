@@ -12,8 +12,8 @@ import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
-import xyz.sangcomz.sangcomz_n_study.adapter.FollowAdapter;
 import xyz.sangcomz.sangcomz_n_study.R;
+import xyz.sangcomz.sangcomz_n_study.adapter.FollowAdapter;
 import xyz.sangcomz.sangcomz_n_study.bean.Member;
 import xyz.sangcomz.sangcomz_n_study.util.NoDataController;
 
@@ -29,6 +29,13 @@ public class SearchFriendFragment extends Fragment {
     RelativeLayout areaNoData;
     NoDataController noDataController;
 
+    LinearLayoutManager linearLayoutManager;
+
+    int curPage = 1;
+    int totalPage;
+    int pastVisiblesItems, visibleItemCount, totalItemCount;
+
+    String query="";
 
     public SearchFriendFragment() {
         // Required empty public constructor
@@ -38,13 +45,33 @@ public class SearchFriendFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_follower, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_search_friend, container, false);
         seachController = new SeachController(getActivity(), this);
         areaNoData = (RelativeLayout) rootView.findViewById(R.id.area_nodata);
         noDataController = new NoDataController(areaNoData, getActivity());
         noDataController.setNodata(R.drawable.ic_search_black_24dp, getString(R.string.msg_no_search));
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+                visibleItemCount = linearLayoutManager.getChildCount();
+                totalItemCount = linearLayoutManager.getItemCount();
+                pastVisiblesItems = linearLayoutManager.findFirstVisibleItemPosition();
+
+                if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                    if (curPage <= totalPage) {
+                        searchMember(query);
+                    }
+                }
+
+            }
+        });
+
         return rootView;
     }
 
@@ -59,7 +86,8 @@ public class SearchFriendFragment extends Fragment {
         }
     }
 
-    public void searchMember(String query, int page) {
-        seachController.SearchMember(query, page);
+    public void searchMember(String query) {
+        this.query = query;
+        seachController.SearchMember(query, curPage++);
     }
 }

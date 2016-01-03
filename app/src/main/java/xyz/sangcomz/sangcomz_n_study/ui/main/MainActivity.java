@@ -356,7 +356,7 @@ public class MainActivity extends BaseActivity {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
                     System.out.println("onQueryTextSubmit :::: " + query);
-                    ((SearchFriendFragment) searchFriendFragment).searchMember(query, 1);
+                    ((SearchFriendFragment) searchFriendFragment).searchMember(query);
                     return false;
                 }
 
