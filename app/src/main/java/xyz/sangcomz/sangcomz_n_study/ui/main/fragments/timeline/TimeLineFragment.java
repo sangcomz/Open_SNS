@@ -57,7 +57,7 @@ public class TimeLineFragment extends Fragment {
         linearLayoutManager = new LinearLayoutManager(getActivity());
         areaNoData = (RelativeLayout) rootView.findViewById(R.id.area_nodata);
         initAreaNoData();
-
+        curPage = 1;
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(linearLayoutManager);
 
