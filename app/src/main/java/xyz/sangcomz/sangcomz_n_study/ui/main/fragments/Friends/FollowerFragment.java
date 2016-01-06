@@ -67,7 +67,7 @@ public class FollowerFragment extends Fragment {
                 members.clear();
                 curPage = 1;
                 swipeRefreshLayout.setRefreshing(false);
-                followController.GetFollow(true, curPage++, FollowerFragment.this);
+                followController.GetFollow(false, curPage++, FollowerFragment.this);
             }
         });
 
@@ -81,7 +81,7 @@ public class FollowerFragment extends Fragment {
 
                 if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
                     if (curPage <= totalPage) {
-                        followController.GetFollow(true, curPage++, FollowerFragment.this);
+                        followController.GetFollow(false, curPage++, FollowerFragment.this);
                     }
                 }
 
