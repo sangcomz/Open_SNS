@@ -3,6 +3,7 @@ package xyz.sangcomz.sangcomz_n_study.ui.main.fragments.friends;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,6 +31,13 @@ public class FollowerFragment extends Fragment {
     RelativeLayout areaNoData;
     NoDataController noDataController;
 
+    SwipeRefreshLayout swipeRefreshLayout;
+    LinearLayoutManager linearLayoutManager;
+
+    int curPage = 1;
+    int totalPage;
+    int pastVisiblesItems, visibleItemCount, totalItemCount;
+
     public FollowerFragment() {
         // Required empty public constructor
     }
@@ -40,7 +48,9 @@ public class FollowerFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_follower, container, false);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        linearLayoutManager = new LinearLayoutManager(getActivity());
+        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh);
+        recyclerView.setLayoutManager(linearLayoutManager);
 
 //        followAdapter = new FollowAdapter(getActivity(), members, false);
         followController = new FollowController(getActivity(), followAdapter);
@@ -50,6 +60,33 @@ public class FollowerFragment extends Fragment {
         noDataController = new NoDataController(areaNoData, getActivity());
         noDataController.setNodata(R.drawable.ic_people_black_24dp, getString(R.string.msg_no_follower));
         // Inflate the layout for this fragment
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                members.clear();
+                curPage = 1;
+                swipeRefreshLayout.setRefreshing(false);
+                followController.GetFollow(true, curPage++, FollowerFragment.this);
+            }
+        });
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+                visibleItemCount = linearLayoutManager.getChildCount();
+                totalItemCount = linearLayoutManager.getItemCount();
+                pastVisiblesItems = linearLayoutManager.findFirstVisibleItemPosition();
+
+                if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                    if (curPage <= totalPage) {
+                        followController.GetFollow(true, curPage++, FollowerFragment.this);
+                    }
+                }
+
+            }
+        });
 
         return rootView;
     }
