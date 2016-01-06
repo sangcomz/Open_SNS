@@ -77,9 +77,9 @@ public class MainActivity extends BaseActivity {
     private IProfile profile = null;
 
     int curPosition = 1;
-    Fragment curFragment = null;
+//    Fragment curFragment = null;
 
-    SearchView searchView;
+//    SearchView searchView;
 
     MainController mainController;
 

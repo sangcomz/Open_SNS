@@ -14,12 +14,9 @@ public class ViewMapper {
 		return view;
 	}	
 	public static View mapLayout(Object container, View view) {
-		System.out.println("container :::: " + container.toString());
-		System.out.println("view :::: " + view.toString());
 		View view0 = null;
 		Field[] fields = container.getClass().getDeclaredFields();
 		for (Field field: fields) {
-			System.out.println("field :::: " + field.toString());
 			DeclareView param = field.getAnnotation(DeclareView.class);
 			if (param != null) {	//To map R.id.xx into field value			
 				int id = param.id();	
