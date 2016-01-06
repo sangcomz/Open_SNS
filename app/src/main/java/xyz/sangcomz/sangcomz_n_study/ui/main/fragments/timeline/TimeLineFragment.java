@@ -16,21 +16,29 @@ import java.util.ArrayList;
 import xyz.sangcomz.sangcomz_n_study.adapter.PostAdapter;
 import xyz.sangcomz.sangcomz_n_study.R;
 import xyz.sangcomz.sangcomz_n_study.bean.Post;
+import xyz.sangcomz.sangcomz_n_study.core.common.BaseFragment;
+import xyz.sangcomz.sangcomz_n_study.core.common.view.DeclareView;
 import xyz.sangcomz.sangcomz_n_study.util.NoDataController;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TimeLineFragment extends Fragment {
+public class TimeLineFragment extends BaseFragment {
 
     TimeLineController timeLineController;
-    RecyclerView recyclerView;
-    PostAdapter postAdapter;
-    ArrayList<Post> posts = new ArrayList<>();
-    RelativeLayout areaNoData;
     NoDataController noDataController;
 
+    PostAdapter postAdapter;
+    ArrayList<Post> posts = new ArrayList<>();
+
+    @DeclareView(id = R.id.recyclerview)
+    RecyclerView recyclerView;
+    @DeclareView(id = R.id.swipe_refresh)
     SwipeRefreshLayout swipeRefreshLayout;
+    @DeclareView(id = R.id.area_nodata)
+    RelativeLayout areaNoData;
+
+
     LinearLayoutManager linearLayoutManager;
 
 
@@ -52,13 +60,11 @@ public class TimeLineFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_time_line, container, false);
+        bindView(rootView);
         timeLineController = new TimeLineController(getActivity(), this);
-        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh);
         linearLayoutManager = new LinearLayoutManager(getActivity());
-        areaNoData = (RelativeLayout) rootView.findViewById(R.id.area_nodata);
         initAreaNoData();
         curPage = 1;
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(linearLayoutManager);
 
         postAdapter = new PostAdapter(getActivity(), posts);

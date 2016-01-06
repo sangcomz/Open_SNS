@@ -16,21 +16,22 @@ import java.util.ArrayList;
 import xyz.sangcomz.sangcomz_n_study.adapter.FollowAdapter;
 import xyz.sangcomz.sangcomz_n_study.R;
 import xyz.sangcomz.sangcomz_n_study.bean.Member;
+import xyz.sangcomz.sangcomz_n_study.core.common.BaseFragment;
 import xyz.sangcomz.sangcomz_n_study.util.ItemDecoration.DividerItemDecoration;
 import xyz.sangcomz.sangcomz_n_study.util.NoDataController;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FollowerFragment extends Fragment {
+public class FollowerFragment extends BaseFragment {
 
     FollowController followController;
     FollowAdapter followAdapter;
     ArrayList<Member> members = new ArrayList<>();
-    RecyclerView recyclerView;
-    RelativeLayout areaNoData;
     NoDataController noDataController;
 
+    RecyclerView recyclerView;
+    RelativeLayout areaNoData;
     SwipeRefreshLayout swipeRefreshLayout;
     LinearLayoutManager linearLayoutManager;
 
