@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import xyz.sangcomz.sangcomz_n_study.R;
 import xyz.sangcomz.sangcomz_n_study.adapter.FollowAdapter;
 import xyz.sangcomz.sangcomz_n_study.bean.Member;
+import xyz.sangcomz.sangcomz_n_study.core.common.view.DeclareView;
 import xyz.sangcomz.sangcomz_n_study.util.NoDataController;
 
 /**
@@ -22,11 +23,16 @@ import xyz.sangcomz.sangcomz_n_study.util.NoDataController;
  */
 public class SearchFriendFragment extends Fragment {
 
-    RecyclerView recyclerView;
     FollowAdapter followAdapter;
+
+    @DeclareView(id = R.id.recyclerview)
+    RecyclerView recyclerView;
+    @DeclareView(id = R.id.area_nodata)
+    RelativeLayout areaNoData;
+
     ArrayList<Member> members = new ArrayList<>();
     SeachController seachController;
-    RelativeLayout areaNoData;
+
     NoDataController noDataController;
 
     LinearLayoutManager linearLayoutManager;
@@ -47,10 +53,8 @@ public class SearchFriendFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_search_friend, container, false);
         seachController = new SeachController(getActivity(), this);
-        areaNoData = (RelativeLayout) rootView.findViewById(R.id.area_nodata);
         noDataController = new NoDataController(areaNoData, getActivity());
         noDataController.setNodata(R.drawable.ic_search_black_24dp, getString(R.string.msg_no_search));
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview);
         linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
 

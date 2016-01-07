@@ -40,6 +40,7 @@ import java.net.URLDecoder;
 import xyz.sangcomz.sangcomz_n_study.R;
 import xyz.sangcomz.sangcomz_n_study.core.common.BaseActivity;
 import xyz.sangcomz.sangcomz_n_study.core.common.GlobalApplication;
+import xyz.sangcomz.sangcomz_n_study.core.common.view.DeclareView;
 import xyz.sangcomz.sangcomz_n_study.define.SharedDefine;
 import xyz.sangcomz.sangcomz_n_study.ui.main.fragments.friends.FriendsFragment;
 import xyz.sangcomz.sangcomz_n_study.ui.main.fragments.search.SearchFriendFragment;
@@ -51,10 +52,15 @@ import xyz.sangcomz.sangcomz_n_study.util.Utils;
 
 public class MainActivity extends BaseActivity {
 
+    @DeclareView(id = R.id.appbar)
     AppBarLayout appBarLayout;
+    @DeclareView(id = R.id.toolbar)
     Toolbar toolbar;
+    @DeclareView(id = R.id.tabs)
     TabLayout tabLayout;
+    @DeclareView(id = R.id.area_fragment)
     FrameLayout areaFragment;
+    @DeclareView(id = R.id.fab)
     FloatingActionButton fab;
 
     Fragment timeLineFragment;
@@ -71,24 +77,24 @@ public class MainActivity extends BaseActivity {
     private IProfile profile = null;
 
     int curPosition = 1;
-    Fragment curFragment = null;
+//    Fragment curFragment = null;
 
-    SearchView searchView;
+//    SearchView searchView;
 
     MainController mainController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main, true);
         mainController = new MainController(this);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
+//        toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setSelectedTabIndicatorHeight(Utils.convertDP(this, 4));
-        appBarLayout = (AppBarLayout) findViewById(R.id.appbar);    //appBarLayout xml 아이디 연걸
+//        appBarLayout = (AppBarLayout) findViewById(R.id.appbar);    //appBarLayout xml 아이디 연걸
 
-        areaFragment = (FrameLayout) findViewById(R.id.area_fragment);
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+//        areaFragment = (FrameLayout) findViewById(R.id.area_fragment);
+//        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

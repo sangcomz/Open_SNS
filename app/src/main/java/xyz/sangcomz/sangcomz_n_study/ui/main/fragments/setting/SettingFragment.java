@@ -19,25 +19,35 @@ import android.widget.TextView;
 
 import xyz.sangcomz.sangcomz_n_study.R;
 import xyz.sangcomz.sangcomz_n_study.core.SharedPref.SharedPref;
+import xyz.sangcomz.sangcomz_n_study.core.common.BaseFragment;
+import xyz.sangcomz.sangcomz_n_study.core.common.view.DeclareView;
 import xyz.sangcomz.sangcomz_n_study.define.SharedDefine;
 import xyz.sangcomz.sangcomz_n_study.ui.splash.SplashActivity;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SettingFragment extends Fragment {
+public class SettingFragment extends BaseFragment {
+
 
     SettingController settingController;
+
+    @DeclareView(id = R.id.btn_logout)
     Button btnLogout;
+    @DeclareView(id = R.id.sw_searchable)
     Switch swSearchable;
+    @DeclareView(id = R.id.sw_push_alarm)
     Switch swPushAlarm;
+    @DeclareView(id = R.id.txt_current_version)
+    TextView txtCurVer;
+    @DeclareView(id = R.id.txt_device_version)
+    TextView txtDevVer;
+
     SharedPref sharedPref;
 
     String pushOnOff;
     String searchable;
 
-    TextView txtCurVer;
-    TextView txtDevVer;
 
 
     public SettingFragment() {
@@ -49,18 +59,16 @@ public class SettingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_setting, container, false);
+        bindView(rootView);
         settingController = new SettingController(this);
         sharedPref = new SharedPref(getActivity());
-        swPushAlarm = (Switch) rootView.findViewById(R.id.sw_push_alarm);
-        swSearchable = (Switch) rootView.findViewById(R.id.sw_searchable);
-        txtCurVer = (TextView) rootView.findViewById(R.id.txt_current_version);
-        txtDevVer = (TextView) rootView.findViewById(R.id.txt_device_version);
+
         try {
             txtDevVer.setText("v" + getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        btnLogout = (Button) rootView.findViewById(R.id.btn_logout);
+
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

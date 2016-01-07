@@ -11,20 +11,25 @@ import android.widget.LinearLayout;
 import xyz.sangcomz.sangcomz_n_study.R;
 import xyz.sangcomz.sangcomz_n_study.core.common.BaseActivity;
 import xyz.sangcomz.sangcomz_n_study.core.common.GlobalApplication;
+import xyz.sangcomz.sangcomz_n_study.core.common.view.DeclareView;
 import xyz.sangcomz.sangcomz_n_study.define.SharedDefine;
 import xyz.sangcomz.sangcomz_n_study.util.Utils;
 
-public class SplashActivity extends BaseActivity {
+public class SplashActivity extends BaseActivity implements View.OnClickListener {
 
     SplashController splashController;
 
+    @DeclareView(id = R.id.area_logo)
     LinearLayout areaLogo;
+    @DeclareView(id = R.id.area_login)
     LinearLayout areaLogin;
-
+    @DeclareView(id = R.id.et_nick_name)
     EditText etName;
+    @DeclareView(id = R.id.et_password)
     EditText etPassword;
-
+    @DeclareView(id = R.id.btn_login, click = "this")
     Button btnLogin;
+    @DeclareView(id = R.id.btn_join, click = "this")
     Button btnjoin;
 
     String memberSrl;
@@ -32,64 +37,11 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+        setContentView(R.layout.activity_splash, true);
         GlobalApplication.setCurrentActivity(this);
         splashController = new SplashController(this);
-
-
-        areaLogo = (LinearLayout) findViewById(R.id.area_logo);
-        areaLogin = (LinearLayout) findViewById(R.id.area_login);
-        btnLogin = (Button) findViewById(R.id.btn_login);
-        etName = (EditText) findViewById(R.id.et_nick_name);
-        etPassword = (EditText) findViewById(R.id.et_password);
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                splashController.Login(etName.getText().toString(), etPassword.getText().toString());
-            }
-        });
-        btnjoin = (Button) findViewById(R.id.btn_join);
-        btnjoin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                redirectJoinActivity();
-            }
-        });
-
-
+        
         memberSrl = sharedPref.getStringPref(SharedDefine.SHARED_MEMBER_SRL);
-
-//        try {
-//            Utils.drawableFromUrl(this, sharedPref.getStringPref(SharedDefine.SHARED_MEMBER_PROFILE));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//
-////                    final Drawable drawable = (Utils.drawableFromUrl(SplashActivity.this, sharedPref.getStringPref(SharedDefine.SHARED_MEMBER_PROFILE)));
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//
-//                            if (memberSrl != null && memberSrl.length() > 0) {
-//                                splashController.Login(memberSrl);
-//                            } else {
-//                                animLogo();
-//                            }
-//
-//                        }
-//                    });
-//
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }).start();
-
 
         if (memberSrl != null && memberSrl.length() > 0) {
             splashController.Login(memberSrl);
@@ -119,5 +71,19 @@ public class SplashActivity extends BaseActivity {
         ViewCompat.animate(areaLogin)
                 .alpha(1)
                 .setDuration(1000).translationY(Utils.convertDP(this, -125)).start();
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id){
+            case R.id.btn_login:
+                splashController.Login(etName.getText().toString(), etPassword.getText().toString());
+                break;
+
+            case R.id.btn_join:
+                redirectJoinActivity();
+                break;
+        }
     }
 }
