@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,20 +23,27 @@ import java.util.ArrayList;
 
 import xyz.sangcomz.sangcomz_n_study.R;
 import xyz.sangcomz.sangcomz_n_study.core.common.BaseActivity;
+import xyz.sangcomz.sangcomz_n_study.core.common.view.DeclareView;
 
 public class AddPostActivity extends BaseActivity {
 
+    @DeclareView(id = R.id.toolbar)
     Toolbar toolbar;
+    @DeclareView(id = R.id.area_photo)
     RelativeLayout areaPhoto;
+    @DeclareView(id = R.id.img_post)
     ImageView imgPost;
-    Bitmap bitPost = null;
+    @DeclareView(id = R.id.et_content)
     EditText etContent;
+
+    Bitmap bitPost = null;
+
     AddPostController addPostController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_post);
+        setContentView(R.layout.activity_add_post, true);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getString(R.string.txt_add_post));
