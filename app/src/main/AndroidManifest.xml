@@ -36,8 +36,10 @@
             android:name=".ui.join.JoinActivity"
             android:theme="@style/TranslucentStatusAppTheme" />
         <activity android:name=".ui.post.AddPostActivity" />
-        <activity android:name=".ui.comment.CommentActivity"
+        <activity
+            android:name=".ui.comment.CommentActivity"
             android:theme="@style/Theme.AppCompat.Translucent" />
+        <activity android:name=".ui.profile.ProfileActivity"></activity>
     </application>
 
 </manifest>

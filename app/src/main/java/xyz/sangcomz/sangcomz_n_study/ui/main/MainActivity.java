@@ -14,7 +14,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -50,7 +49,7 @@ import xyz.sangcomz.sangcomz_n_study.ui.post.AddPostActivity;
 import xyz.sangcomz.sangcomz_n_study.util.AnimUtils;
 import xyz.sangcomz.sangcomz_n_study.util.Utils;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @DeclareView(id = R.id.appbar)
     AppBarLayout appBarLayout;
@@ -60,7 +59,7 @@ public class MainActivity extends BaseActivity {
     TabLayout tabLayout;
     @DeclareView(id = R.id.area_fragment)
     FrameLayout areaFragment;
-    @DeclareView(id = R.id.fab)
+    @DeclareView(id = R.id.fab, click = "this")
     FloatingActionButton fab;
 
     Fragment timeLineFragment;
@@ -88,20 +87,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main, true);
         mainController = new MainController(this);
-//        toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setSelectedTabIndicatorHeight(Utils.convertDP(this, 4));
-//        appBarLayout = (AppBarLayout) findViewById(R.id.appbar);    //appBarLayout xml 아이디 연걸
-
-//        areaFragment = (FrameLayout) findViewById(R.id.area_fragment);
-//        fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, AddPostActivity.class);
-                startActivity(i);
-            }
-        });
 
         timeLineFragment = new TimeLineFragment();
         friendsFragment = new FriendsFragment();
@@ -132,10 +118,7 @@ public class MainActivity extends BaseActivity {
                 .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
                     @Override
                     public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
-
-                        System.out.println("view :::: " + view);
-                        System.out.println("currentProfile :::: " + currentProfile);
-                        //my Page로 이동??
+                        redirectProfileActivity();
                         return false;
                     }
                 })
@@ -157,15 +140,6 @@ public class MainActivity extends BaseActivity {
                         new PrimaryDrawerItem().withName(getString(R.string.txt_friends)).withIcon(R.drawable.ic_people_black_24dp).withIdentifier(2),
                         new PrimaryDrawerItem().withName(getString(R.string.txt_search_friend)).withIcon(R.drawable.ic_search_black_24dp).withIdentifier(3),
                         new PrimaryDrawerItem().withName(getString(R.string.txt_setting)).withIcon(R.drawable.ic_settings_black_24dp).withIdentifier(4)
-
-//                        new PrimaryDrawerItem().withName(R.string.drawer_item_action_bar_drawer).withIcon(FontAwesome.Icon.faw_home).withBadge("22").withBadgeStyle(new BadgeStyle(Color.RED, Color.RED)).withIdentifier(2).withSelectable(false),
-//                        new PrimaryDrawerItem().withName(R.string.drawer_item_multi_drawer).withIcon(FontAwesome.Icon.faw_gamepad).withIdentifier(3),
-//                        new PrimaryDrawerItem().withName(R.string.drawer_item_non_translucent_status_drawer).withIcon(FontAwesome.Icon.faw_eye).withIdentifier(4),
-//                        new PrimaryDrawerItem().withDescription("A more complex sample").withName(R.string.drawer_item_advanced_drawer).withIcon(GoogleMaterial.Icon.gmd_adb).withIdentifier(5),
-//                        new PrimaryDrawerItem().withName(R.string.drawer_item_keyboard_util_drawer).withIcon(GoogleMaterial.Icon.gmd_labels).withIdentifier(6),
-//                        new SectionDrawerItem().withName(R.string.drawer_item_section_header),
-//                        new SecondaryDrawerItem().withName(R.string.drawer_item_open_source).withIcon(FontAwesome.Icon.faw_github),
-//                        new SecondaryDrawerItem().withName(R.string.drawer_item_contact).withIcon(GoogleMaterial.Icon.gmd_format_color_fill).withTag("Bullhorn")
                 ) // add the items we want to use with our Drawer
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -281,11 +255,7 @@ public class MainActivity extends BaseActivity {
         invalidateOptionsMenu();
         switch (position) {
             case 0:
-//                animFab(0);
-//                tabLayout.setVisibility(View.GONE);
-//                getSupportActionBar().setTitle(getString(R.string.txt_my_profile));
-//                getSupportFragmentManager().beginTransaction().replace(areaFragment.getId(), profileFragment).commit();
-//                getFragmentManager().beginTransaction().replace(areaFragment.getId(), profileFragment).commit();//초기화
+                redirectProfileActivity();
                 break;
             case 1:
                 animFab(1);
@@ -322,9 +292,7 @@ public class MainActivity extends BaseActivity {
      */
     private void animFab(final float scale) {
         ViewCompat.animate(fab)
-//                .setInterpolator(AnimUtils.FAST_OUT_SLOW_IN_INTERPOLATOR) //사라지는 모양
                 .setInterpolator(AnimUtils.FAST_OUT_LINEAR_IN_INTERPOLATOR)
-//                .setInterpolator(AnimUtils.LINEAR_OUT_SLOW_IN_INTERPOLATOR)
                 .scaleX(scale)
                 .scaleY(scale)
                 .withStartAction(new Runnable() {
@@ -361,7 +329,7 @@ public class MainActivity extends BaseActivity {
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-                    System.out.println("onQueryTextSubmit :::: " + query);
+//                    System.out.println("onQueryTextSubmit :::: " + query);
                     ((SearchFriendFragment) searchFriendFragment).searchMember(query);
                     return false;
                 }
@@ -378,11 +346,15 @@ public class MainActivity extends BaseActivity {
         return true;
     }
 
-
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.fab:
+                Intent i = new Intent(MainActivity.this, AddPostActivity.class);
+                startActivity(i);
+                break;
 
-        return super.onOptionsItemSelected(item);
+        }
     }
 }
