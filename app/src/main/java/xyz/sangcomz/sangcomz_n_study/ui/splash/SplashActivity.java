@@ -40,7 +40,7 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
         setContentView(R.layout.activity_splash, true);
         GlobalApplication.setCurrentActivity(this);
         splashController = new SplashController(this);
-        
+
         memberSrl = sharedPref.getStringPref(SharedDefine.SHARED_MEMBER_SRL);
 
         if (memberSrl != null && memberSrl.length() > 0) {
