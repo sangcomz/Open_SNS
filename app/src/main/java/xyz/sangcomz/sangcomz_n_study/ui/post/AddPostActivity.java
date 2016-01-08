@@ -25,11 +25,11 @@ import xyz.sangcomz.sangcomz_n_study.R;
 import xyz.sangcomz.sangcomz_n_study.core.common.BaseActivity;
 import xyz.sangcomz.sangcomz_n_study.core.common.view.DeclareView;
 
-public class AddPostActivity extends BaseActivity {
+public class AddPostActivity extends BaseActivity implements View.OnClickListener {
 
     @DeclareView(id = R.id.toolbar)
     Toolbar toolbar;
-    @DeclareView(id = R.id.area_photo)
+    @DeclareView(id = R.id.area_photo, click = "this")
     RelativeLayout areaPhoto;
     @DeclareView(id = R.id.img_post)
     ImageView imgPost;
@@ -44,28 +44,10 @@ public class AddPostActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_post, true);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getString(R.string.txt_add_post));
         addPostController = new AddPostController(this);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        imgPost = (ImageView) findViewById(R.id.img_post);
-
-        etContent = (EditText) findViewById(R.id.et_content);
-
-        areaPhoto = (RelativeLayout) findViewById(R.id.area_photo);
-        areaPhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FishBun
-                        .with(AddPostActivity.this)
-                        .setCamera(true)
-                        .setActionBarColor(Color.parseColor("#009688"), Color.parseColor("#00796B"))
-                        .setPickerCount(1)
-                        .startAlbum();
-            }
-        });
     }
 
     protected void onActivityResult(int requestCode, int resultCode,
@@ -119,4 +101,20 @@ public class AddPostActivity extends BaseActivity {
     }
 
 
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+
+        switch (id) {
+            case R.id.area_photo:
+                FishBun
+                        .with(AddPostActivity.this)
+                        .setCamera(true)
+                        .setActionBarColor(Color.parseColor("#009688"), Color.parseColor("#00796B"))
+                        .setPickerCount(1)
+                        .startAlbum();
+                break;
+        }
+
+    }
 }
