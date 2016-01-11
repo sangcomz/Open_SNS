@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import xyz.sangcomz.sangcomz_n_study.R;
-import xyz.sangcomz.sangcomz_n_study.bean.Member;
+import xyz.sangcomz.sangcomz_n_study.bean.FollowMember;
 import xyz.sangcomz.sangcomz_n_study.ui.main.fragments.friends.FollowController;
 import xyz.sangcomz.sangcomz_n_study.util.custom.RoundedImageView;
 
@@ -24,7 +24,7 @@ import xyz.sangcomz.sangcomz_n_study.util.custom.RoundedImageView;
 public class FollowAdapter
         extends RecyclerView.Adapter<FollowAdapter.ViewHolder> {
 
-    ArrayList<Member> members = new ArrayList<>();
+    ArrayList<FollowMember> followMembers = new ArrayList<>();
     Context context;
     FollowController followController;
     private boolean isRemove;
@@ -44,9 +44,9 @@ public class FollowAdapter
         }
     }
 
-    public FollowAdapter(Context context, ArrayList<Member> members, boolean isRemove) {
+    public FollowAdapter(Context context, ArrayList<FollowMember> followMembers, boolean isRemove) {
         this.context = context;
-        this.members = members;
+        this.followMembers = followMembers;
         this.isRemove = isRemove;
         followController = new FollowController(context, this);
     }
@@ -61,16 +61,16 @@ public class FollowAdapter
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        Glide.with(context).load(members.get(position).getProfilePath()).centerCrop().into(holder.rivProfile);
-        holder.txtMemberName.setText(members.get(position).getMemberName());
-        setBtnColor(members.get(position).getFollowYN(), holder.btnFollow);
+        Glide.with(context).load(followMembers.get(position).getProfilePath()).centerCrop().into(holder.rivProfile);
+        holder.txtMemberName.setText(followMembers.get(position).getMemberName());
+        setBtnColor(followMembers.get(position).getFollowYN(), holder.btnFollow);
         holder.btnFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (members.get(position).getFollowYN().equals("Y")) {
-                    followController.Follow(members.get(position).getMemberSrl(), false, position);
+                if (followMembers.get(position).getFollowYN().equals("Y")) {
+                    followController.Follow(followMembers.get(position).getMemberSrl(), false, position);
                 } else {
-                    followController.Follow(members.get(position).getMemberSrl(), true, position);
+                    followController.Follow(followMembers.get(position).getMemberSrl(), true, position);
                 }
             }
         });
@@ -101,14 +101,14 @@ public class FollowAdapter
 //    }
 
     public void refreshFollowYn(int position, String followYN) {
-        members.get(position).setFollowYN(followYN);
+        followMembers.get(position).setFollowYN(followYN);
         notifyItemChanged(position);
         if (isRemove)
             deleteMember(position);
     }
 
     public void deleteMember(int position) {
-        members.remove(position);
+        followMembers.remove(position);
         notifyItemRemoved(position);
 //        notifyDataSetChanged();
     }
@@ -116,6 +116,6 @@ public class FollowAdapter
 
     @Override
     public int getItemCount() {
-        return members.size();
+        return followMembers.size();
     }
 }

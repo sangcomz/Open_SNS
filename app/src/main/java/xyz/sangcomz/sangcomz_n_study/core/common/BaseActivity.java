@@ -10,6 +10,7 @@ import xyz.sangcomz.sangcomz_n_study.core.SharedPref.SharedPref;
 import xyz.sangcomz.sangcomz_n_study.core.common.view.ViewMapper;
 import xyz.sangcomz.sangcomz_n_study.ui.join.JoinActivity;
 import xyz.sangcomz.sangcomz_n_study.ui.main.MainActivity;
+import xyz.sangcomz.sangcomz_n_study.ui.profile.ProfileActivity;
 
 /**
  * @author leoshin, created at 15. 7. 20..
@@ -24,7 +25,7 @@ public class BaseActivity extends AppCompatActivity {
         sharedPref = new SharedPref(this);
     }
 
-    public void setContentView(int layoutResID,boolean isViewMap) {
+    public void setContentView(int layoutResID, boolean isViewMap) {
         if (isViewMap == true) {
             setContentView(layoutResID);
             ViewMapper.mapLayout(this, getWindow().getDecorView());
@@ -68,6 +69,13 @@ public class BaseActivity extends AppCompatActivity {
     protected void redirectJoinActivity() {
         final Intent intent = new Intent(this, JoinActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
+    }
+
+    protected void redirectProfileActivity(String memberSrl) {
+        final Intent intent = new Intent(this, ProfileActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.putExtra("member_srl", memberSrl);
         startActivity(intent);
     }
 }

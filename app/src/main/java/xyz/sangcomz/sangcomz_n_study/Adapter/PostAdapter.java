@@ -88,14 +88,14 @@ public class PostAdapter
             }
         });
 
-//        setBtnColor(members.get(position).getFollowYN(), holder.btnFollow);
+//        setBtnColor(followMembers.get(position).getFollowYN(), holder.btnFollow);
 //        holder.btnFollow.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                if (members.get(position).getFollowYN().equals("Y")) {
-//                    followController.Follow(members.get(position).getMemberSrl(), false, position);
+//                if (followMembers.get(position).getFollowYN().equals("Y")) {
+//                    followController.Follow(followMembers.get(position).getMemberSrl(), false, position);
 //                } else {
-//                    followController.Follow(members.get(position).getMemberSrl(), true, position);
+//                    followController.Follow(followMembers.get(position).getMemberSrl(), true, position);
 //                }
 //            }
 //        });

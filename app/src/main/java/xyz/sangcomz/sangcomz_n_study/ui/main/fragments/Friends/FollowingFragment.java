@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 import xyz.sangcomz.sangcomz_n_study.adapter.FollowAdapter;
 import xyz.sangcomz.sangcomz_n_study.R;
-import xyz.sangcomz.sangcomz_n_study.bean.Member;
+import xyz.sangcomz.sangcomz_n_study.bean.FollowMember;
 import xyz.sangcomz.sangcomz_n_study.util.ItemDecoration.DividerItemDecoration;
 import xyz.sangcomz.sangcomz_n_study.util.NoDataController;
 
@@ -26,7 +26,7 @@ public class FollowingFragment extends Fragment {
 
     FollowController followController;
     FollowAdapter followAdapter;
-    ArrayList<Member> members = new ArrayList<>();
+    ArrayList<FollowMember> followMembers = new ArrayList<>();
     RecyclerView recyclerView;
 
     RelativeLayout areaNoData;
@@ -63,7 +63,7 @@ public class FollowingFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                members.clear();
+                followMembers.clear();
                 curPage = 1;
                 swipeRefreshLayout.setRefreshing(false);
                 followController.GetFollow(true, curPage++, FollowingFragment.this);
@@ -90,11 +90,11 @@ public class FollowingFragment extends Fragment {
         return rootView;
     }
 
-    public void setMembers(ArrayList<Member> members) {
-        this.members = members;
-        if (members.size() > 0) {
+    public void setFollowMembers(ArrayList<FollowMember> followMembers) {
+        this.followMembers = followMembers;
+        if (followMembers.size() > 0) {
             areaNoData.setVisibility(View.GONE);
-            followAdapter = new FollowAdapter(getActivity(), members, true);
+            followAdapter = new FollowAdapter(getActivity(), followMembers, true);
             recyclerView.setAdapter(followAdapter);
             recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         } else {

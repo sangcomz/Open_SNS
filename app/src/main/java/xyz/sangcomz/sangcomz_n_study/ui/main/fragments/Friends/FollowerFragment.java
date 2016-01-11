@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 import xyz.sangcomz.sangcomz_n_study.adapter.FollowAdapter;
 import xyz.sangcomz.sangcomz_n_study.R;
-import xyz.sangcomz.sangcomz_n_study.bean.Member;
+import xyz.sangcomz.sangcomz_n_study.bean.FollowMember;
 import xyz.sangcomz.sangcomz_n_study.core.common.BaseFragment;
 import xyz.sangcomz.sangcomz_n_study.util.ItemDecoration.DividerItemDecoration;
 import xyz.sangcomz.sangcomz_n_study.util.NoDataController;
@@ -27,7 +27,7 @@ public class FollowerFragment extends BaseFragment {
 
     FollowController followController;
     FollowAdapter followAdapter;
-    ArrayList<Member> members = new ArrayList<>();
+    ArrayList<FollowMember> followMembers = new ArrayList<>();
     NoDataController noDataController;
 
     RecyclerView recyclerView;
@@ -53,7 +53,7 @@ public class FollowerFragment extends BaseFragment {
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-//        followAdapter = new FollowAdapter(getActivity(), members, false);
+//        followAdapter = new FollowAdapter(getActivity(), followMembers, false);
         followController = new FollowController(getActivity(), followAdapter);
         followController.GetFollow(false, 1, this);
 
@@ -65,7 +65,7 @@ public class FollowerFragment extends BaseFragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                members.clear();
+                followMembers.clear();
                 curPage = 1;
                 swipeRefreshLayout.setRefreshing(false);
                 followController.GetFollow(false, curPage++, FollowerFragment.this);
@@ -92,11 +92,11 @@ public class FollowerFragment extends BaseFragment {
         return rootView;
     }
 
-    public void setMembers(ArrayList<Member> members) {
-        this.members = members;
-        if (members.size() > 0) {
+    public void setFollowMembers(ArrayList<FollowMember> followMembers) {
+        this.followMembers = followMembers;
+        if (followMembers.size() > 0) {
             areaNoData.setVisibility(View.GONE);
-            followAdapter = new FollowAdapter(getActivity(), members, false);
+            followAdapter = new FollowAdapter(getActivity(), followMembers, false);
             recyclerView.setAdapter(followAdapter);
             recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         } else {

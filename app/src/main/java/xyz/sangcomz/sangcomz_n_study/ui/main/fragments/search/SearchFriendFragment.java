@@ -14,14 +14,15 @@ import java.util.ArrayList;
 
 import xyz.sangcomz.sangcomz_n_study.R;
 import xyz.sangcomz.sangcomz_n_study.adapter.FollowAdapter;
-import xyz.sangcomz.sangcomz_n_study.bean.Member;
+import xyz.sangcomz.sangcomz_n_study.bean.FollowMember;
+import xyz.sangcomz.sangcomz_n_study.core.common.BaseFragment;
 import xyz.sangcomz.sangcomz_n_study.core.common.view.DeclareView;
 import xyz.sangcomz.sangcomz_n_study.util.NoDataController;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SearchFriendFragment extends Fragment {
+public class SearchFriendFragment extends BaseFragment {
 
     FollowAdapter followAdapter;
 
@@ -30,7 +31,7 @@ public class SearchFriendFragment extends Fragment {
     @DeclareView(id = R.id.area_nodata)
     RelativeLayout areaNoData;
 
-    ArrayList<Member> members = new ArrayList<>();
+    ArrayList<FollowMember> followMembers = new ArrayList<>();
     SeachController seachController;
 
     NoDataController noDataController;
@@ -41,7 +42,7 @@ public class SearchFriendFragment extends Fragment {
     int totalPage;
     int pastVisiblesItems, visibleItemCount, totalItemCount;
 
-    String query="";
+    String query = "";
 
     public SearchFriendFragment() {
         // Required empty public constructor
@@ -52,6 +53,7 @@ public class SearchFriendFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_search_friend, container, false);
+        bindView(rootView);
         seachController = new SeachController(getActivity(), this);
         noDataController = new NoDataController(areaNoData, getActivity());
         noDataController.setNodata(R.drawable.ic_search_black_24dp, getString(R.string.msg_no_search));
@@ -62,7 +64,6 @@ public class SearchFriendFragment extends Fragment {
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-
                 visibleItemCount = linearLayoutManager.getChildCount();
                 totalItemCount = linearLayoutManager.getItemCount();
                 pastVisiblesItems = linearLayoutManager.findFirstVisibleItemPosition();
@@ -79,11 +80,11 @@ public class SearchFriendFragment extends Fragment {
         return rootView;
     }
 
-    public void setMembers(ArrayList<Member> members) {
-        this.members = members;
-        if (members.size() > 0) {
+    public void setFollowMembers(ArrayList<FollowMember> followMembers) {
+        this.followMembers = followMembers;
+        if (followMembers.size() > 0) {
             areaNoData.setVisibility(View.GONE);
-            followAdapter = new FollowAdapter(getActivity(), members, false);
+            followAdapter = new FollowAdapter(getActivity(), followMembers, false);
             recyclerView.setAdapter(followAdapter);
         } else {
             areaNoData.setVisibility(View.VISIBLE);
@@ -91,6 +92,7 @@ public class SearchFriendFragment extends Fragment {
     }
 
     public void searchMember(String query) {
+        curPage = 1;
         this.query = query;
         seachController.SearchMember(query, curPage++);
     }

@@ -44,12 +44,11 @@ public class AddPostActivity extends BaseActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_post, true);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getString(R.string.txt_add_post));
         addPostController = new AddPostController(this);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         imgPost = (ImageView) findViewById(R.id.img_post);
 
         etContent = (EditText) findViewById(R.id.et_content);
@@ -135,3 +134,4 @@ public class AddPostActivity extends BaseActivity implements View.OnClickListene
         }
     }
 }
+
