@@ -25,7 +25,7 @@ public class BaseActivity extends AppCompatActivity {
         sharedPref = new SharedPref(this);
     }
 
-    public void setContentView(int layoutResID,boolean isViewMap) {
+    public void setContentView(int layoutResID, boolean isViewMap) {
         if (isViewMap == true) {
             setContentView(layoutResID);
             ViewMapper.mapLayout(this, getWindow().getDecorView());
@@ -72,9 +72,10 @@ public class BaseActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    protected void redirectProfileActivity() {
+    protected void redirectProfileActivity(String memberSrl) {
         final Intent intent = new Intent(this, ProfileActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.putExtra("member_srl", memberSrl);
         startActivity(intent);
     }
 }

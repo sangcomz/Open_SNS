@@ -118,7 +118,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
                     @Override
                     public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
-                        redirectProfileActivity();
+                        redirectProfileActivity(sharedPref.getStringPref(SharedDefine.SHARED_MEMBER_SRL));
                         return false;
                     }
                 })
@@ -255,7 +255,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         invalidateOptionsMenu();
         switch (position) {
             case 0:
-                redirectProfileActivity();
+                redirectProfileActivity(sharedPref.getStringPref(SharedDefine.SHARED_MEMBER_SRL));
                 break;
             case 1:
                 animFab(1);

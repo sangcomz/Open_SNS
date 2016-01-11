@@ -1,7 +1,6 @@
-package xyz.sangcomz.sangcomz_n_study.ui.main.fragments.search;
+package xyz.sangcomz.sangcomz_n_study.ui.profile;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.view.Window;
 
 import com.google.gson.Gson;
@@ -9,50 +8,44 @@ import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 import xyz.sangcomz.sangcomz_n_study.R;
-import xyz.sangcomz.sangcomz_n_study.bean.FollowMember;
+import xyz.sangcomz.sangcomz_n_study.bean.Member;
 import xyz.sangcomz.sangcomz_n_study.core.SharedPref.SharedPref;
 import xyz.sangcomz.sangcomz_n_study.core.http.HttpClient;
 import xyz.sangcomz.sangcomz_n_study.define.SharedDefine;
 import xyz.sangcomz.sangcomz_n_study.define.UrlDefine;
 
 /**
- * Created by sangc on 2015-12-28.
+ * Created by sangc on 2016-01-11.
  */
-public class SeachController {
-    Context context;
-    SearchFriendFragment searchFriendFragment;
+public class ProfileController {
+    ProfileActivity profileActivity;
 
-    public SeachController(Context context, SearchFriendFragment searchFriendFragment) {
-        this.context = context;
-        this.searchFriendFragment = searchFriendFragment;
+    public ProfileController(ProfileActivity profileActivity) {
+        this.profileActivity = profileActivity;
     }
 
 
-    public void SearchMember(String query, int page) {
+    public void getMember(String memberSrl) {
 
         // 프로그레스
-        final ProgressDialog progressDialog = new ProgressDialog(context, R.style.MyProgressBarDialog);
+        final ProgressDialog progressDialog = new ProgressDialog(profileActivity, R.style.MyProgressBarDialog);
         progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         progressDialog.setProgressStyle(android.R.style.Widget_Material_ProgressBar_Small);
         progressDialog.show();
 
         RequestParams params = new RequestParams();
 
-        params.put("query", query);
 
-        params.put("member_srl", (new SharedPref(context)).getStringPref(SharedDefine.SHARED_MEMBER_SRL));
-        params.put("page", page);
-        HttpClient.get(UrlDefine.URL_SEARCH, params, new JsonHttpResponseHandler() {
+        params.put("member_srl", (new SharedPref(profileActivity)).getStringPref(SharedDefine.SHARED_MEMBER_SRL));
+        params.put("profile_member_srl", memberSrl);
+        HttpClient.get(UrlDefine.URL_ACCOUNT_GET_ACCOUNT, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -60,15 +53,16 @@ public class SeachController {
                 System.out.println("onSuccess JSONObject :::: " + response.toString());
 
                 try {
-                    JSONArray jsonArray = response.getJSONArray("follow_members");
+                    JSONObject jsonObject = response.getJSONObject("members");
                     Gson gson = new Gson();
-                    String jsonOutput = jsonArray.toString();
+                    String jsonOutput = jsonObject.toString();
 
-                    Type listType = new TypeToken<List<FollowMember>>() {
+                    Type type = new TypeToken<Member>() {
                     }.getType();
-                    List<FollowMember> followMembers = (List<FollowMember>) gson.fromJson(jsonOutput, listType);
+                    Member member = gson.fromJson(jsonOutput, type);
+                    profileActivity.setProfileView(member);
 
-                    searchFriendFragment.setFollowMembers((ArrayList<FollowMember>) followMembers);
+//                    searchFriendFragment.setFollowMembers((ArrayList<FollowMember>) followMembers);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

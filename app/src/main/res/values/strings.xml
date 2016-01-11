@@ -18,6 +18,7 @@
     <string name="txt_searchable">검색 허용</string>
     <string name="txt_content_hint">내용을 입력해주세요.</string>
     <string name="txt_done">확인</string>
+    <string name="txt_pic_change">사진 변경</string>
     <string name="txt_cancel">취소</string>
     <string name="msg_insert_image_or_content">이미지 혹은 내용을 입력해주세요.</string>
     <string name="msg_need_app_version_update">최신버전으로 업데이트해주세요.</string>

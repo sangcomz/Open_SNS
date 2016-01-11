@@ -17,6 +17,7 @@
         android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
+
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
@@ -61,29 +62,30 @@
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/profile_img"
                     android:layout_alignTop="@+id/profile_img"
-                    android:layout_toLeftOf="@+id/btn_follow"
                     android:layout_toRightOf="@+id/profile_img">
 
 
                     <TextView
                         android:id="@+id/txt_member_name"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
                         android:layout_marginLeft="3dp"
+                        android:layout_marginRight="66dp"
                         android:ellipsize="end"
+                        android:gravity="center"
                         android:singleLine="true"
-                        android:text="@string/app_name"
+                        android:text=""
                         android:textColor="@color/primary_light"
-                        android:textSize="18dp"
+                        android:textSize="20dp"
                         android:textStyle="bold" />
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_alignEnd="@+id/txt_member_name"
                         android:layout_alignStart="@+id/txt_member_name"
-                        android:layout_below="@+id/txt_member_name">
+                        android:layout_below="@+id/txt_member_name"
+                        android:layout_marginRight="66dp">
 
                         <LinearLayout
                             android:id="@+id/area_post_count"
@@ -98,7 +100,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:singleLine="true"
-                                android:text="8"
+                                android:text="0"
                                 android:textColor="#ffffff"
                                 android:textSize="16dp"
                                 android:textStyle="bold" />
@@ -106,6 +108,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:singleLine="true"
                                 android:text="post"
                                 android:textSize="12dp" />
                         </LinearLayout>
@@ -124,7 +127,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:singleLine="true"
-                                android:text="203"
+                                android:text="0"
                                 android:textColor="#ffffff"
                                 android:textSize="16dp"
                                 android:textStyle="bold" />
@@ -132,6 +135,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:singleLine="true"
                                 android:text="follower"
                                 android:textSize="12dp" />
                         </LinearLayout>
@@ -150,7 +154,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:singleLine="true"
-                                android:text="155"
+                                android:text="0"
                                 android:textColor="#ffffff"
                                 android:textSize="16dp"
                                 android:textStyle="bold" />
@@ -158,6 +162,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:singleLine="true"
                                 android:text="following"
                                 android:textSize="12dp" />
                         </LinearLayout>
@@ -168,16 +173,16 @@
                 </RelativeLayout>
 
 
-                <Button
-                    android:id="@+id/btn_follow"
-                    android:layout_width="60dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/profile_img"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignTop="@+id/profile_img"
-                    android:background="@color/colorFollow"
-                    android:text="@string/txt_add_follow"
-                    android:textSize="12dp" />
+                <!--<Button-->
+                <!--android:id="@+id/btn_follow"-->
+                <!--android:layout_width="60dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignBottom="@+id/profile_img"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:layout_alignTop="@+id/profile_img"-->
+                <!--android:background="@color/colorFollow"-->
+                <!--android:text="@string/txt_add_follow"-->
+                <!--android:textSize="12dp" />-->
 
                 <!--<ImageView-->
                 <!--android:background="@drawable/follow_button_selector"-->
@@ -194,9 +199,20 @@
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
+
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:alpha="0"
+        android:src="@drawable/ic_action_add_follow"
+        app:backgroundTint="@color/colorFollow"
+        app:layout_anchor="@+id/appbar"
+        app:layout_anchorGravity="bottom|right|end" />
 
 </android.support.design.widget.CoordinatorLayout>

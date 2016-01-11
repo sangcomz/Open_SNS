@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 import xyz.sangcomz.sangcomz_n_study.R;
 import xyz.sangcomz.sangcomz_n_study.adapter.FollowAdapter;
-import xyz.sangcomz.sangcomz_n_study.bean.Member;
+import xyz.sangcomz.sangcomz_n_study.bean.FollowMember;
 import xyz.sangcomz.sangcomz_n_study.core.common.BaseFragment;
 import xyz.sangcomz.sangcomz_n_study.core.common.view.DeclareView;
 import xyz.sangcomz.sangcomz_n_study.util.NoDataController;
@@ -31,7 +31,7 @@ public class SearchFriendFragment extends BaseFragment {
     @DeclareView(id = R.id.area_nodata)
     RelativeLayout areaNoData;
 
-    ArrayList<Member> members = new ArrayList<>();
+    ArrayList<FollowMember> followMembers = new ArrayList<>();
     SeachController seachController;
 
     NoDataController noDataController;
@@ -80,11 +80,11 @@ public class SearchFriendFragment extends BaseFragment {
         return rootView;
     }
 
-    public void setMembers(ArrayList<Member> members) {
-        this.members = members;
-        if (members.size() > 0) {
+    public void setFollowMembers(ArrayList<FollowMember> followMembers) {
+        this.followMembers = followMembers;
+        if (followMembers.size() > 0) {
             areaNoData.setVisibility(View.GONE);
-            followAdapter = new FollowAdapter(getActivity(), members, false);
+            followAdapter = new FollowAdapter(getActivity(), followMembers, false);
             recyclerView.setAdapter(followAdapter);
         } else {
             areaNoData.setVisibility(View.VISIBLE);

@@ -21,7 +21,7 @@ import java.util.List;
 import cz.msebera.android.httpclient.Header;
 import xyz.sangcomz.sangcomz_n_study.R;
 import xyz.sangcomz.sangcomz_n_study.adapter.FollowAdapter;
-import xyz.sangcomz.sangcomz_n_study.bean.Member;
+import xyz.sangcomz.sangcomz_n_study.bean.FollowMember;
 import xyz.sangcomz.sangcomz_n_study.core.SharedPref.SharedPref;
 import xyz.sangcomz.sangcomz_n_study.core.http.HttpClient;
 import xyz.sangcomz.sangcomz_n_study.define.SharedDefine;
@@ -97,18 +97,18 @@ public class FollowController {
                 super.onSuccess(statusCode, headers, response);
                 System.out.println("onSuccess JSONObject :::: " + response.toString());
                 try {
-                    JSONArray jsonArray = response.getJSONArray("members");
+                    JSONArray jsonArray = response.getJSONArray("follow_members");
                     Gson gson = new Gson();
                     String jsonOutput = jsonArray.toString();
 
-                    Type listType = new TypeToken<List<Member>>() {
+                    Type listType = new TypeToken<List<FollowMember>>() {
                     }.getType();
-                    List<Member> members = (List<Member>) gson.fromJson(jsonOutput, listType);
+                    List<FollowMember> followMembers = (List<FollowMember>) gson.fromJson(jsonOutput, listType);
 
                     if (isFollow)
-                        ((FollowingFragment) fragment).setMembers((ArrayList<Member>) members);
+                        ((FollowingFragment) fragment).setFollowMembers((ArrayList<FollowMember>) followMembers);
                     else
-                        ((FollowerFragment) fragment).setMembers((ArrayList<Member>) members);
+                        ((FollowerFragment) fragment).setFollowMembers((ArrayList<FollowMember>) followMembers);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
