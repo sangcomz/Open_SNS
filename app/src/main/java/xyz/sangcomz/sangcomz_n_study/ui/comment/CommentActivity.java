@@ -18,26 +18,33 @@ import xyz.sangcomz.sangcomz_n_study.R;
 import xyz.sangcomz.sangcomz_n_study.adapter.CommentAdapter;
 import xyz.sangcomz.sangcomz_n_study.bean.Comment;
 import xyz.sangcomz.sangcomz_n_study.core.common.BaseActivity;
+import xyz.sangcomz.sangcomz_n_study.core.common.view.DeclareView;
 import xyz.sangcomz.sangcomz_n_study.util.ItemDecoration.DividerItemDecoration;
 import xyz.sangcomz.sangcomz_n_study.util.NoDataController;
 
-public class CommentActivity extends BaseActivity {
+public class CommentActivity extends BaseActivity implements View.OnClickListener {
+
+
+    @DeclareView(id = R.id.area_background)
+    FrameLayout areaBackground;
+    @DeclareView(id = R.id.area_send, click = "this")
+    RelativeLayout areaSend;
+    @DeclareView(id = R.id.img_back, click = "this")
+    ImageView imgBack;
+    @DeclareView(id = R.id.et_comment)
+    EditText etComment;
+    @DeclareView(id = R.id.recyclerview)
+    RecyclerView recyclerView;
+    @DeclareView(id = R.id.area_nodata)
+    RelativeLayout areaNoData;
+    @DeclareView(id = R.id.swipe_refresh)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     CommentController commentController;
-    FrameLayout areaBackground;
-    RelativeLayout areaSend;
-
-    ImageView imgBack;
-    EditText etComment;
     String postSrl;
-
-    RecyclerView recyclerView;
     CommentAdapter commentAdapter;
     ArrayList<Comment> comments = new ArrayList<>();
-    RelativeLayout areaNoData;
     NoDataController noDataController;
-
-    SwipeRefreshLayout swipeRefreshLayout;
     LinearLayoutManager linearLayoutManager;
 
     private int curPage = 1;
@@ -46,28 +53,15 @@ public class CommentActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_comment);
+        setContentView(R.layout.activity_comment, true);
 
-        imgBack = (ImageView) findViewById(R.id.img_back);
-        imgBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        etComment = (EditText) findViewById(R.id.et_comment);
-        areaSend = (RelativeLayout) findViewById(R.id.area_send);
-        areaBackground = (FrameLayout) findViewById(R.id.area_background);
         setAreaBackgroundColor(Color.BLACK);
 
 
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
         linearLayoutManager = new LinearLayoutManager(this);
-        areaNoData = (RelativeLayout) findViewById(R.id.area_nodata);
         commentController = new CommentController(this, etComment, areaNoData);
         initAreaNoData();
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(linearLayoutManager);
 
         commentAdapter = new CommentAdapter(this, comments, commentController);
@@ -75,14 +69,23 @@ public class CommentActivity extends BaseActivity {
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
 
         postSrl = getIntent().getStringExtra("postSrl");
-        areaSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                commentController.addComment(postSrl, etComment.getText().toString());
-            }
-        });
+//        areaSend.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                commentController.addComment(postSrl, etComment.getText().toString());
+//            }
+//        });
 
         commentController.getComment(postSrl, curPage++, true);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(false);
+                curPage = 1;
+                commentController.getComment(postSrl, curPage++, true);
+            }
+        });
     }
 
     protected void initAreaNoData() {
@@ -140,4 +143,17 @@ public class CommentActivity extends BaseActivity {
     }
 
 
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.img_back:
+                finish();
+                break;
+            case R.id.area_send:
+                commentController.addComment(postSrl, etComment.getText().toString());
+                break;
+
+        }
+    }
 }
