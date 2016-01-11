@@ -69,12 +69,6 @@ public class CommentActivity extends BaseActivity implements View.OnClickListene
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
 
         postSrl = getIntent().getStringExtra("postSrl");
-//        areaSend.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                commentController.addComment(postSrl, etComment.getText().toString());
-//            }
-//        });
 
         commentController.getComment(postSrl, curPage++, true);
 
