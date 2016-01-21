@@ -45,7 +45,7 @@
                 <!--android:background="@drawable/bg_drawer"-->
                 <!--android:fitsSystemWindows="true" />-->
 
-                <xyz.sangcomz.sangcomz_n_study.util.custom.RoundedImageView
+                <xyz.sangcomz.open_sns.util.custom.RoundedImageView
                     android:id="@+id/profile_img"
                     android:layout_width="70dp"
                     android:layout_height="70dp"

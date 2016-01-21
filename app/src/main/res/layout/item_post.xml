@@ -12,7 +12,7 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <xyz.sangcomz.sangcomz_n_study.util.custom.RoundedImageView
+        <xyz.sangcomz.open_sns.util.custom.RoundedImageView
             android:id="@+id/riv_profile"
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -41,7 +41,7 @@
             android:textColor="@color/colorPrimaryText" />
     </LinearLayout>
 
-    <xyz.sangcomz.sangcomz_n_study.util.custom.SquareImageView
+    <xyz.sangcomz.open_sns.util.custom.SquareImageView
         android:id="@+id/siv_post_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

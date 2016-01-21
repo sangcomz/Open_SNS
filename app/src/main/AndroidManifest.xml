@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="xyz.sangcomz.sangcomz_n_study">
+    package="xyz.sangcomz.open_sns">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".core.common.GlobalApplication"
+        android:name="xyz.sangcomz.open_sns.core.common.GlobalApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.main.MainActivity">
+        <activity android:name="xyz.sangcomz.open_sns.ui.main.MainActivity">
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.SEARCH" /> -->
@@ -24,7 +24,7 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity
-            android:name=".ui.splash.SplashActivity"
+            android:name="xyz.sangcomz.open_sns.ui.splash.SplashActivity"
             android:theme="@style/TranslucentStatusAppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,13 +33,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.join.JoinActivity"
+            android:name="xyz.sangcomz.open_sns.ui.join.JoinActivity"
             android:theme="@style/TranslucentStatusAppTheme" />
-        <activity android:name=".ui.post.AddPostActivity" />
+        <activity android:name="xyz.sangcomz.open_sns.ui.post.AddPostActivity" />
         <activity
-            android:name=".ui.comment.CommentActivity"
+            android:name="xyz.sangcomz.open_sns.ui.comment.CommentActivity"
             android:theme="@style/Theme.AppCompat.Translucent" />
-        <activity android:name=".ui.profile.ProfileActivity"></activity>
+        <activity android:name="xyz.sangcomz.open_sns.ui.profile.ProfileActivity"></activity>
     </application>
 
 </manifest>

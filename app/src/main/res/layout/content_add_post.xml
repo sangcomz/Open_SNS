@@ -32,7 +32,7 @@
                     android:layout_centerInParent="true"
                     android:background="@drawable/ic_add_a_photo_white_48dp" />
 
-                <xyz.sangcomz.sangcomz_n_study.util.custom.SquareImageView
+                <xyz.sangcomz.open_sns.util.custom.SquareImageView
                     android:id="@+id/img_post"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"

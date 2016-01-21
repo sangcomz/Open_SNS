@@ -8,7 +8,7 @@
     android:orientation="horizontal"
     android:padding="10dp">
 
-    <xyz.sangcomz.sangcomz_n_study.util.custom.RoundedImageView
+    <xyz.sangcomz.open_sns.util.custom.RoundedImageView
         android:id="@+id/riv_profile"
         android:layout_width="50dp"
         android:layout_height="50dp"
