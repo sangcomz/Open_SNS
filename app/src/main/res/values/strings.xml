@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Open_SNS</string>
-    <string name="txt_logo_top">SNS</string>
-    <string name="txt_logo_bottom">Open_SNS</string>
+    <string name="txt_logo_top">OS</string>
+    <string name="txt_logo_bottom">Open_Sns</string>
     <string name="txt_timeline">타임라인</string>
     <string name="txt_add_post">글 작성</string>
     <string name="txt_friends">친구</string>

@@ -39,7 +39,7 @@
         <activity
             android:name="xyz.sangcomz.open_sns.ui.comment.CommentActivity"
             android:theme="@style/Theme.AppCompat.Translucent" />
-        <activity android:name="xyz.sangcomz.open_sns.ui.profile.ProfileActivity"></activity>
+        <activity android:name="xyz.sangcomz.open_sns.ui.profile.ProfileActivity"/>
     </application>
 
 </manifest>
