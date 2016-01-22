@@ -66,7 +66,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     Fragment friendsFragment;
     Fragment searchFriendFragment;
     Fragment settingFragment;
-//    Fragment profileFragment;
 
     //save our header or result
     private AccountHeader headerResult = null;
@@ -172,6 +171,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //                        setFragment(position);
 
                         crossfadeDrawerLayout.closeDrawers();
+                        if (position != 0) {
+                            crossfadeDrawerLayout.closeDrawers();
+                        }
 //                        if (position == 0) {
 //                            crossfadeDrawerLayout.crossfade();
 //                        } else {

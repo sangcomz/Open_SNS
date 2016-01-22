@@ -1,5 +1,8 @@
 package xyz.sangcomz.open_sns.ui.profile;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -13,6 +16,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.sangcomz.fishbun.FishBun;
+import com.sangcomz.fishbun.define.Define;
+
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import xyz.sangcomz.open_sns.R;
 import xyz.sangcomz.open_sns.bean.Member;
@@ -58,6 +68,7 @@ public class ProfileActivity extends BaseActivity {
 
     String memberSrl;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +82,6 @@ public class ProfileActivity extends BaseActivity {
         p.setAnchorId(View.NO_ID); //should let you set visibility
         fab.setLayoutParams(p);
 
-        collapsingToolbarLayout.setTitle(getString(R.string.txt_timeline));
 
         profileController = new ProfileController(this);
 
@@ -82,6 +92,13 @@ public class ProfileActivity extends BaseActivity {
 
         profileController.getMember(getIntent().getStringExtra("member_srl"));
 
+
+//        Bitmap myBitmap = Glide.with(getApplicationContext())
+//                .load(postImageBeans.get(i).getImagePath())
+//                .asBitmap()
+//                .override(600, 600)
+//                .into(600, 600)
+//                .get();
 
     }
 
@@ -98,17 +115,64 @@ public class ProfileActivity extends BaseActivity {
         int id = item.getItemId();
         if (id == android.R.id.home)
             finish();
+        else if (id == R.id.action_change_profile_bg) {
+            FishBun
+                    .with(ProfileActivity.this)
+                    .setCamera(true)
+                    .setActionBarColor(Color.parseColor("#009688"), Color.parseColor("#00796B"))
+                    .setPickerCount(1)
+                    .startAlbum();
+        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case Define.ALBUM_REQUEST_CODE:
+                if (resultCode == RESULT_OK) {
+                    final ArrayList<String> path = data.getStringArrayListExtra(Define.INTENT_PATH);
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                Bitmap bmProfileBg = Glide.with(getApplicationContext())
+                                        .load(path.get(0))
+                                        .asBitmap()
+                                        .override(1200, 600)
+                                        .into(1200, 600)
+                                        .get();
+                                profileController.setProfileBg(bmProfileBg);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            } catch (ExecutionException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }).start();
+
+                    //You can get image path(ArrayList<String>
+                    break;
+                }
+        }
     }
 
     protected void setProfileView(Member member) {
         String isMyProfile = member.getIsMyProfile();
         String isFollow = member.getFollowYN();
+
+        collapsingToolbarLayout.setTitle(member.getMemberName());
         txtMemberName.setText(member.getMemberName());
         txtFollowerCount.setText(member.getMemberFollowerCount());
         txtFollowingCount.setText(member.getMemberFollowingCount());
         txtPostCount.setText(member.getMemberPostCount());
+
+        Glide.with(this)
+                .load(member.getProfilePath())
+                .centerCrop()
+                .into(rivProfile);
 
         if (isMyProfile.equals("Y")) {
             fab.setVisibility(View.GONE); // View.INVISIBLE might also be worth trying

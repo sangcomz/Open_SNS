@@ -8,13 +8,14 @@ public class UrlDefine {
     ///////////////
     public static final String HTTP = "http://";
 
-    public static final String SERVER_HOST = "sangcomz.xyz/sangcomz_n_study";
+    public static final String SERVER_HOST = "sangcomz.xyz/open_sns";
 
     public static final String URL_ACCOUNT_JOIN = HTTP + SERVER_HOST + "/account/join.php";
     public static final String URL_ACCOUNT_LOGIN = HTTP + SERVER_HOST + "/account/login.php";
     public static final String URL_ACCOUNT_PHONE_SETTING = HTTP + SERVER_HOST + "/account/phone_setting.php";
     public static final String URL_ACCOUNT_GET_APP_VERSION = HTTP + SERVER_HOST + "/account/get_app_version.php";
     public static final String URL_ACCOUNT_GET_ACCOUNT = HTTP + SERVER_HOST + "/account/get_account.php";
+    public static final String URL_ACCOUNT_SET_PROFILE_BG = HTTP + SERVER_HOST + "/account/set_profile_bg.php";
 
     public static final String URL_POST_CREATE = HTTP + SERVER_HOST + "/post/create.php";
     public static final String URL_GET_POST = HTTP + SERVER_HOST + "/post/get_post.php";

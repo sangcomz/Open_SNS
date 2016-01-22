@@ -48,7 +48,7 @@ public class JoinController {
 
         params.put("member_pwd", MD5(password, "").toLowerCase(Locale.getDefault()));
 
-        File file = Utils.BitmapToFileCache(bitProfile);
+        final File file = Utils.BitmapToFileCache(bitProfile);
 
         try {
             params.put("member_profile", file);
@@ -70,6 +70,8 @@ public class JoinController {
                             jsonObject.getString("member_profile_bg"));
 
                     (new SharedPref(joinActivity)).setSettings("Y", "Y");
+
+                    file.delete();
 
                     joinActivity.finish();
                     joinActivity.redirectMainActivity();

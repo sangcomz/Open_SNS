@@ -4,7 +4,7 @@
     tools:context="com.example.administrator.imageviewer.PhotoAlbumActivity">
 
     <item
-        android:id="@+id/action_done"
+        android:id="@+id/action_change_profile_bg"
         android:icon="@drawable/ic_photo_white_24dp"
         app:showAsAction="withText|ifRoom"
         android:title="@string/txt_pic_change" />
