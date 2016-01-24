@@ -59,7 +59,6 @@ public class Utils {
     }
 
     public static Drawable drawableFromUrl(Context context, String url) throws IOException {
-        System.out.println("url ::::: " + url);
         if (url == null || url.equals("")) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 return context.getResources().getDrawable(R.drawable.bg_drawer, null);

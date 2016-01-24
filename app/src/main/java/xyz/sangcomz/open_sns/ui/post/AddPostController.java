@@ -38,7 +38,7 @@ public class AddPostController {
 
 
         params.put("member_srl", (new SharedPref(addPostActivity)).getStringPref(SharedDefine.SHARED_MEMBER_SRL));
-        File file = Utils.BitmapToFileCache(bitImage);
+        final File file = Utils.BitmapToFileCache(bitImage);
 
         try {
             params.put("post_image", file);
@@ -53,6 +53,9 @@ public class AddPostController {
                 System.out.println("onSuccess JSONObject :::: " + response.toString());
                 try {
                     JSONObject jsonObject = response.getJSONObject("response");
+
+                    file.delete();
+
                     addPostActivity.finish();
                 } catch (JSONException e) {
                     e.printStackTrace();
