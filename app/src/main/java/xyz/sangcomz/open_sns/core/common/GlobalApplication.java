@@ -60,15 +60,15 @@ public class GlobalApplication extends Application {
         return drawableBg;
     }
 
-    /**
-     * singleton 애플리케이션 객체를 얻는다.
-     * @return singleton 애플리케이션 객체
-     */
-    public static GlobalApplication getGlobalApplicationContext() {
-        if (instance == null)
-            throw new IllegalStateException("this application does not inherit com.kakao.GlobalApplication");
-        return instance;
-    }
+//    /**
+//     * singleton 애플리케이션 객체를 얻는다.
+//     * @return singleton 애플리케이션 객체
+//     */
+//    public static GlobalApplication getGlobalApplicationContext() {
+//        if (instance == null)
+//            throw new IllegalStateException("this application does not inherit com.kakao.GlobalApplication");
+//        return instance;
+//    }
 
     /**
      * 이미지 로더, 이미지 캐시, 요청 큐를 초기화한다.

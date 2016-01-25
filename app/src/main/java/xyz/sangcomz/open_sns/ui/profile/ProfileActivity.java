@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -63,6 +64,10 @@ public class ProfileActivity extends BaseActivity {
     @DeclareView(id = R.id.recyclerview)
     RecyclerView recyclerView;
 
+    @DeclareView(id = R.id.backdrop)
+    ImageView backDrop;
+
+
 
     ProfileController profileController;
 
@@ -91,14 +96,7 @@ public class ProfileActivity extends BaseActivity {
             collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
 
         profileController.getMember(getIntent().getStringExtra("member_srl"));
-
-
-//        Bitmap myBitmap = Glide.with(getApplicationContext())
-//                .load(postImageBeans.get(i).getImagePath())
-//                .asBitmap()
-//                .override(600, 600)
-//                .into(600, 600)
-//                .get();
+        
 
     }
 
@@ -163,6 +161,7 @@ public class ProfileActivity extends BaseActivity {
         String isMyProfile = member.getIsMyProfile();
         String isFollow = member.getFollowYN();
 
+
         collapsingToolbarLayout.setTitle(member.getMemberName());
         txtMemberName.setText(member.getMemberName());
         txtFollowerCount.setText(member.getMemberFollowerCount());
@@ -173,6 +172,11 @@ public class ProfileActivity extends BaseActivity {
                 .load(member.getProfilePath())
                 .centerCrop()
                 .into(rivProfile);
+
+        Glide.with(this)
+                .load(member.getMemberProfileBg())
+                .centerCrop()
+                .into(backDrop);
 
         if (isMyProfile.equals("Y")) {
             fab.setVisibility(View.GONE); // View.INVISIBLE might also be worth trying

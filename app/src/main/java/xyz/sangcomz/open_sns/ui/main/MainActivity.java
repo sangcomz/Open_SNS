@@ -82,6 +82,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     MainController mainController;
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        headerResult.setBackground(GlobalApplication.getDrawableBg());
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main, true);
@@ -110,7 +116,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         // Create the AccountHeader
         headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
-                .withHeaderBackground(GlobalApplication.getDrawableBg()) //펼쳤을때 백그라운드 색
+//                .withHeaderBackground(GlobalApplication.getDrawableBg()) //펼쳤을때 백그라운드 색
                 .addProfiles(profile)
                 .withSelectionListEnabledForSingleProfile(false)
                 .withSavedInstance(savedInstanceState)
