@@ -27,7 +27,6 @@ public class TimeLineFragment extends BaseFragment {
 
     TimeLineController timeLineController;
     NoDataController noDataController;
-
     PostAdapter postAdapter;
     ArrayList<Post> posts = new ArrayList<>();
 

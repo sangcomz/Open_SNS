@@ -79,11 +79,11 @@ public class PostAdapter
         holder.areaComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity mainActivity = (MainActivity) context;
+                MainActivity activity = (MainActivity) context;
                 Intent intent = new Intent(holder.areaComment.getContext(), CommentActivity.class);
                 intent.putExtra("postSrl", posts.get(position).getPostSrl());
-                mainActivity.startActivity(intent);
-                mainActivity.overridePendingTransition(R.anim.slide_top_to_bottom, R.anim.slide_top_to_bottom);
+                activity.startActivity(intent);
+                activity.overridePendingTransition(R.anim.slide_top_to_bottom, R.anim.slide_top_to_bottom);
 
             }
         });
