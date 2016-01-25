@@ -6,6 +6,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.SyncHttpClient;
 
 /**
  * Created by 석원 on 7/2/2015.
@@ -14,22 +15,37 @@ public class HttpClient {
 
     private static final String BASE_URL = "";
 
-    private static AsyncHttpClient client = new AsyncHttpClient();
+    private static AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
+    private static SyncHttpClient syncHttpClient = new SyncHttpClient();
 
-    public static AsyncHttpClient getInstance() {
-        return HttpClient.client;
-    }
 
     public static void post(String url, RequestParams params, JsonHttpResponseHandler responseHandler) {
-        client.post(getAbsoluteUrl(url), params, responseHandler);
+        asyncHttpClient.post(getAbsoluteUrl(url), params, responseHandler);
     }
 
     public static void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-        client.get(getAbsoluteUrl(url), params, responseHandler);
+        asyncHttpClient.get(getAbsoluteUrl(url), params, responseHandler);
     }
 
     public static void cancel(Context context) {
-        client.cancelRequests(context, true);
+        asyncHttpClient.cancelRequests(context, true);
+    }
+
+
+
+
+
+
+    public static void syncPost(String url, RequestParams params, JsonHttpResponseHandler responseHandler) {
+        syncHttpClient.post(getAbsoluteUrl(url), params, responseHandler);
+    }
+
+    public static void syncGet(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+        syncHttpClient.get(getAbsoluteUrl(url), params, responseHandler);
+    }
+
+    public static void syncCancel(Context context) {
+        syncHttpClient.cancelRequests(context, true);
     }
 
     private static String getAbsoluteUrl(String relativeUrl) {

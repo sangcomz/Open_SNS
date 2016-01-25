@@ -105,7 +105,7 @@ public class ProfileController {
         }
 
 
-        HttpClient.post(UrlDefine.URL_ACCOUNT_SET_PROFILE_BG, params, new JsonHttpResponseHandler() {
+        HttpClient.syncPost(UrlDefine.URL_ACCOUNT_SET_PROFILE_BG, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
