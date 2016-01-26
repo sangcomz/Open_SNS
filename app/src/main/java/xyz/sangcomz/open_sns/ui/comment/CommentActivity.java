@@ -92,6 +92,7 @@ public class CommentActivity extends BaseActivity implements View.OnClickListene
                 totalItemCount = linearLayoutManager.getItemCount();
                 pastVisiblesItems = linearLayoutManager.findFirstVisibleItemPosition();
 
+
                 if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
                     if (curPage <= totalPage) {
                         commentController.getComment(postSrl, curPage++, false);
