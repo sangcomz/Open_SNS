@@ -24,7 +24,6 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import com.google.android.gms.gcm.GcmListenerService;
 
@@ -49,9 +48,10 @@ public class MyGcmListenerService extends GcmListenerService {
     @Override
     public void onMessageReceived(String from, Bundle data) {
         sharedPref = new SharedPref(getApplicationContext());
-        String message = data.getString("message");
-        Log.d(TAG, "From: " + from);
-        Log.d(TAG, "Message: " + message);
+        System.out.println("toString :::: " + data.toString());
+//        String message = data.getString("message");
+//        Log.d(TAG, "From: " + from);
+//        Log.d(TAG, "Message: " + message);
 
         if (from.startsWith("/topics/")) {
             // message received from some topic.
@@ -72,7 +72,7 @@ public class MyGcmListenerService extends GcmListenerService {
          * that a message was received.
          */
         if (sharedPref.getStringPref(SharedDefine.SHARED_PUSH_ON_OFF).equals("Y"))
-            sendNotification(message);
+            sendNotification("asd");
         // [END_EXCLUDE]
     }
     // [END receive_message]
