@@ -132,8 +132,6 @@ public class ProfileController {
                     Gson gson = new Gson();
                     String jsonOutput = jsonObject.toString();
 
-
-
                     Type type = new TypeToken<Member>() {
                     }.getType();
                     final Member member = gson.fromJson(jsonOutput, type);
@@ -164,7 +162,7 @@ public class ProfileController {
         });
     }
 
-    public void GetMyPost(int page) {
+    public void getMyPost(int page) {
 
         // 프로그레스
         final ProgressDialog progressDialog = new ProgressDialog(profileActivity, R.style.MyProgressBarDialog);
@@ -178,7 +176,7 @@ public class ProfileController {
         params.put("member_srl", (new SharedPref(profileActivity)).getStringPref(SharedDefine.SHARED_MEMBER_SRL));
         params.put("page", page);
 
-        HttpClient.get(UrlDefine.URL_GET_MY_POST, params, new JsonHttpResponseHandler() {
+        HttpClient.get(UrlDefine.URL_GET_MY_POSTS, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);

@@ -135,7 +135,7 @@ public class ProfileActivity extends BaseActivity {
 
                 curPage = 1;
                 swipeRefreshLayout.setRefreshing(false);
-                profileController.GetMyPost(curPage++);
+                profileController.getMyPost(curPage++);
             }
         });
 
@@ -149,7 +149,7 @@ public class ProfileActivity extends BaseActivity {
 
                 if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
                     if (curPage <= totalPage) {
-                        profileController.GetMyPost(curPage++);
+                        profileController.getMyPost(curPage++);
                     }
                 }
 
@@ -157,7 +157,7 @@ public class ProfileActivity extends BaseActivity {
         });
 
 
-        profileController.GetMyPost(curPage++);
+        profileController.getMyPost(curPage++);
 
     }
 

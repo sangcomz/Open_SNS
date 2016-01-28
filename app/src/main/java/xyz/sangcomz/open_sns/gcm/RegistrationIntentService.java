@@ -97,8 +97,42 @@ public class RegistrationIntentService extends IntentService {
      *
      * @param token The new token.
      */
-    private void sendRegistrationToServer(String token) {
+    private void sendRegistrationToServer(final String token) {
         // Add custom implementation, as needed.
+
+//        new Handler().post(new Runnable() {
+//            @Override
+//            public void run() {
+//                RequestParams params = new RequestParams();
+//
+//                params.put("member_srl", (new SharedPref(getApplication())).getStringPref(SharedDefine.SHARED_MEMBER_SRL));
+//                params.put("member_device_token", token);
+//
+//                System.out.println("params :::: " + params.toString());
+//
+//                HttpClient.syncPost(UrlDefine.URL_PHONE_INFO, params, new JsonHttpResponseHandler() {
+//                    @Override
+//                    public void onSuccess(int statusCode, Header[] headers, final JSONObject response) {
+//                        super.onSuccess(statusCode, headers, response);
+//                        System.out.println("sendRegistrationToServer onSuccess JSONObject :::: " + response.toString());
+//                        try {
+//                            int stat = response.getInt("stat");
+//                            if (stat == 1) {
+//                            } else {
+//                            }
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//
+//                    }
+//
+//                    @Override
+//                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+//                        super.onFailure(statusCode, headers, responseString, throwable);
+//                    }
+//                });
+//            }
+//        });
 
         RequestParams params = new RequestParams();
 
@@ -115,34 +149,6 @@ public class RegistrationIntentService extends IntentService {
                 try {
                     int stat = response.getInt("stat");
                     if (stat == 1) {
-//                        new Thread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                try {
-//
-//                                    JSONObject jsonObject = null;
-//
-//                                    jsonObject = response.getJSONObject("response");
-//                                    (new SharedPref(splashActivity)).setMemberPref(jsonObject.getString("member_srl"),
-//                                            jsonObject.getString("member_name"),
-//                                            jsonObject.getString("member_profile"),
-//                                            jsonObject.getString("member_profile_bg"));
-//
-//                                    (new SharedPref(splashActivity)).setSettings(jsonObject.getString("setting_push_on_off"),
-//                                            jsonObject.getString("setting_searchable"));
-//
-//                                    GlobalApplication.setDrawableBg((Utils.drawableFromUrl(splashActivity,
-//                                            (new SharedPref(splashActivity)).getStringPref(SharedDefine.SHARED_MEMBER_PROFILE_BG))));
-//
-//                                    splashActivity.redirectMainActivity();
-//                                    splashActivity.finish();
-//                                } catch (IOException e) {
-//                                    e.printStackTrace();
-//                                } catch (JSONException e) {
-//                                    e.printStackTrace();
-//                                }
-//                            }
-//                        }).start();
                     } else {
                     }
                 } catch (JSONException e) {

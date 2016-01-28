@@ -1,7 +1,6 @@
-package xyz.sangcomz.open_sns.ui.main.fragments.timeline;
+package xyz.sangcomz.open_sns.ui.post;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.view.Window;
 
 import com.google.gson.Gson;
@@ -9,39 +8,32 @@ import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 import xyz.sangcomz.open_sns.R;
 import xyz.sangcomz.open_sns.bean.Post;
-import xyz.sangcomz.open_sns.core.SharedPref.SharedPref;
 import xyz.sangcomz.open_sns.core.http.HttpClient;
-import xyz.sangcomz.open_sns.define.SharedDefine;
 import xyz.sangcomz.open_sns.define.UrlDefine;
 
 /**
- * Created by sangc on 2015-12-29.
+ * Created by sangcomz on 1/28/16.
  */
-public class TimeLineController {
-    Context context;
-    TimeLineFragment timeLineFragment;
+public class PostController {
 
+    PostActivity postActivity;
 
-    public TimeLineController(Context context, TimeLineFragment timeLineFragment) {
-        this.context = context;
-        this.timeLineFragment = timeLineFragment;
+    public PostController(PostActivity postActivity) {
+        this.postActivity = postActivity;
     }
 
-    public void getPosts(int page) {
+    protected void getPost(String postSrl) {
 
         // 프로그레스
-        final ProgressDialog progressDialog = new ProgressDialog(context, R.style.MyProgressBarDialog);
+        final ProgressDialog progressDialog = new ProgressDialog(postActivity, R.style.MyProgressBarDialog);
         progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         progressDialog.setProgressStyle(android.R.style.Widget_Material_ProgressBar_Small);
         progressDialog.show();
@@ -49,10 +41,9 @@ public class TimeLineController {
 
         RequestParams params = new RequestParams();
 
-        params.put("member_srl", (new SharedPref(context)).getStringPref(SharedDefine.SHARED_MEMBER_SRL));
-        params.put("page", page);
+        params.put("post_srl", postSrl);
 
-        HttpClient.get(UrlDefine.URL_GET_POSTS, params, new JsonHttpResponseHandler() {
+        HttpClient.get(UrlDefine.URL_GET_POST, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -60,19 +51,15 @@ public class TimeLineController {
                 progressDialog.dismiss();
                 System.out.println("onSuccess JSONObject :::: " + response.toString());
                 try {
-                    JSONArray jsonArray = response.getJSONArray("posts");
-                    JSONObject page = response.getJSONObject("page");
+                    JSONObject jsonObject = response.getJSONObject("post");
                     Gson gson = new Gson();
-                    String jsonOutput = jsonArray.toString();
+                    String jsonOutput = jsonObject.toString();
 
-                    Type listType = new TypeToken<List<Post>>() {
+                    Type type = new TypeToken<Post>() {
                     }.getType();
-                    List<Post> posts = (List<Post>) gson.fromJson(jsonOutput, listType);
+                    Post post = gson.fromJson(jsonOutput, type);
 
-                    timeLineFragment.setTotalPage(page.getInt("total_page"));
-
-
-                    timeLineFragment.setPosts((ArrayList<Post>) posts);
+                    postActivity.setPost(post);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -88,4 +75,5 @@ public class TimeLineController {
             }
         });
     }
+
 }

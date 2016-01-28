@@ -2,6 +2,12 @@ package xyz.sangcomz.open_sns.util;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -108,5 +114,44 @@ public class Utils {
             }
         }
         return "-";
+    }
+
+    public static Bitmap getCircleBitmap(Context context, Bitmap bitmap) {
+        double size = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 176, context.getResources().getDisplayMetrics());
+        double ratio;
+        final Bitmap output = Bitmap.createBitmap((int) size,
+                (int) size, Bitmap.Config.ARGB_8888);
+
+        final Canvas canvas = new Canvas(output);
+        if (bitmap.getWidth() > bitmap.getHeight() && (size > bitmap.getHeight() || size < bitmap.getHeight())) {
+            ratio = size / (double) bitmap.getHeight();
+        } else if (bitmap.getHeight() > bitmap.getWidth() && (size < bitmap.getWidth() || size > bitmap.getWidth())) {
+            ratio = size / (double) bitmap.getWidth();
+        } else if (bitmap.getHeight() == bitmap.getWidth() && (size < bitmap.getWidth() || size > bitmap.getWidth())) {
+            ratio = size / (double) bitmap.getWidth();
+        } else {
+            ratio = 1;
+        }
+//        System.out.println("size :::: " + size);
+//        System.out.println("bitmap.getWidth() :::: " + bitmap.getWidth());
+//        System.out.println("bitmap.getHeight() :::: " + bitmap.getHeight());
+//        System.out.println("ratio :::: " + ratio);
+        Bitmap resized = Bitmap.createScaledBitmap(bitmap, (int) (bitmap.getWidth() * ratio), (int) (bitmap.getHeight() * ratio), true);
+        final int color = 0xff424242;
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, (int) size, (int) size);
+        final RectF rectF = new RectF(rect);
+
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(color);
+        canvas.drawOval(rectF, paint);
+
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(resized, rect, rect, paint);
+
+        bitmap.recycle();
+
+        return output;
     }
 }

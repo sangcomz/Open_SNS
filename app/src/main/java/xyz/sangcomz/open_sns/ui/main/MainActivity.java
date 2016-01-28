@@ -45,7 +45,7 @@ import xyz.sangcomz.open_sns.ui.main.fragments.friends.FriendsFragment;
 import xyz.sangcomz.open_sns.ui.main.fragments.search.SearchFriendFragment;
 import xyz.sangcomz.open_sns.ui.main.fragments.setting.SettingFragment;
 import xyz.sangcomz.open_sns.ui.main.fragments.timeline.TimeLineFragment;
-import xyz.sangcomz.open_sns.ui.post.AddPostActivity;
+import xyz.sangcomz.open_sns.ui.post.add.AddPostActivity;
 import xyz.sangcomz.open_sns.util.AnimUtils;
 import xyz.sangcomz.open_sns.util.Utils;
 

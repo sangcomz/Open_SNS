@@ -20,17 +20,29 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import com.google.android.gms.gcm.GcmListenerService;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import xyz.sangcomz.open_sns.R;
+import xyz.sangcomz.open_sns.bean.Member;
 import xyz.sangcomz.open_sns.core.SharedPref.SharedPref;
 import xyz.sangcomz.open_sns.define.SharedDefine;
-import xyz.sangcomz.open_sns.ui.main.MainActivity;
+import xyz.sangcomz.open_sns.ui.post.PostActivity;
+import xyz.sangcomz.open_sns.util.Utils;
 
 public class MyGcmListenerService extends GcmListenerService {
 
@@ -48,10 +60,21 @@ public class MyGcmListenerService extends GcmListenerService {
     @Override
     public void onMessageReceived(String from, Bundle data) {
         sharedPref = new SharedPref(getApplicationContext());
-        System.out.println("toString :::: " + data.toString());
-//        String message = data.getString("message");
-//        Log.d(TAG, "From: " + from);
-//        Log.d(TAG, "Message: " + message);
+//        System.out.println("toString :::: " + data.toString());
+        String message = data.getString("comment_content");
+        String postSrl = data.getString("post_srl");
+        String postWriterMember = data.getString("post_writer_member");
+        String commentWriterMember = data.getString("comment_writer_member");
+        Log.d(TAG, "From: " + from);
+        Log.d(TAG, "Message: " + message);
+
+        Gson gson = new Gson();
+        Type type = new TypeToken<Member>() {
+        }.getType();
+        final Member postMember = gson.fromJson(postWriterMember, type);
+        final Member commentMember = gson.fromJson(commentWriterMember, type);
+        Log.d(TAG, "postWriterMember: " + postMember.getMemberName());
+        Log.d(TAG, "commentWriterMember: " + commentMember.getMemberName());
 
         if (from.startsWith("/topics/")) {
             // message received from some topic.
@@ -72,7 +95,7 @@ public class MyGcmListenerService extends GcmListenerService {
          * that a message was received.
          */
         if (sharedPref.getStringPref(SharedDefine.SHARED_PUSH_ON_OFF).equals("Y"))
-            sendNotification("asd");
+            sendCommentNotification(message, postSrl, postMember, commentMember);
         // [END_EXCLUDE]
     }
     // [END receive_message]
@@ -82,17 +105,32 @@ public class MyGcmListenerService extends GcmListenerService {
      *
      * @param message GCM message received.
      */
-    private void sendNotification(String message) {
-        Intent intent = new Intent(this, MainActivity.class);
+    private void sendCommentNotification(String message, String postSrl, Member postMember, Member commentMember) {
+        Intent intent = new Intent(this, PostActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("post_srl", postSrl);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
+
+        URL url = null;
+        Bitmap image = null;
+        try {
+            url = new URL(commentMember.getProfilePath());
+            image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            image = BitmapFactory.decodeResource(getResources(), R.drawable.ic_noti);
+//            image = Bitmap.createBitmap(R.mipmap.stub,);
+            e.printStackTrace();
+        }
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_noti)
-                .setContentTitle("open sns")
-                .setContentText(message)
+                .setContentTitle(commentMember.getMemberName())
+                .setLargeIcon(Utils.getCircleBitmap(getApplicationContext(), image))
+                .setContentText(getString(R.string.txt_noti_comment) + message)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);

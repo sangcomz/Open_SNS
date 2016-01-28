@@ -4,6 +4,7 @@
     <string name="txt_logo_bottom">Open_Sns</string>
     <string name="txt_timeline">타임라인</string>
     <string name="txt_add_post">글 작성</string>
+    <string name="txt_view_post">포스트 보기</string>
     <string name="txt_friends">친구</string>
     <string name="txt_search_friend">친구찾기</string>
     <string name="txt_my_profile">프로필</string>
@@ -33,16 +34,15 @@
     <string name="txt_device_version">Device Version : </string>
     <string name="txt_current_version">Current Version : </string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search_hint">닉네임을 입력해주세요.</string>
 
 
     <string name="date_minutes_ago">분전</string>
     <string name="date_hours_ago">시간전</string>
     <string name="txt_comment">댓글</string>
-    <string name="msg_comment_hint">댓글을 입력하세요...</string>
+    <string name="msg_comment_hint">댓글을 입력하세요…</string>
     <string name="txt_comment_dialog_title">댓글 삭제</string>
     <string name="msg_comment_dialog">댓글을 삭제하시겠습니까?</string>
+    <string name="txt_noti_comment">"댓글 : "</string>
 
 </resources>
