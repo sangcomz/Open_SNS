@@ -71,7 +71,7 @@ public class CommentActivity extends BaseActivity implements View.OnClickListene
         recyclerView.setAdapter(commentAdapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
 
-        postSrl = getIntent().getStringExtra("postSrl");
+        postSrl = getIntent().getStringExtra("post_srl");
 
         commentController.getComment(postSrl, curPage++, true);
 

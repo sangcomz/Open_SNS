@@ -44,7 +44,6 @@ public class GlobalApplication extends Application {
     private static volatile Drawable drawableBg = null;
 
     public static Activity getCurrentActivity() {
-        System.out.println("currentActivity :::: " + currentActivity);
         return currentActivity;
     }
 
