@@ -106,6 +106,7 @@ public class MyGcmListenerService extends GcmListenerService {
      * @param message GCM message received.
      */
     private void sendCommentNotification(String message, String postSrl, Member postMember, Member commentMember) {
+
         Intent intent = new Intent(this, PostActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("post_srl", postSrl);

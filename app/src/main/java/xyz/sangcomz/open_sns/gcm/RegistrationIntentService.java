@@ -141,7 +141,7 @@ public class RegistrationIntentService extends IntentService {
 
         System.out.println("params :::: " + params.toString());
 
-        HttpClient.post(UrlDefine.URL_PHONE_INFO, params, new JsonHttpResponseHandler() {
+        HttpClient.syncGet(UrlDefine.URL_PHONE_INFO, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, final JSONObject response) {
                 super.onSuccess(statusCode, headers, response);

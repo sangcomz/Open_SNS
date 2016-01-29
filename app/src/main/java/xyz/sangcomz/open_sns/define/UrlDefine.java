@@ -20,6 +20,7 @@ public class UrlDefine {
     public static final String URL_PHONE_INFO = HTTP + SERVER_HOST + "/account/phone_info.php";
 
     public static final String URL_POST_CREATE = HTTP + SERVER_HOST + "/post/create.php";
+    public static final String URL_POST_DELETE = HTTP + SERVER_HOST + "/post/delete.php";
     public static final String URL_GET_POSTS = HTTP + SERVER_HOST + "/post/get_posts.php";
     public static final String URL_GET_POST = HTTP + SERVER_HOST + "/post/get_post.php";
 

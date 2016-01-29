@@ -118,7 +118,8 @@ public class ProfileActivity extends BaseActivity {
         else
             collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
 
-        profileController.getMember(getIntent().getStringExtra("member_srl"));
+        memberSrl = getIntent().getStringExtra("member_srl");
+        profileController.getMember(memberSrl);
 
 
         gridLayoutManager = new GridLayoutManager(this, 3);
@@ -132,10 +133,9 @@ public class ProfileActivity extends BaseActivity {
             @Override
             public void onRefresh() {
                 posts.clear();
-
                 curPage = 1;
                 swipeRefreshLayout.setRefreshing(false);
-                profileController.getMyPost(curPage++);
+                profileController.getMyPost(curPage++, memberSrl);
             }
         });
 
@@ -149,15 +149,25 @@ public class ProfileActivity extends BaseActivity {
 
                 if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
                     if (curPage <= totalPage) {
-                        profileController.getMyPost(curPage++);
+                        profileController.getMyPost(curPage++, memberSrl);
                     }
                 }
 
             }
         });
 
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (verticalOffset == 0)
+                    swipeRefreshLayout.setEnabled(true);
+                else
+                    swipeRefreshLayout.setEnabled(false);
+            }
+        });
 
-        profileController.getMyPost(curPage++);
+
+        profileController.getMyPost(curPage++, memberSrl);
 
     }
 

@@ -1,6 +1,7 @@
 package xyz.sangcomz.open_sns.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 
 import xyz.sangcomz.open_sns.R;
 import xyz.sangcomz.open_sns.bean.Post;
+import xyz.sangcomz.open_sns.ui.post.PostActivity;
 import xyz.sangcomz.open_sns.util.custom.SquareImageView;
 
 /**
@@ -55,6 +57,15 @@ public class GridPostImageAdapter
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
         Glide.with(context).load(posts.get(position).getPostImage()).centerCrop().into(holder.sivPostImage);
+
+        holder.sivPostImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(holder.sivPostImage.getContext(), PostActivity.class);
+                i.putExtra("post_srl", posts.get(position).getPostSrl());
+                holder.sivPostImage.getContext().startActivity(i);
+            }
+        });
 
 
 

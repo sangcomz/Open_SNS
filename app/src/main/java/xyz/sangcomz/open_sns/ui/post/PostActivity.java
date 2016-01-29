@@ -2,19 +2,23 @@ package xyz.sangcomz.open_sns.ui.post;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
 import xyz.sangcomz.open_sns.R;
 import xyz.sangcomz.open_sns.bean.Post;
+import xyz.sangcomz.open_sns.core.SharedPref.SharedPref;
 import xyz.sangcomz.open_sns.core.common.BaseActivity;
 import xyz.sangcomz.open_sns.core.common.view.DeclareView;
+import xyz.sangcomz.open_sns.define.SharedDefine;
 import xyz.sangcomz.open_sns.ui.comment.CommentActivity;
 import xyz.sangcomz.open_sns.util.Utils;
 import xyz.sangcomz.open_sns.util.custom.RoundedImageView;
@@ -45,8 +49,13 @@ public class PostActivity extends BaseActivity implements View.OnClickListener {
     @DeclareView(id = R.id.area_comment, click = "this")
     protected LinearLayout areaComment;
 
+    @DeclareView(id = R.id.area_more, click = "this")
+    protected RelativeLayout areaMore;
+
     PostController postController;
     boolean isPush;
+
+    Post post = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +83,7 @@ public class PostActivity extends BaseActivity implements View.OnClickListener {
     }
 
     protected void setPost(final Post post){
+        this.post = post;
         Glide.with(this).load(post.getMemberProfile()).centerCrop().into(rivProfile);
         Glide.with(this).load(post.getPostImage()).centerCrop().into(sivPostImage);
         txtMemberName.setText(post.getMemberName());
@@ -93,15 +103,80 @@ public class PostActivity extends BaseActivity implements View.OnClickListener {
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_top_to_bottom, R.anim.slide_top_to_bottom);
                 break;
+
+            case R.id.area_more:
+                PopupMenu popup = new PopupMenu(areaMore.getContext(), areaMore, Gravity.BOTTOM);
+                //Inflating the Popup using xml file
+                popup.getMenuInflater().inflate(R.menu.menu_more_post, popup.getMenu());
+
+                MenuItem menuDelete = popup.getMenu().findItem(R.id.action_delete);
+
+                if (post.getMemberSrl().equals(new SharedPref(this).getStringPref(SharedDefine.SHARED_MEMBER_SRL)))
+                    menuDelete.setVisible(true);
+                else
+                    menuDelete.setVisible(false);
+
+                //registering popup with OnMenuItemClickListener
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        int id = item.getItemId();
+                        switch (id) {
+                            case R.id.action_delete:
+                                PostController.deletePost(PostActivity.this, post.getPostSrl());
+                                break;
+                            case R.id.action_share:
+                                break;
+                        }
+                        return false;
+                    }
+
+                });
+                popup.show();
+                break;
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_add_post, menu);
-        return true;
-    }
+//    holder.areaMore.setOnClickListener(new View.OnClickListener() {
+//        @Override
+//        public void onClick(View v) {
+//            PopupMenu popup = new PopupMenu(holder.areaMore.getContext(), holder.areaMore, Gravity.BOTTOM);
+//            //Inflating the Popup using xml file
+//            popup.getMenuInflater().inflate(R.menu.menu_more_post, popup.getMenu());
+//
+//            MenuItem menuDelete = popup.getMenu().findItem(R.id.action_delete);
+//
+//            if (posts.get(position).getMemberSrl().equals(new SharedPref(context).getStringPref(SharedDefine.SHARED_MEMBER_SRL)))
+//                menuDelete.setVisible(true);
+//            else
+//                menuDelete.setVisible(false);
+//
+//            //registering popup with OnMenuItemClickListener
+//            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//                @Override
+//                public boolean onMenuItemClick(MenuItem item) {
+//                    int id = item.getItemId();
+//                    switch (id){
+//                        case R.id.action_delete:
+//                            PostController.deletePost(context, posts.get(position).getPostSrl());
+//                            break;
+//                        case R.id.action_share:
+//                            break;
+//                    }
+//                    return false;
+//                }
+//
+//            });
+//            popup.show();
+//        }
+//    });
+
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.menu_add_post, menu);
+//        return true;
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -162,7 +162,7 @@ public class ProfileController {
         });
     }
 
-    public void getMyPost(int page) {
+    public void getMyPost(int page, String member_srl) {
 
         // 프로그레스
         final ProgressDialog progressDialog = new ProgressDialog(profileActivity, R.style.MyProgressBarDialog);
@@ -173,7 +173,7 @@ public class ProfileController {
 
         RequestParams params = new RequestParams();
 
-        params.put("member_srl", (new SharedPref(profileActivity)).getStringPref(SharedDefine.SHARED_MEMBER_SRL));
+        params.put("member_srl", member_srl);
         params.put("page", page);
 
         HttpClient.get(UrlDefine.URL_GET_MY_POSTS, params, new JsonHttpResponseHandler() {
