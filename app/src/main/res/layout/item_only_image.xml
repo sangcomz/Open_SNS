@@ -1,0 +1,6 @@
+<xyz.sangcomz.open_sns.util.custom.SquareImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/siv_post_image"
+    android:layout_marginTop="4dp"
+    android:layout_marginLeft="4dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />

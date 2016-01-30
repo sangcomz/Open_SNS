@@ -57,7 +57,7 @@ public class CommentController {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                System.out.println("onSuccess JSONObject :::: " + response.toString());
+                System.out.println("addComment onSuccess JSONObject :::: " + response.toString());
                 try {
                     JSONObject jsonObject = response.getJSONObject("comments");
 //                    Gson gson = new Gson();
@@ -69,7 +69,7 @@ public class CommentController {
 
                     etComment.setText("");
 
-                    commentActivity.setCurPage(1);
+                    commentActivity.setCurPage(2);
                     getComment(jsonObject.getString("post_srl"), 1, true);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -80,7 +80,7 @@ public class CommentController {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
-                System.out.println("onFailure responseString :::: " + throwable.toString());
+                System.out.println("addComment onFailure responseString :::: " + throwable.toString());
             }
         });
     }
@@ -105,7 +105,7 @@ public class CommentController {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
-                System.out.println("onFailure responseString :::: " + throwable.toString());
+                System.out.println("delComment onFailure responseString :::: " + throwable.toString());
             }
         });
     }
@@ -124,7 +124,7 @@ public class CommentController {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                System.out.println("onSuccess JSONObject :::: " + response.toString());
+                System.out.println("getComment onSuccess JSONObject :::: " + response.toString());
                 try {
 
                     JSONArray jsonArray = response.getJSONArray("comments");
@@ -148,7 +148,7 @@ public class CommentController {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
-                System.out.println("onFailure responseString :::: " + throwable.toString());
+                System.out.println("getComment onFailure responseString :::: " + throwable.toString());
             }
         });
     }

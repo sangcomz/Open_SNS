@@ -47,7 +47,10 @@ public class CommentActivity extends BaseActivity implements View.OnClickListene
     NoDataController noDataController;
     LinearLayoutManager linearLayoutManager;
 
-    private int curPage = 1;
+    int pastVisiblesItems, visibleItemCount, totalItemCount;
+
+    int curPage = 1;
+
     private int totalPage;
 
     @Override
@@ -68,7 +71,7 @@ public class CommentActivity extends BaseActivity implements View.OnClickListene
         recyclerView.setAdapter(commentAdapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
 
-        postSrl = getIntent().getStringExtra("postSrl");
+        postSrl = getIntent().getStringExtra("post_srl");
 
         commentController.getComment(postSrl, curPage++, true);
 
@@ -78,6 +81,24 @@ public class CommentActivity extends BaseActivity implements View.OnClickListene
                 swipeRefreshLayout.setRefreshing(false);
                 curPage = 1;
                 commentController.getComment(postSrl, curPage++, true);
+            }
+        });
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+                visibleItemCount = linearLayoutManager.getChildCount();
+                totalItemCount = linearLayoutManager.getItemCount();
+                pastVisiblesItems = linearLayoutManager.findFirstVisibleItemPosition();
+
+
+                if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                    if (curPage <= totalPage) {
+                        commentController.getComment(postSrl, curPage++, false);
+                    }
+                }
+
             }
         });
     }

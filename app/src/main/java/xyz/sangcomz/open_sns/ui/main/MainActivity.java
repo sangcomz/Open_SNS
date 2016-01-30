@@ -13,11 +13,14 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.mikepenz.crossfadedrawerlayout.view.CrossfadeDrawerLayout;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -41,15 +44,19 @@ import xyz.sangcomz.open_sns.core.common.BaseActivity;
 import xyz.sangcomz.open_sns.core.common.GlobalApplication;
 import xyz.sangcomz.open_sns.core.common.view.DeclareView;
 import xyz.sangcomz.open_sns.define.SharedDefine;
+import xyz.sangcomz.open_sns.gcm.RegistrationIntentService;
 import xyz.sangcomz.open_sns.ui.main.fragments.friends.FriendsFragment;
 import xyz.sangcomz.open_sns.ui.main.fragments.search.SearchFriendFragment;
 import xyz.sangcomz.open_sns.ui.main.fragments.setting.SettingFragment;
 import xyz.sangcomz.open_sns.ui.main.fragments.timeline.TimeLineFragment;
-import xyz.sangcomz.open_sns.ui.post.AddPostActivity;
+import xyz.sangcomz.open_sns.ui.post.add.AddPostActivity;
 import xyz.sangcomz.open_sns.util.AnimUtils;
 import xyz.sangcomz.open_sns.util.Utils;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
+
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private static final String TAG = "MainActivity";
 
     @DeclareView(id = R.id.appbar)
     AppBarLayout appBarLayout;
@@ -82,9 +89,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     MainController mainController;
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        headerResult.setBackground(GlobalApplication.getDrawableBg());
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main, true);
+
+        if (checkPlayServices()) {
+            // Start IntentService to register this application with GCM.
+            Intent intent = new Intent(this, RegistrationIntentService.class);
+            startService(intent);
+        }
+
+
         mainController = new MainController(this);
         tabLayout.setSelectedTabIndicatorHeight(Utils.convertDP(this, 4));
 
@@ -110,7 +131,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         // Create the AccountHeader
         headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
-                .withHeaderBackground(GlobalApplication.getDrawableBg()) //펼쳤을때 백그라운드 색
+//                .withHeaderBackground(GlobalApplication.getDrawableBg()) //펼쳤을때 백그라운드 색
                 .addProfiles(profile)
                 .withSelectionListEnabledForSingleProfile(false)
                 .withSavedInstance(savedInstanceState)
@@ -221,6 +242,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         animFab(1);
 
                 }
+
+
+
 
             }
         });
@@ -359,4 +383,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         }
     }
+
+    /**
+     * Check the device to make sure it has the Google Play Services APK. If
+     * it doesn't, display a dialog that allows users to download the APK from
+     * the Google Play Store or enable it in the device's system settings.
+     */
+    private boolean checkPlayServices() {
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (apiAvailability.isUserResolvableError(resultCode)) {
+                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
+                        .show();
+            } else {
+                Log.i(TAG, "This device is not supported.");
+                finish();
+            }
+            return false;
+        }
+        return true;
+    }
+
 }

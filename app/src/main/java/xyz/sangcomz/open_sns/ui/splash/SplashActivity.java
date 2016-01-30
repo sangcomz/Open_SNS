@@ -34,12 +34,18 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
 
     String memberSrl;
 
+    String deviceToken;
+
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private static final String TAG = "SplashActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash, true);
         GlobalApplication.setCurrentActivity(this);
         splashController = new SplashController(this);
+
 
         memberSrl = sharedPref.getStringPref(SharedDefine.SHARED_MEMBER_SRL);
 
@@ -53,6 +59,8 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
                 }
             }, 2000);
         }
+
+
 
 
     }
@@ -76,7 +84,7 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        switch (id){
+        switch (id) {
             case R.id.btn_login:
                 splashController.Login(etName.getText().toString(), etPassword.getText().toString());
                 break;
@@ -85,5 +93,11 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
                 redirectJoinActivity();
                 break;
         }
+
+
     }
+
+
+
+
 }

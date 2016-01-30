@@ -38,7 +38,7 @@ public class TimeLineController {
         this.timeLineFragment = timeLineFragment;
     }
 
-    public void GetPost(int page) {
+    public void getPosts(int page) {
 
         // 프로그레스
         final ProgressDialog progressDialog = new ProgressDialog(context, R.style.MyProgressBarDialog);
@@ -52,7 +52,7 @@ public class TimeLineController {
         params.put("member_srl", (new SharedPref(context)).getStringPref(SharedDefine.SHARED_MEMBER_SRL));
         params.put("page", page);
 
-        HttpClient.get(UrlDefine.URL_GET_POST, params, new JsonHttpResponseHandler() {
+        HttpClient.get(UrlDefine.URL_GET_POSTS, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);

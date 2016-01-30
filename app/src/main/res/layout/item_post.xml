@@ -29,7 +29,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="no Name"
             android:textColor="@color/colorPrimaryText" />
 
         <TextView
@@ -37,7 +36,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
-            android:text="no Name"
             android:textColor="@color/colorPrimaryText" />
     </LinearLayout>
 
@@ -49,7 +47,7 @@
         android:layout_marginBottom="5dp" />
 
     <RelativeLayout
-        android:id="@+id/area_more"
+        android:id="@+id/area_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/siv_post_image"
@@ -62,6 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/back_button_black_selector"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <ImageView
@@ -74,11 +73,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
+                android:text="0"
                 android:textColor="@color/colorPrimaryText" />
         </LinearLayout>
 
 
         <RelativeLayout
+            android:id="@+id/area_more"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -99,7 +100,7 @@
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@+id/area_more"
+        android:layout_below="@+id/area_bar"
         android:layout_margin="5dp"
         android:background="@color/colorBlurDivider" />
 

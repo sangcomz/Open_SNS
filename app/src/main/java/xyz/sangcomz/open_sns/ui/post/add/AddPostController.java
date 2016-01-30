@@ -1,6 +1,8 @@
-package xyz.sangcomz.open_sns.ui.post;
+package xyz.sangcomz.open_sns.ui.post.add;
 
+import android.app.ProgressDialog;
 import android.graphics.Bitmap;
+import android.view.Window;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -12,6 +14,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 import cz.msebera.android.httpclient.Header;
+import xyz.sangcomz.open_sns.R;
 import xyz.sangcomz.open_sns.core.SharedPref.SharedPref;
 import xyz.sangcomz.open_sns.core.http.HttpClient;
 import xyz.sangcomz.open_sns.define.SharedDefine;
@@ -32,6 +35,12 @@ public class AddPostController {
 
     public void AddPost(String content, Bitmap bitImage) {
 
+        final ProgressDialog progressDialog = new ProgressDialog(addPostActivity, R.style.MyProgressBarDialog);
+        progressDialog.setCancelable(false);
+        progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        progressDialog.setProgressStyle(android.R.style.Widget_Material_ProgressBar_Small);
+        progressDialog.show();
+
         RequestParams params = new RequestParams();
 
         params.put("post_content", content);
@@ -50,6 +59,7 @@ public class AddPostController {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
+                progressDialog.dismiss();
                 System.out.println("onSuccess JSONObject :::: " + response.toString());
                 try {
                     JSONObject jsonObject = response.getJSONObject("response");
@@ -66,6 +76,7 @@ public class AddPostController {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
+                progressDialog.dismiss();
                 System.out.println("onFailure responseString :::: " + throwable.toString());
             }
         });

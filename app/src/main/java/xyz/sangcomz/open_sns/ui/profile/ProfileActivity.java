@@ -10,11 +10,15 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -25,10 +29,13 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import xyz.sangcomz.open_sns.R;
+import xyz.sangcomz.open_sns.adapter.GridPostImageAdapter;
 import xyz.sangcomz.open_sns.bean.Member;
+import xyz.sangcomz.open_sns.bean.Post;
 import xyz.sangcomz.open_sns.core.common.BaseActivity;
 import xyz.sangcomz.open_sns.core.common.view.DeclareView;
 import xyz.sangcomz.open_sns.util.AnimUtils;
+import xyz.sangcomz.open_sns.util.NoDataController;
 import xyz.sangcomz.open_sns.util.custom.RoundedImageView;
 
 public class ProfileActivity extends BaseActivity {
@@ -63,10 +70,31 @@ public class ProfileActivity extends BaseActivity {
     @DeclareView(id = R.id.recyclerview)
     RecyclerView recyclerView;
 
+    @DeclareView(id = R.id.backdrop)
+    ImageView backDrop;
+
+    @DeclareView(id = R.id.area_nodata)
+    RelativeLayout areaNoData;
+
+    @DeclareView(id = R.id.swipe_refresh)
+    SwipeRefreshLayout swipeRefreshLayout;
+
 
     ProfileController profileController;
 
     String memberSrl;
+
+    NoDataController noDataController;
+    GridPostImageAdapter gridPostImageAdapter;
+    ArrayList<Post> posts = new ArrayList<>();
+
+    GridLayoutManager gridLayoutManager;
+
+    int pastVisiblesItems, visibleItemCount, totalItemCount;
+
+    int curPage = 1;
+
+    private int totalPage;
 
 
     @Override
@@ -90,15 +118,56 @@ public class ProfileActivity extends BaseActivity {
         else
             collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
 
-        profileController.getMember(getIntent().getStringExtra("member_srl"));
+        memberSrl = getIntent().getStringExtra("member_srl");
+        profileController.getMember(memberSrl);
 
 
-//        Bitmap myBitmap = Glide.with(getApplicationContext())
-//                .load(postImageBeans.get(i).getImagePath())
-//                .asBitmap()
-//                .override(600, 600)
-//                .into(600, 600)
-//                .get();
+        gridLayoutManager = new GridLayoutManager(this, 3);
+        initAreaNoData();
+        curPage = 1;
+        recyclerView.setLayoutManager(gridLayoutManager);
+        gridPostImageAdapter = new GridPostImageAdapter(this, posts);
+        recyclerView.setAdapter(gridPostImageAdapter);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                posts.clear();
+                curPage = 1;
+                swipeRefreshLayout.setRefreshing(false);
+                profileController.getMyPost(curPage++, memberSrl);
+            }
+        });
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+                visibleItemCount = gridLayoutManager.getChildCount();
+                totalItemCount = gridLayoutManager.getItemCount();
+                pastVisiblesItems = gridLayoutManager.findFirstVisibleItemPosition();
+
+                if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                    if (curPage <= totalPage) {
+                        profileController.getMyPost(curPage++, memberSrl);
+                    }
+                }
+
+            }
+        });
+
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (verticalOffset == 0)
+                    swipeRefreshLayout.setEnabled(true);
+                else
+                    swipeRefreshLayout.setEnabled(false);
+            }
+        });
+
+
+        profileController.getMyPost(curPage++, memberSrl);
 
     }
 
@@ -163,6 +232,7 @@ public class ProfileActivity extends BaseActivity {
         String isMyProfile = member.getIsMyProfile();
         String isFollow = member.getFollowYN();
 
+
         collapsingToolbarLayout.setTitle(member.getMemberName());
         txtMemberName.setText(member.getMemberName());
         txtFollowerCount.setText(member.getMemberFollowerCount());
@@ -173,6 +243,11 @@ public class ProfileActivity extends BaseActivity {
                 .load(member.getProfilePath())
                 .centerCrop()
                 .into(rivProfile);
+
+        Glide.with(this)
+                .load(member.getMemberProfileBg())
+                .centerCrop()
+                .into(backDrop);
 
         if (isMyProfile.equals("Y")) {
             fab.setVisibility(View.GONE); // View.INVISIBLE might also be worth trying
@@ -207,5 +282,24 @@ public class ProfileActivity extends BaseActivity {
                 .withLayer()        //Software Type Hardware Type
                 .start();
 
+    }
+
+    protected void initAreaNoData() {
+        noDataController = new NoDataController(areaNoData, this);
+        noDataController.setNodata(R.drawable.ic_public_black_24dp, getString(R.string.msg_no_post));
+    }
+
+    public void setPosts(ArrayList<Post> posts) {
+        this.posts.addAll(posts);
+        if (posts.size() > 0) {
+            areaNoData.setVisibility(View.GONE);
+            gridPostImageAdapter.notifyDataSetChanged();
+        } else {
+            areaNoData.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void setTotalPage(int totalPage) {
+        this.totalPage = totalPage;
     }
 }

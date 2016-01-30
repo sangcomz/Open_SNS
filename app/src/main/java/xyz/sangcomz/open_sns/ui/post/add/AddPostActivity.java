@@ -1,4 +1,4 @@
-package xyz.sangcomz.open_sns.ui.post;
+package xyz.sangcomz.open_sns.ui.post.add;
 
 import android.content.Intent;
 import android.graphics.Bitmap;

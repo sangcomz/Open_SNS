@@ -27,7 +27,6 @@ public class TimeLineFragment extends BaseFragment {
 
     TimeLineController timeLineController;
     NoDataController noDataController;
-
     PostAdapter postAdapter;
     ArrayList<Post> posts = new ArrayList<>();
 
@@ -70,7 +69,7 @@ public class TimeLineFragment extends BaseFragment {
         postAdapter = new PostAdapter(getActivity(), posts);
         recyclerView.setAdapter(postAdapter);
 
-        timeLineController.GetPost(curPage++);
+        timeLineController.getPosts(curPage++);
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -78,7 +77,7 @@ public class TimeLineFragment extends BaseFragment {
                 posts.clear();
                 curPage = 1;
                 swipeRefreshLayout.setRefreshing(false);
-                timeLineController.GetPost(curPage++);
+                timeLineController.getPosts(curPage++);
             }
         });
 
@@ -93,7 +92,7 @@ public class TimeLineFragment extends BaseFragment {
 
                 if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
                     if (curPage <= totalPage) {
-                        timeLineController.GetPost(curPage++);
+                        timeLineController.getPosts(curPage++);
                     }
                 }
 
