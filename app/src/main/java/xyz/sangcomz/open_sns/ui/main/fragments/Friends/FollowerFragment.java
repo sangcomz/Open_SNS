@@ -1,6 +1,7 @@
 package xyz.sangcomz.open_sns.ui.main.fragments.friends;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -13,8 +14,9 @@ import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
-import xyz.sangcomz.open_sns.adapter.FollowAdapter;
+import de.greenrobot.event.EventBus;
 import xyz.sangcomz.open_sns.R;
+import xyz.sangcomz.open_sns.adapter.FollowAdapter;
 import xyz.sangcomz.open_sns.bean.FollowMember;
 import xyz.sangcomz.open_sns.core.common.BaseFragment;
 import xyz.sangcomz.open_sns.util.ItemDecoration.DividerItemDecoration;
@@ -41,8 +43,22 @@ public class FollowerFragment extends BaseFragment {
 
     public FollowerFragment() {
         // Required empty public constructor
+
+
     }
 
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onDetach() {
+        EventBus.getDefault().unregister(this);
+        super.onDetach();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,7 +70,7 @@ public class FollowerFragment extends BaseFragment {
         recyclerView.setLayoutManager(linearLayoutManager);
 
 //        followAdapter = new FollowAdapter(getActivity(), followMembers, false);
-        followController = new FollowController(getActivity(), followAdapter);
+        followController = new FollowController(this, followAdapter);
         followController.GetFollow(false, 1, this);
 
         areaNoData = (RelativeLayout) rootView.findViewById(R.id.area_nodata);
@@ -88,7 +104,6 @@ public class FollowerFragment extends BaseFragment {
 
             }
         });
-
         return rootView;
     }
 
@@ -96,7 +111,7 @@ public class FollowerFragment extends BaseFragment {
         this.followMembers = followMembers;
         if (followMembers.size() > 0) {
             areaNoData.setVisibility(View.GONE);
-            followAdapter = new FollowAdapter(getActivity(), followMembers, false);
+            followAdapter = new FollowAdapter(this, followMembers, false);
             recyclerView.setAdapter(followAdapter);
             recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         } else {
@@ -104,5 +119,13 @@ public class FollowerFragment extends BaseFragment {
         }
     }
 
+    public void onEvent(String con) {
+        if (!con.contains("FollowerFragment")){
+            followMembers.clear();
+            curPage = 1;
+            swipeRefreshLayout.setRefreshing(false);
+            followController.GetFollow(false, curPage++, FollowerFragment.this);
+        }
+    }
 
 }

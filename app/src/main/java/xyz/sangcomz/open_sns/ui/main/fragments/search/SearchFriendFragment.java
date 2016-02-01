@@ -84,7 +84,7 @@ public class SearchFriendFragment extends BaseFragment {
         this.followMembers = followMembers;
         if (followMembers.size() > 0) {
             areaNoData.setVisibility(View.GONE);
-            followAdapter = new FollowAdapter(getActivity(), followMembers, false);
+            followAdapter = new FollowAdapter(this, followMembers, false);
             recyclerView.setAdapter(followAdapter);
         } else {
             areaNoData.setVisibility(View.VISIBLE);

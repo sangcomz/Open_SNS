@@ -1,7 +1,6 @@
 package xyz.sangcomz.open_sns.ui.main.fragments.friends;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.view.Window;
 
@@ -19,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
+import de.greenrobot.event.EventBus;
 import xyz.sangcomz.open_sns.R;
 import xyz.sangcomz.open_sns.adapter.FollowAdapter;
 import xyz.sangcomz.open_sns.bean.FollowMember;
@@ -31,18 +31,18 @@ import xyz.sangcomz.open_sns.define.UrlDefine;
  * Created by sangc on 2015-12-28.
  */
 public class FollowController {
-    Context context;
+    Fragment fragment;
     FollowAdapter followAdapter;
 
-    public FollowController(Context context, FollowAdapter followAdapter) {
-        this.context = context;
+    public FollowController(Fragment fragment, FollowAdapter followAdapter) {
+        this.fragment = fragment;
         this.followAdapter = followAdapter;
     }
 
     public void Follow(String followMemberSrl, final boolean isFollow, final int position) {
 
         // 프로그레스
-        final ProgressDialog progressDialog = new ProgressDialog(context, R.style.MyProgressBarDialog);
+        final ProgressDialog progressDialog = new ProgressDialog(fragment.getContext(), R.style.MyProgressBarDialog);
         progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         progressDialog.setProgressStyle(android.R.style.Widget_Material_ProgressBar_Small);
         progressDialog.show();
@@ -50,7 +50,7 @@ public class FollowController {
         RequestParams params = new RequestParams();
 
 
-        params.put("member_srl", (new SharedPref(context)).getStringPref(SharedDefine.SHARED_MEMBER_SRL));
+        params.put("member_srl", (new SharedPref(fragment.getContext())).getStringPref(SharedDefine.SHARED_MEMBER_SRL));
         params.put("follow_member_srl", followMemberSrl);
 
         String url;
@@ -63,6 +63,9 @@ public class FollowController {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 System.out.println("onSuccess JSONObject :::: " + response.toString());
+
+                EventBus.getDefault().post(fragment.toString());
+
                 progressDialog.dismiss();
                 if (isFollow)
                     followAdapter.refreshFollowYn(position, "Y");
@@ -81,10 +84,11 @@ public class FollowController {
     }
 
 
+
     public void GetFollow(final boolean isFollow, int page, final Fragment fragment) {
         RequestParams params = new RequestParams();
 
-        params.put("member_srl", (new SharedPref(context)).getStringPref(SharedDefine.SHARED_MEMBER_SRL));
+        params.put("member_srl", (new SharedPref(fragment.getContext())).getStringPref(SharedDefine.SHARED_MEMBER_SRL));
         if (isFollow)
             params.put("mode", "following");
         else
@@ -123,4 +127,6 @@ public class FollowController {
             }
         });
     }
+
+
 }
