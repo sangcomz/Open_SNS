@@ -30,7 +30,10 @@ import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerUIUtils;
 
+import rx.Observable;
+import rx.Subscriber;
 import xyz.sangcomz.open_sns.R;
+import xyz.sangcomz.open_sns.bean.Post;
 
 /**
  * 이미지를 캐시를 앱 수준에서 관리하기 위한 애플리케이션 객체이다.
@@ -42,6 +45,9 @@ public class GlobalApplication extends Application {
     private static volatile GlobalApplication instance = null;
     private static volatile Activity currentActivity = null;
     private static volatile Drawable drawableBg = null;
+
+    public static volatile Observable<Post> refreshObservable;
+
 
     public static Activity getCurrentActivity() {
         return currentActivity;
@@ -76,6 +82,17 @@ public class GlobalApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+
+
+
+
+        refreshObservable = Observable.create(new Observable.OnSubscribe<Post>() {
+            @Override
+            public void call(Subscriber<? super Post> subscriber) {
+
+            }
+        });
+
 
 
         DrawerImageLoader.init(new AbstractDrawerImageLoader() {

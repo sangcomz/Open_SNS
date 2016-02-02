@@ -1,5 +1,6 @@
 package xyz.sangcomz.open_sns.adapter;
 
+import android.content.Intent;
 import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import xyz.sangcomz.open_sns.R;
 import xyz.sangcomz.open_sns.bean.FollowMember;
 import xyz.sangcomz.open_sns.ui.main.fragments.friends.FollowController;
+import xyz.sangcomz.open_sns.ui.profile.ProfileActivity;
 import xyz.sangcomz.open_sns.util.custom.RoundedImageView;
 
 /**
@@ -73,6 +75,17 @@ public class FollowAdapter
                     followController.Follow(followMembers.get(position).getMemberSrl(), true, position);
                 }
          }
+        });
+
+
+        holder.rivProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Intent intent = new Intent(fragment.getContext(), ProfileActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.putExtra("member_srl", followMembers.get(position).getMemberSrl());
+                fragment.getContext().startActivity(intent);
+            }
         });
 
     }

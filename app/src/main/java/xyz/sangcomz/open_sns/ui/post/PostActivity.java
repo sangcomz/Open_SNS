@@ -28,7 +28,7 @@ public class PostActivity extends BaseActivity implements View.OnClickListener {
     @DeclareView(id = R.id.toolbar)
     Toolbar toolbar;
 
-    @DeclareView(id = R.id.riv_profile)
+    @DeclareView(id = R.id.riv_profile, click = "this")
     protected RoundedImageView rivProfile;
 
     @DeclareView(id = R.id.txt_member_name)
@@ -67,7 +67,7 @@ public class PostActivity extends BaseActivity implements View.OnClickListener {
 
         postController = new PostController(this);
 
-        isPush = getIntent().getBooleanExtra("is_push" , false);
+        isPush = getIntent().getBooleanExtra("is_push", false);
 
     }
 
@@ -76,13 +76,13 @@ public class PostActivity extends BaseActivity implements View.OnClickListener {
         super.onResume();
 
         postController.getPost(getIntent().getStringExtra("post_srl"));
-        if (isPush){
+        if (isPush) {
             areaComment.performClick();
             isPush = false;
         }
     }
 
-    protected void setPost(final Post post){
+    protected void setPost(final Post post) {
         this.post = post;
         Glide.with(this).load(post.getMemberProfile()).centerCrop().into(rivProfile);
         Glide.with(this).load(post.getPostImage()).centerCrop().into(sivPostImage);
@@ -96,7 +96,7 @@ public class PostActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        switch (id){
+        switch (id) {
             case R.id.area_comment:
                 Intent intent = new Intent(this, CommentActivity.class);
                 intent.putExtra("post_srl", getIntent().getStringExtra("post_srl"));
@@ -134,6 +134,14 @@ public class PostActivity extends BaseActivity implements View.OnClickListener {
                 });
                 popup.show();
                 break;
+
+//            case R.id.riv_profile:
+//                intent = new Intent(this, ProfileActivity.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                intent.putExtra("member_srl", post.getMemberSrl());
+//                startActivity(intent);
+//                break;
+
         }
     }
 

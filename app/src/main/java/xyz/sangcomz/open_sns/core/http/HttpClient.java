@@ -75,7 +75,7 @@ public class HttpClient {
 //        params.put("user_app_os", "android");
 //        params.put("user_app_version", Utils.getVersion(activity));
 //        System.out.println("param ::: " + params.toString());
-//        HttpClient.post(Define.URL_ACCOUNT_JOIN, params, new JsonHttpResponseHandler() {
+//        HttpClient.post(RequeDefine.URL_ACCOUNT_JOIN, params, new JsonHttpResponseHandler() {
 //            @Override
 //            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 //                super.onSuccess(statusCode, headers, response);
@@ -131,48 +131,48 @@ public class HttpClient {
 //                            String nextLevelId = memberLevelInfo.getString("next_level_id");
 //
 //
-//                            SharedPreferences pref = activity.getSharedPreferences(Define.SHARED_INFO, activity.MODE_PRIVATE);
+//                            SharedPreferences pref = activity.getSharedPreferences(RequeDefine.SHARED_INFO, activity.MODE_PRIVATE);
 //                            SharedPreferences.Editor editor = pref.edit();
-//                            editor.putString(Define.SHARED_JOIN_TYPE, joinType);
-//                            editor.putString(Define.SHARED_MEMBER_SRL, memberSrl);
-//                            editor.putString(Define.SHARED_EMAIL, email);
-//                            editor.putString(Define.SHARED_EMAIL_AUTH, email_auth);
-//                            editor.putString(Define.SHARED_NICKNAME, nick_name);
-//                            editor.putString(Define.SHARED_BIRTH, birthday);
-//                            editor.putString(Define.SHARED_SEX, sex);
-//                            editor.putString(Define.SHARED_SNS_ID, sns_id);
-//                            editor.putString(Define.SHARED_PROFILE_PATH, img_path);
+//                            editor.putString(RequeDefine.SHARED_JOIN_TYPE, joinType);
+//                            editor.putString(RequeDefine.SHARED_MEMBER_SRL, memberSrl);
+//                            editor.putString(RequeDefine.SHARED_EMAIL, email);
+//                            editor.putString(RequeDefine.SHARED_EMAIL_AUTH, email_auth);
+//                            editor.putString(RequeDefine.SHARED_NICKNAME, nick_name);
+//                            editor.putString(RequeDefine.SHARED_BIRTH, birthday);
+//                            editor.putString(RequeDefine.SHARED_SEX, sex);
+//                            editor.putString(RequeDefine.SHARED_SNS_ID, sns_id);
+//                            editor.putString(RequeDefine.SHARED_PROFILE_PATH, img_path);
 //
-//                            editor.putInt(Define.SHARED_CONTENTS_COUNT, contents_count);
-//                            editor.putString(Define.SHARED_FOLLOWER, follower);
-//                            editor.putString(Define.SHARED_FOLLOWING, following);
-//                            editor.putString(Define.SHARED_ALARM_COUNT, alarm_count);
-//                            editor.putString(Define.SHARED_TUTO_NOTE_NAME, note_name);
-//                            editor.putString(Define.SHARED_TUTO_NOTE_CODE, note_code);
+//                            editor.putInt(RequeDefine.SHARED_CONTENTS_COUNT, contents_count);
+//                            editor.putString(RequeDefine.SHARED_FOLLOWER, follower);
+//                            editor.putString(RequeDefine.SHARED_FOLLOWING, following);
+//                            editor.putString(RequeDefine.SHARED_ALARM_COUNT, alarm_count);
+//                            editor.putString(RequeDefine.SHARED_TUTO_NOTE_NAME, note_name);
+//                            editor.putString(RequeDefine.SHARED_TUTO_NOTE_CODE, note_code);
 //
-//                            editor.putString(Define.SHARED_ALERT_COMMENT, alarm_comments);
-//                            editor.putString(Define.SHARED_ALERT_LIKE, alarm_likes);
-//                            editor.putString(Define.SHARED_ALERT_FOLLOW, alarm_follows);
+//                            editor.putString(RequeDefine.SHARED_ALERT_COMMENT, alarm_comments);
+//                            editor.putString(RequeDefine.SHARED_ALERT_LIKE, alarm_likes);
+//                            editor.putString(RequeDefine.SHARED_ALERT_FOLLOW, alarm_follows);
 //
-//                            editor.putString(Define.SHARED_BASIC_POST, basic_contents);
-//                            editor.putString(Define.SHARED_BASIC_COMMENT, basic_comments);
-//                            editor.putString(Define.SHARED_BASIC_SCRAP, basic_scrap);
+//                            editor.putString(RequeDefine.SHARED_BASIC_POST, basic_contents);
+//                            editor.putString(RequeDefine.SHARED_BASIC_COMMENT, basic_comments);
+//                            editor.putString(RequeDefine.SHARED_BASIC_SCRAP, basic_scrap);
 //
-//                            editor.putString(Define.SHARED_MEMBER_LEVEL, memberLevel);
-//                            editor.putString(Define.SHARED_POST_A, postA);
-//                            editor.putString(Define.SHARED_POST_B, postB);
-//                            editor.putString(Define.SHARED_POST_C, postC);
-//                            editor.putString(Define.SHARED_NOW_LEVEL_ID, nowLevelId);
-//                            editor.putString(Define.SHARED_NOW_LEVEL_KO, nowLevelKo);
-//                            editor.putString(Define.SHARED_NOW_POST, nowPost);
-//                            editor.putString(Define.SHARED_NOW_POST_COUNT, nowPostCount);
-//                            editor.putString(Define.SHARED_NEXT_LEVEL_ID, nextLevelId);
-//                            editor.putString(Define.SHARED_NEXT_LEVEL_KO, nextLevelKo);
+//                            editor.putString(RequeDefine.SHARED_MEMBER_LEVEL, memberLevel);
+//                            editor.putString(RequeDefine.SHARED_POST_A, postA);
+//                            editor.putString(RequeDefine.SHARED_POST_B, postB);
+//                            editor.putString(RequeDefine.SHARED_POST_C, postC);
+//                            editor.putString(RequeDefine.SHARED_NOW_LEVEL_ID, nowLevelId);
+//                            editor.putString(RequeDefine.SHARED_NOW_LEVEL_KO, nowLevelKo);
+//                            editor.putString(RequeDefine.SHARED_NOW_POST, nowPost);
+//                            editor.putString(RequeDefine.SHARED_NOW_POST_COUNT, nowPostCount);
+//                            editor.putString(RequeDefine.SHARED_NEXT_LEVEL_ID, nextLevelId);
+//                            editor.putString(RequeDefine.SHARED_NEXT_LEVEL_KO, nextLevelKo);
 //
 //                            if (contents_count > 0 || note_count > 1) {
-//                                editor.putBoolean(Define.SHARED_TUTO_1, true);
-//                                editor.putBoolean(Define.SHARED_TUTO_2, true);
-//                                editor.putBoolean(Define.SHARED_TUTO_3, true);
+//                                editor.putBoolean(RequeDefine.SHARED_TUTO_1, true);
+//                                editor.putBoolean(RequeDefine.SHARED_TUTO_2, true);
+//                                editor.putBoolean(RequeDefine.SHARED_TUTO_3, true);
 //                            }
 //
 //                            editor.commit();

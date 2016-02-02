@@ -1,6 +1,8 @@
 package xyz.sangcomz.open_sns.ui.main.fragments.timeline;
 
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -13,17 +15,20 @@ import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
-import xyz.sangcomz.open_sns.adapter.PostAdapter;
 import xyz.sangcomz.open_sns.R;
+import xyz.sangcomz.open_sns.adapter.PostAdapter;
 import xyz.sangcomz.open_sns.bean.Post;
 import xyz.sangcomz.open_sns.core.common.BaseFragment;
 import xyz.sangcomz.open_sns.core.common.view.DeclareView;
+import xyz.sangcomz.open_sns.define.RequeDefine;
 import xyz.sangcomz.open_sns.util.NoDataController;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class TimeLineFragment extends BaseFragment {
+
+    private static final String TAG = TimeLineFragment.class.getName();
 
     TimeLineController timeLineController;
     NoDataController noDataController;
@@ -39,7 +44,6 @@ public class TimeLineFragment extends BaseFragment {
 
 
     LinearLayoutManager linearLayoutManager;
-
 
 
     int pastVisiblesItems, visibleItemCount, totalItemCount;
@@ -98,11 +102,54 @@ public class TimeLineFragment extends BaseFragment {
 
             }
         });
-
         return rootView;
     }
 
-    protected void initAreaNoData(){
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//
+//        System.out.println("GlobalApplication.refreshObservable.count() :::: " + GlobalApplication.refreshObservable.count());
+//
+//        GlobalApplication.refreshObservable
+//                .subscribe(new Subscriber<Post>() {
+//            @Override
+//            public void onCompleted() {
+//                Log.d(TAG, "complete!");
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//                Log.e(TAG, "error: " + e.getMessage());
+//            }
+//
+//            @Override
+//            public void onNext(Post post) {
+//                Log.d(TAG, "onNext: " + post.toString());
+//            }
+//        });
+//    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        System.out.println("requesteCode : " + requestCode);
+        System.out.println("resultCode : " + resultCode);
+        System.out.println("data : " + data.getSerializableExtra("post"));
+        if (requestCode== RequeDefine.REQUEST_CODE_CREATE_POST && resultCode == Activity.RESULT_OK){
+            posts.add(0, (Post)data.getSerializableExtra("post"));
+            postAdapter.notifyDataSetChanged();
+            recyclerView.post(new Runnable() {
+                @Override
+                public void run() {
+                    recyclerView.scrollToPosition(0);
+                }
+            });
+        }
+    }
+
+    protected void initAreaNoData() {
         noDataController = new NoDataController(areaNoData, getActivity());
         noDataController.setNodata(R.drawable.ic_public_black_24dp, getString(R.string.msg_no_post));
     }

@@ -1,6 +1,7 @@
 package xyz.sangcomz.open_sns.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import me.drakeet.materialdialog.MaterialDialog;
 import xyz.sangcomz.open_sns.R;
 import xyz.sangcomz.open_sns.bean.Comment;
 import xyz.sangcomz.open_sns.ui.comment.CommentController;
+import xyz.sangcomz.open_sns.ui.profile.ProfileActivity;
 import xyz.sangcomz.open_sns.util.Utils;
 import xyz.sangcomz.open_sns.util.custom.RoundedImageView;
 
@@ -116,6 +118,16 @@ public class CommentAdapter
                 }
             });
 
+
+        holder.rivProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Intent intent = new Intent(context, ProfileActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.putExtra("member_srl", comments.get(position).getMemberSrl());
+                context.startActivity(intent);
+            }
+        });
 
     }
 

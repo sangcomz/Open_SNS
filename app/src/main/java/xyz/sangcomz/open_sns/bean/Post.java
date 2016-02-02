@@ -2,10 +2,14 @@ package xyz.sangcomz.open_sns.bean;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by sangc on 2015-12-29.
  */
-public class Post {
+public class Post implements Serializable{
+
+    private static final long serialVersionUID = 1L;
 
     @SerializedName("post_srl")
     String postSrl;

@@ -1,145 +1,156 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.v4.widget.NestedScrollView android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginBottom="56dp"
     android:background="@color/colorBackground"
-    android:padding="30dp"
-    tools:context=".ui.main.fragments.setting.SettingFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
-        android:id="@+id/area_push_alarm"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_notifications_black_24dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/txt_push_alarm"
-            android:textColor="@color/colorPrimaryText"
-            android:textSize="18dp" />
-
-
-        <Switch
-            android:id="@+id/sw_push_alarm"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:thumbTextPadding="10dp"
-            android:track="@drawable/switch_background" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/area_push_alarm"
-        android:layout_marginTop="10dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_search_black_24dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/txt_searchable"
-            android:textColor="@color/colorPrimaryText"
-            android:textSize="18dp" />
-
-
-        <Switch
-            android:id="@+id/sw_searchable"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:thumbTextPadding="10dp"
-            android:track="@drawable/switch_background" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:orientation="vertical"
         android:gravity="center"
-        android:orientation="vertical">
-
-        <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:background="@mipmap/ic_launcher" />
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground"
+        android:padding="30dp"
+        tools:context=".ui.main.fragments.setting.SettingFragment">
 
         <LinearLayout
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
+            android:id="@+id/area_push_alarm"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="match_parent"
+            <ImageView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="@string/txt_device_version"
+                android:background="@drawable/ic_notifications_black_24dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_push_alarm"
                 android:textColor="@color/colorPrimaryText"
                 android:textSize="18dp" />
 
-            <TextView
-                android:id="@+id/txt_device_version"
+
+            <Switch
+                android:id="@+id/sw_push_alarm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:gravity="center_horizontal"
-                android:text="v0.0.0"
-                android:textColor="@color/colorPrimaryText"
-                android:textSize="18dp" />
-        </LinearLayout>
+                android:thumbTextPadding="10dp"
+                android:track="@drawable/switch_background" />
 
-
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="@string/txt_current_version"
-                android:textColor="@color/colorPrimaryText"
-                android:textSize="18dp" />
-
-            <TextView
-                android:id="@+id/txt_current_version"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text="v0.0.0"
-                android:gravity="center_horizontal"
-                android:textColor="@color/colorPrimaryText"
-                android:textSize="18dp" />
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/area_push_alarm"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_search_black_24dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_searchable"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="18dp" />
+
+
+            <Switch
+                android:id="@+id/sw_searchable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:thumbTextPadding="10dp"
+                android:track="@drawable/switch_background" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="50dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:background="@mipmap/ic_launcher" />
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="@string/txt_device_version"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:id="@+id/txt_device_version"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center_horizontal"
+                    android:text="v0.0.0"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="18dp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="@string/txt_current_version"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:id="@+id/txt_current_version"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="v0.0.0"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="18dp" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <!-- TODO: Update blank fragment layout -->
+        <Button
+            android:id="@+id/btn_logout"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="@string/txt_logout" />
 
     </LinearLayout>
 
-    <!-- TODO: Update blank fragment layout -->
-    <Button
-        android:id="@+id/btn_logout"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_alignParentBottom="true"
-        android:text="@string/txt_logout" />
+</android.support.v4.widget.NestedScrollView>
 
-</RelativeLayout>
