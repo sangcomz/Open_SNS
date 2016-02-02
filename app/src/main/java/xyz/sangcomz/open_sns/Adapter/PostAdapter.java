@@ -1,6 +1,5 @@
 package xyz.sangcomz.open_sns.adapter;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -20,9 +19,10 @@ import java.util.ArrayList;
 import xyz.sangcomz.open_sns.R;
 import xyz.sangcomz.open_sns.bean.Post;
 import xyz.sangcomz.open_sns.core.SharedPref.SharedPref;
+import xyz.sangcomz.open_sns.define.RequeDefine;
 import xyz.sangcomz.open_sns.define.SharedDefine;
 import xyz.sangcomz.open_sns.ui.comment.CommentActivity;
-import xyz.sangcomz.open_sns.ui.main.MainActivity;
+import xyz.sangcomz.open_sns.ui.main.fragments.timeline.TimeLineFragment;
 import xyz.sangcomz.open_sns.ui.post.PostController;
 import xyz.sangcomz.open_sns.ui.profile.ProfileActivity;
 import xyz.sangcomz.open_sns.util.Utils;
@@ -36,7 +36,9 @@ public class PostAdapter
         extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     ArrayList<Post> posts = new ArrayList<>();
-    Context context;
+//    Context context;
+    TimeLineFragment timeLineFragment;
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -63,9 +65,14 @@ public class PostAdapter
         }
     }
 
-    public PostAdapter(Context context, ArrayList<Post> posts) {
-        this.context = context;
+//    public PostAdapter(Context context, ArrayList<Post> posts) {
+//        this.context = context;
+//        this.posts = posts;
+//    }
+
+    public PostAdapter(ArrayList<Post> posts, TimeLineFragment timeLineFragment) {
         this.posts = posts;
+        this.timeLineFragment = timeLineFragment;
     }
 
     @Override
@@ -78,8 +85,8 @@ public class PostAdapter
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        Glide.with(context).load(posts.get(position).getMemberProfile()).centerCrop().into(holder.rivProfile);
-        Glide.with(context).load(posts.get(position).getPostImage()).centerCrop().into(holder.sivPostImage);
+        Glide.with(timeLineFragment).load(posts.get(position).getMemberProfile()).centerCrop().into(holder.rivProfile);
+        Glide.with(timeLineFragment).load(posts.get(position).getPostImage()).centerCrop().into(holder.sivPostImage);
         holder.txtMemberName.setText(posts.get(position).getMemberName());
         holder.txtContent.setText(posts.get(position).getPostContent());
         holder.txtCommentCount.setText(posts.get(position).getPostCommentCount());
@@ -89,11 +96,12 @@ public class PostAdapter
         holder.areaComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity activity = (MainActivity) context;
+//                MainActivity activity = (MainActivity) context;
                 Intent intent = new Intent(holder.areaComment.getContext(), CommentActivity.class);
                 intent.putExtra("post_srl", posts.get(position).getPostSrl());
-                activity.startActivity(intent);
-                activity.overridePendingTransition(R.anim.slide_top_to_bottom, R.anim.slide_top_to_bottom);
+                intent.putExtra("position", position);
+                timeLineFragment.startActivityForResult(intent, RequeDefine.REQUEST_CODE_CHANGE_COMMENT);
+                timeLineFragment.getActivity().overridePendingTransition(R.anim.slide_top_to_bottom, R.anim.slide_top_to_bottom);
 
             }
         });
@@ -101,10 +109,10 @@ public class PostAdapter
         holder.rivProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Intent intent = new Intent(context, ProfileActivity.class);
+                final Intent intent = new Intent(timeLineFragment.getContext(), ProfileActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 intent.putExtra("member_srl", posts.get(position).getMemberSrl());
-                context.startActivity(intent);
+                timeLineFragment.startActivity(intent);
             }
         });
 
@@ -117,7 +125,7 @@ public class PostAdapter
 
                 MenuItem menuDelete = popup.getMenu().findItem(R.id.action_delete);
 
-                if (posts.get(position).getMemberSrl().equals(new SharedPref(context).getStringPref(SharedDefine.SHARED_MEMBER_SRL)))
+                if (posts.get(position).getMemberSrl().equals(new SharedPref(timeLineFragment.getContext()).getStringPref(SharedDefine.SHARED_MEMBER_SRL)))
                     menuDelete.setVisible(true);
                 else
                     menuDelete.setVisible(false);
@@ -129,7 +137,7 @@ public class PostAdapter
                         int id = item.getItemId();
                         switch (id){
                             case R.id.action_delete:
-                                PostController.deletePost(context, posts.get(position).getPostSrl());
+                                PostController.deletePost(timeLineFragment.getContext(), posts.get(position).getPostSrl(), position);
                                 break;
                             case R.id.action_share:
                                 break;

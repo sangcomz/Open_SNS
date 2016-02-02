@@ -2,6 +2,7 @@ package xyz.sangcomz.open_sns.ui.main.fragments.timeline;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,12 +16,14 @@ import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
+import de.greenrobot.event.EventBus;
 import xyz.sangcomz.open_sns.R;
 import xyz.sangcomz.open_sns.adapter.PostAdapter;
 import xyz.sangcomz.open_sns.bean.Post;
 import xyz.sangcomz.open_sns.core.common.BaseFragment;
 import xyz.sangcomz.open_sns.core.common.view.DeclareView;
 import xyz.sangcomz.open_sns.define.RequeDefine;
+import xyz.sangcomz.open_sns.event.DelPostEvent;
 import xyz.sangcomz.open_sns.util.NoDataController;
 
 /**
@@ -70,7 +73,7 @@ public class TimeLineFragment extends BaseFragment {
         curPage = 1;
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        postAdapter = new PostAdapter(getActivity(), posts);
+        postAdapter = new PostAdapter(posts, this);
         recyclerView.setAdapter(postAdapter);
 
         timeLineController.getPosts(curPage++);
@@ -136,9 +139,9 @@ public class TimeLineFragment extends BaseFragment {
         super.onActivityResult(requestCode, resultCode, data);
         System.out.println("requesteCode : " + requestCode);
         System.out.println("resultCode : " + resultCode);
-        System.out.println("data : " + data.getSerializableExtra("post"));
-        if (requestCode== RequeDefine.REQUEST_CODE_CREATE_POST && resultCode == Activity.RESULT_OK){
-            posts.add(0, (Post)data.getSerializableExtra("post"));
+        System.out.println("data : " + data.toString());
+        if (requestCode == RequeDefine.REQUEST_CODE_CREATE_POST && resultCode == Activity.RESULT_OK) {
+            posts.add(0, (Post) data.getSerializableExtra("post"));
             postAdapter.notifyDataSetChanged();
             recyclerView.post(new Runnable() {
                 @Override
@@ -146,6 +149,24 @@ public class TimeLineFragment extends BaseFragment {
                     recyclerView.scrollToPosition(0);
                 }
             });
+        }
+        if (requestCode == RequeDefine.REQUEST_CODE_CHANGE_COMMENT && resultCode == Activity.RESULT_OK) {
+            int position = data.getIntExtra("position", -1);
+            int commentCount = data.getIntExtra("comment_count", -1);
+            System.out.println("position : " + position);
+            System.out.println("commentCount : " + commentCount);
+            if (position != -1 && commentCount != -1) {
+                posts.get(position).setPostCommentCount(String.valueOf(commentCount));
+                postAdapter.notifyItemChanged(position);
+            }
+//            posts.add(0, (Post)data.getSerializableExtra("post"));
+//            postAdapter.notifyDataSetChanged();
+//            recyclerView.post(new Runnable() {
+//                @Override
+//                public void run() {
+//                    recyclerView.scrollToPosition(0);
+//                }
+//            });
         }
     }
 
@@ -166,5 +187,24 @@ public class TimeLineFragment extends BaseFragment {
 
     public void setTotalPage(int totalPage) {
         this.totalPage = totalPage;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onDetach() {
+        EventBus.getDefault().unregister(this);
+        super.onDetach();
+    }
+
+    public void onEvent(DelPostEvent delPostEvent) {
+        posts.remove(delPostEvent.getPosition());
+        postAdapter.notifyItemRemoved(delPostEvent.getPosition());
+        postAdapter.notifyItemRangeChanged(delPostEvent.getPosition(), posts.size());
+
     }
 }

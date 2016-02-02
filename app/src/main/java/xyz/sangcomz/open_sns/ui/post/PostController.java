@@ -15,12 +15,14 @@ import org.json.JSONObject;
 import java.lang.reflect.Type;
 
 import cz.msebera.android.httpclient.Header;
+import de.greenrobot.event.EventBus;
 import xyz.sangcomz.open_sns.R;
 import xyz.sangcomz.open_sns.bean.Post;
 import xyz.sangcomz.open_sns.core.SharedPref.SharedPref;
 import xyz.sangcomz.open_sns.core.http.HttpClient;
 import xyz.sangcomz.open_sns.define.SharedDefine;
 import xyz.sangcomz.open_sns.define.UrlDefine;
+import xyz.sangcomz.open_sns.event.DelPostEvent;
 
 /**
  * Created by sangcomz on 1/28/16.
@@ -80,7 +82,7 @@ public class PostController {
     }
 
 
-    public static void deletePost(Context context, String postSrl) {
+    public static void deletePost(Context context, String postSrl, final int position) {
 
         // 프로그레스
         final ProgressDialog progressDialog = new ProgressDialog(context, R.style.MyProgressBarDialog);
@@ -102,6 +104,8 @@ public class PostController {
 
                 progressDialog.dismiss();
                 System.out.println("deletePost onSuccess JSONObject :::: " + response.toString());
+
+                EventBus.getDefault().post(new DelPostEvent(position));
 //                try {
 //                    JSONObject jsonObject = response.getJSONObject("post");
 //                    Gson gson = new Gson();

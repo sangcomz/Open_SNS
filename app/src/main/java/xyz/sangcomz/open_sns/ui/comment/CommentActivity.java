@@ -1,5 +1,6 @@
 package xyz.sangcomz.open_sns.ui.comment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -53,6 +54,8 @@ public class CommentActivity extends BaseActivity implements View.OnClickListene
 
     private int totalPage;
 
+    int position;//-1이면 다른곳에서 호출
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +75,7 @@ public class CommentActivity extends BaseActivity implements View.OnClickListene
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
 
         postSrl = getIntent().getStringExtra("post_srl");
+        position = getIntent().getIntExtra("position", -1);
 
         commentController.getComment(postSrl, curPage++, true);
 
@@ -111,6 +115,10 @@ public class CommentActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void finish() {
+        Intent i = new Intent();
+        i.putExtra("position", position);
+        i.putExtra("comment_count", comments.size());
+        setResult(RESULT_OK, i);
         super.finish();
         setAreaBackgroundColor(Color.TRANSPARENT);
         overridePendingTransition(R.anim.slide_bottom_to_top, R.anim.slide_bottom_to_top);

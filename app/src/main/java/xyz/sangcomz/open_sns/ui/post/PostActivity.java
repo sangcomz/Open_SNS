@@ -55,6 +55,8 @@ public class PostActivity extends BaseActivity implements View.OnClickListener {
     PostController postController;
     boolean isPush;
 
+    int position;
+
     Post post = null;
 
     @Override
@@ -66,6 +68,8 @@ public class PostActivity extends BaseActivity implements View.OnClickListener {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         postController = new PostController(this);
+
+        position = getIntent().getIntExtra("position", -1);
 
         isPush = getIntent().getBooleanExtra("is_push", false);
 
@@ -81,6 +85,31 @@ public class PostActivity extends BaseActivity implements View.OnClickListener {
             isPush = false;
         }
     }
+
+//    @Override
+//    public void onStart(Context context) {
+//        super.onAttach(context);
+//        EventBus.getDefault().register(this);
+//    }
+//
+//    @Override
+//    public void onDetach() {
+//        EventBus.getDefault().unregister(this);
+//        super.onDetach();
+//    }
+
+
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        EventBus.getDefault().register(this);
+//    }
+//
+//    @Override
+//    protected void onPause() {
+//        EventBus.getDefault().unregister(this);
+//        super.onPause();
+//    }
 
     protected void setPost(final Post post) {
         this.post = post;
@@ -123,7 +152,7 @@ public class PostActivity extends BaseActivity implements View.OnClickListener {
                         int id = item.getItemId();
                         switch (id) {
                             case R.id.action_delete:
-                                PostController.deletePost(PostActivity.this, post.getPostSrl());
+                                PostController.deletePost(PostActivity.this, post.getPostSrl(), -1);
                                 break;
                             case R.id.action_share:
                                 break;

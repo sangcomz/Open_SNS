@@ -1,6 +1,5 @@
 package xyz.sangcomz.open_sns.adapter;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,7 +12,9 @@ import java.util.ArrayList;
 
 import xyz.sangcomz.open_sns.R;
 import xyz.sangcomz.open_sns.bean.Post;
+import xyz.sangcomz.open_sns.define.RequeDefine;
 import xyz.sangcomz.open_sns.ui.post.PostActivity;
+import xyz.sangcomz.open_sns.ui.profile.ProfileActivity;
 import xyz.sangcomz.open_sns.util.custom.SquareImageView;
 
 /**
@@ -23,7 +24,7 @@ public class GridPostImageAdapter
         extends RecyclerView.Adapter<GridPostImageAdapter.ViewHolder> {
 
     ArrayList<Post> posts = new ArrayList<>();
-    Context context;
+    ProfileActivity profileActivity;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -40,8 +41,8 @@ public class GridPostImageAdapter
         }
     }
 
-    public GridPostImageAdapter(Context context, ArrayList<Post> posts) {
-        this.context = context;
+    public GridPostImageAdapter(ProfileActivity profileActivity, ArrayList<Post> posts) {
+        this.profileActivity = profileActivity;
         this.posts = posts;
     }
 
@@ -56,14 +57,15 @@ public class GridPostImageAdapter
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-        Glide.with(context).load(posts.get(position).getPostImage()).centerCrop().into(holder.sivPostImage);
+        Glide.with(profileActivity).load(posts.get(position).getPostImage()).centerCrop().into(holder.sivPostImage);
 
         holder.sivPostImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(holder.sivPostImage.getContext(), PostActivity.class);
                 i.putExtra("post_srl", posts.get(position).getPostSrl());
-                holder.sivPostImage.getContext().startActivity(i);
+                i.putExtra("position", position);
+                profileActivity.startActivityForResult(i, RequeDefine.REQUEST_CODE_CHANGE_COMMENT);
             }
         });
 

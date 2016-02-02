@@ -34,6 +34,7 @@ import xyz.sangcomz.open_sns.bean.Member;
 import xyz.sangcomz.open_sns.bean.Post;
 import xyz.sangcomz.open_sns.core.common.BaseActivity;
 import xyz.sangcomz.open_sns.core.common.view.DeclareView;
+import xyz.sangcomz.open_sns.define.RequeDefine;
 import xyz.sangcomz.open_sns.util.AnimUtils;
 import xyz.sangcomz.open_sns.util.NoDataController;
 import xyz.sangcomz.open_sns.util.custom.RoundedImageView;
@@ -223,9 +224,14 @@ public class ProfileActivity extends BaseActivity {
                     }).start();
 
                     //You can get image path(ArrayList<String>
-                    break;
                 }
+                break;
+
+            case RequeDefine.REQUEST_CODE_DELETE_POST:
+                int position = data.getIntExtra("position", -1);
+                break;
         }
+
     }
 
     protected void setProfileView(Member member) {
