@@ -36,7 +36,7 @@ public class TimeLineFragment extends BaseFragment {
     TimeLineController timeLineController;
     NoDataController noDataController;
     PostAdapter postAdapter;
-    ArrayList<Post> posts = new ArrayList<>();
+    private static volatile ArrayList<Post> posts = new ArrayList<>();
 
     @DeclareView(id = R.id.recyclerview)
     RecyclerView recyclerView;
@@ -59,6 +59,7 @@ public class TimeLineFragment extends BaseFragment {
         // Required empty public constructor
 
     }
+
 
 
     @Override
