@@ -152,7 +152,7 @@ public class PostActivity extends BaseActivity implements View.OnClickListener {
                         int id = item.getItemId();
                         switch (id) {
                             case R.id.action_delete:
-                                PostController.deletePost(PostActivity.this, post.getPostSrl(), -1);
+                                PostController.deletePost(PostActivity.this, post.getPostSrl(), position);
                                 break;
                             case R.id.action_share:
                                 break;

@@ -4,6 +4,7 @@
     android:fitsSystemWindows="true"
     android:layout_height="match_parent">
 
+
     <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/swipe_refresh"
         android:background="@color/colorBackground"
@@ -21,6 +22,8 @@
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <include layout="@layout/layout_no_data" />
+
+
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -233,6 +236,7 @@
         android:src="@drawable/ic_action_add_follow"
         app:backgroundTint="@color/colorFollow"
         app:layout_anchor="@+id/appbar"
-        app:layout_anchorGravity="bottom|right|end" />
+        app:layout_anchorGravity="bottom|end" />
+
 
 </android.support.design.widget.CoordinatorLayout>

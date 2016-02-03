@@ -65,7 +65,7 @@ public class GridPostImageAdapter
                 Intent i = new Intent(holder.sivPostImage.getContext(), PostActivity.class);
                 i.putExtra("post_srl", posts.get(position).getPostSrl());
                 i.putExtra("position", position);
-                profileActivity.startActivityForResult(i, RequeDefine.REQUEST_CODE_CHANGE_COMMENT);
+                profileActivity.startActivityForResult(i, RequeDefine.REQUEST_CODE_DELETE_POST);
             }
         });
 

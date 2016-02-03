@@ -139,6 +139,7 @@ public class CommentController {
 
                     commentActivity.setComments((ArrayList<Comment>) comments, isReset);
                     commentActivity.setTotalPage(page.getInt("total_page"));
+                    commentActivity.setTotalCommentCount(page.getInt("total_comment_count"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

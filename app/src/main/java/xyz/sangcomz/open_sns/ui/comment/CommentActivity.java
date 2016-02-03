@@ -54,6 +54,8 @@ public class CommentActivity extends BaseActivity implements View.OnClickListene
 
     private int totalPage;
 
+    private int totalCommentCount;
+
     int position;//-1이면 다른곳에서 호출
 
     @Override
@@ -117,7 +119,7 @@ public class CommentActivity extends BaseActivity implements View.OnClickListene
     public void finish() {
         Intent i = new Intent();
         i.putExtra("position", position);
-        i.putExtra("comment_count", comments.size());
+        i.putExtra("comment_count", totalCommentCount);
         setResult(RESULT_OK, i);
         super.finish();
         setAreaBackgroundColor(Color.TRANSPARENT);
@@ -165,6 +167,10 @@ public class CommentActivity extends BaseActivity implements View.OnClickListene
         this.curPage = curPage;
     }
 
+
+    public void setTotalCommentCount(int totalCommentCount) {
+        this.totalCommentCount = totalCommentCount;
+    }
 
     @Override
     public void onClick(View v) {

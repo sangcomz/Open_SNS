@@ -1,6 +1,7 @@
 package xyz.sangcomz.open_sns.ui.profile;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
@@ -9,11 +10,11 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,14 +33,16 @@ import xyz.sangcomz.open_sns.R;
 import xyz.sangcomz.open_sns.adapter.GridPostImageAdapter;
 import xyz.sangcomz.open_sns.bean.Member;
 import xyz.sangcomz.open_sns.bean.Post;
+import xyz.sangcomz.open_sns.core.SharedPref.SharedPref;
 import xyz.sangcomz.open_sns.core.common.BaseActivity;
 import xyz.sangcomz.open_sns.core.common.view.DeclareView;
 import xyz.sangcomz.open_sns.define.RequeDefine;
-import xyz.sangcomz.open_sns.util.AnimUtils;
+import xyz.sangcomz.open_sns.define.SharedDefine;
+import xyz.sangcomz.open_sns.ui.main.fragments.friends.FollowController;
 import xyz.sangcomz.open_sns.util.NoDataController;
 import xyz.sangcomz.open_sns.util.custom.RoundedImageView;
 
-public class ProfileActivity extends BaseActivity {
+public class ProfileActivity extends BaseActivity implements View.OnClickListener {
 
     @DeclareView(id = R.id.toolbar)
     Toolbar toolbar;
@@ -65,7 +68,7 @@ public class ProfileActivity extends BaseActivity {
     @DeclareView(id = R.id.txt_following_count)
     TextView txtFollowingCount;
 
-    @DeclareView(id = R.id.fab)
+    @DeclareView(id = R.id.fab, click = "this")
     FloatingActionButton fab;
 
     @DeclareView(id = R.id.recyclerview)
@@ -85,6 +88,8 @@ public class ProfileActivity extends BaseActivity {
 
     String memberSrl;
 
+
+    FollowController followController;
     NoDataController noDataController;
     GridPostImageAdapter gridPostImageAdapter;
     ArrayList<Post> posts = new ArrayList<>();
@@ -96,6 +101,8 @@ public class ProfileActivity extends BaseActivity {
     int curPage = 1;
 
     private int totalPage;
+
+    boolean isFollow;
 
 
     @Override
@@ -174,9 +181,10 @@ public class ProfileActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
-        getMenuInflater().inflate(R.menu.menu_profile, menu);
-
+        if (memberSrl.equals(new SharedPref(this).getStringPref(SharedDefine.SHARED_MEMBER_SRL)))
+            getMenuInflater().inflate(R.menu.menu_profile, menu);
+        else
+            getMenuInflater().inflate(R.menu.menu_null, menu);
         return true;
     }
 
@@ -228,7 +236,19 @@ public class ProfileActivity extends BaseActivity {
                 break;
 
             case RequeDefine.REQUEST_CODE_DELETE_POST:
-                int position = data.getIntExtra("position", -1);
+                if (resultCode == RESULT_OK) {
+                    int position = data.getIntExtra("position", -1);
+                    posts.remove(position);
+                    gridPostImageAdapter.notifyItemRemoved(position);
+                    gridPostImageAdapter.notifyItemRangeChanged(position, posts.size());
+
+                    if (posts.size() > 0) {
+                        areaNoData.setVisibility(View.GONE);
+                        gridPostImageAdapter.notifyDataSetChanged();
+                    } else {
+                        areaNoData.setVisibility(View.VISIBLE);
+                    }
+                }
                 break;
         }
 
@@ -257,38 +277,15 @@ public class ProfileActivity extends BaseActivity {
 
         if (isMyProfile.equals("Y")) {
             fab.setVisibility(View.GONE); // View.INVISIBLE might also be worth trying
+        } else {
+            setFabGravity(isFollow);
+            fab.setAlpha(1f);
+
         }
-        fab.setAlpha(1f);
+
+
     }
 
-
-    /**
-     * 스케일 애니메이션
-     *
-     * @param scale 0 = 사라짐 1 = 원래 크기
-     */
-    private void animFab(final float scale) {
-        ViewCompat.animate(fab)
-                .setInterpolator(AnimUtils.FAST_OUT_LINEAR_IN_INTERPOLATOR)
-                .scaleX(scale)
-                .scaleY(scale)
-                .withStartAction(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (scale == 1) fab.setVisibility(View.VISIBLE);
-                    }
-                })
-                .withEndAction(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (scale == 0) fab.setVisibility(View.GONE);
-                    }
-                })
-                .setDuration(250)   //기간
-                .withLayer()        //Software Type Hardware Type
-                .start();
-
-    }
 
     protected void initAreaNoData() {
         noDataController = new NoDataController(areaNoData, this);
@@ -307,5 +304,46 @@ public class ProfileActivity extends BaseActivity {
 
     public void setTotalPage(int totalPage) {
         this.totalPage = totalPage;
+    }
+
+    private void setFabGravity(String isFollow) {
+        CoordinatorLayout.LayoutParams p = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
+        p.setAnchorId(appBarLayout.getId());
+        p.anchorGravity = Gravity.END | Gravity.BOTTOM;
+        fab.setLayoutParams(p);
+        if (isFollow.equals("Y"))
+            setFollowStatus(true);
+        else
+            setFollowStatus(false);
+
+    }
+
+    protected void setFollowStatus(boolean isFollow) {
+        this.isFollow = isFollow;
+        if (isFollow) {
+            fab.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#4BAD4F")));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_remove_follow, getTheme()));
+            } else {
+                fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_remove_follow));
+            }
+        } else {
+            fab.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#303F9F")));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_add_follow, getTheme()));
+            } else {
+                fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_add_follow));
+            }
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.fab:
+                profileController.Follow(memberSrl, !isFollow);
+                break;
+        }
     }
 }

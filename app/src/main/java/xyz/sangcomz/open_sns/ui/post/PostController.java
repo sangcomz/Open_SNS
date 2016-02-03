@@ -1,7 +1,9 @@
 package xyz.sangcomz.open_sns.ui.post;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.Window;
 
 import com.google.gson.Gson;
@@ -82,7 +84,7 @@ public class PostController {
     }
 
 
-    public static void deletePost(Context context, String postSrl, final int position) {
+    public static void deletePost(final Context context, String postSrl, final int position) {
 
         // 프로그레스
         final ProgressDialog progressDialog = new ProgressDialog(context, R.style.MyProgressBarDialog);
@@ -105,7 +107,15 @@ public class PostController {
                 progressDialog.dismiss();
                 System.out.println("deletePost onSuccess JSONObject :::: " + response.toString());
 
-                EventBus.getDefault().post(new DelPostEvent(position));
+                if (context.toString().contains("MainActivity"))
+                    EventBus.getDefault().post(new DelPostEvent(position));
+                else if (context.toString().contains("PostActivity")) {
+                    PostActivity postActivity = (PostActivity) context;
+                    Intent i = new Intent();
+                    i.putExtra("position", position);
+                    postActivity.setResult(Activity.RESULT_OK, i);
+                    postActivity.finish();
+                }
 //                try {
 //                    JSONObject jsonObject = response.getJSONObject("post");
 //                    Gson gson = new Gson();

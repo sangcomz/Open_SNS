@@ -71,6 +71,7 @@ public class TimeLineFragment extends BaseFragment {
         linearLayoutManager = new LinearLayoutManager(getActivity());
         initAreaNoData();
         curPage = 1;
+        posts.clear();
         recyclerView.setLayoutManager(linearLayoutManager);
 
         postAdapter = new PostAdapter(posts, this);
@@ -137,9 +138,6 @@ public class TimeLineFragment extends BaseFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        System.out.println("requesteCode : " + requestCode);
-        System.out.println("resultCode : " + resultCode);
-        System.out.println("data : " + data.toString());
         if (requestCode == RequeDefine.REQUEST_CODE_CREATE_POST && resultCode == Activity.RESULT_OK) {
             posts.add(0, (Post) data.getSerializableExtra("post"));
             postAdapter.notifyDataSetChanged();
@@ -159,14 +157,6 @@ public class TimeLineFragment extends BaseFragment {
                 posts.get(position).setPostCommentCount(String.valueOf(commentCount));
                 postAdapter.notifyItemChanged(position);
             }
-//            posts.add(0, (Post)data.getSerializableExtra("post"));
-//            postAdapter.notifyDataSetChanged();
-//            recyclerView.post(new Runnable() {
-//                @Override
-//                public void run() {
-//                    recyclerView.scrollToPosition(0);
-//                }
-//            });
         }
     }
 

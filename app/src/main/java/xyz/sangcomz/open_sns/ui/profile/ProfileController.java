@@ -148,7 +148,6 @@ public class ProfileController {
                 } catch (IOException e) {
 
 
-
                 }
 
             }
@@ -207,6 +206,52 @@ public class ProfileController {
                 super.onFailure(statusCode, headers, responseString, throwable);
                 progressDialog.dismiss();
                 System.out.println("onFailure responseString :::: " + throwable.toString());
+            }
+        });
+    }
+
+    public void Follow(String followMemberSrl, final boolean isFollow) {
+
+        // 프로그레스
+        final ProgressDialog progressDialog = new ProgressDialog(profileActivity, R.style.MyProgressBarDialog);
+        progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        progressDialog.setProgressStyle(android.R.style.Widget_Material_ProgressBar_Small);
+        progressDialog.show();
+
+        RequestParams params = new RequestParams();
+
+
+        params.put("member_srl", (new SharedPref(profileActivity)).getStringPref(SharedDefine.SHARED_MEMBER_SRL));
+        params.put("follow_member_srl", followMemberSrl);
+
+        String url;
+        if (isFollow)
+            url = UrlDefine.URL_FOLLOW;
+        else
+            url = UrlDefine.URL_UNFOLLOW;
+        HttpClient.post(url, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                System.out.println("onSuccess JSONObject :::: " + response.toString());
+                progressDialog.dismiss();
+                profileActivity.setFollowStatus(isFollow);
+
+//                EventBus.getDefault().post(fragment.toString());
+//
+//                progressDialog.dismiss();
+//                if (isFollow)
+//                    followAdapter.refreshFollowYn(position, "Y");
+//                else
+//                    followAdapter.refreshFollowYn(position, "N");
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                System.out.println("onFailure responseString :::: " + throwable.toString());
+                progressDialog.dismiss();
             }
         });
     }
