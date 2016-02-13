@@ -54,17 +54,6 @@ public class AddPostActivity extends BaseActivity implements View.OnClickListene
         etContent = (EditText) findViewById(R.id.et_content);
 
         areaPhoto = (RelativeLayout) findViewById(R.id.area_photo);
-//        areaPhoto.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                FishBun
-//                        .with(AddPostActivity.this)
-//                        .setCamera(true)
-//                        .setActionBarColor(Color.parseColor("#009688"), Color.parseColor("#00796B"))
-//                        .setPickerCount(1)
-//                        .startAlbum();
-//            }
-//        });
     }
 
     protected void onActivityResult(int requestCode, int resultCode,

@@ -1,6 +1,7 @@
 package xyz.sangcomz.open_sns.ui.main.fragments.friends;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -13,6 +14,7 @@ import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
+import de.greenrobot.event.EventBus;
 import xyz.sangcomz.open_sns.adapter.FollowAdapter;
 import xyz.sangcomz.open_sns.R;
 import xyz.sangcomz.open_sns.bean.FollowMember;
@@ -35,12 +37,27 @@ public class FollowingFragment extends Fragment {
     SwipeRefreshLayout swipeRefreshLayout;
     LinearLayoutManager linearLayoutManager;
 
+    FriendsFragment friendsFragment;
+
     int curPage = 1;
     int totalPage;
     int pastVisiblesItems, visibleItemCount, totalItemCount;
 
     public FollowingFragment() {
         // Required empty public constructor
+    }
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onDetach() {
+        EventBus.getDefault().unregister(this);
+        super.onDetach();
     }
 
 
@@ -56,7 +73,7 @@ public class FollowingFragment extends Fragment {
         noDataController = new NoDataController(areaNoData, getActivity());
         noDataController.setNodata(R.drawable.ic_people_black_24dp, getString(R.string.msg_no_following));
 
-        followController = new FollowController(getActivity(), followAdapter);
+        followController = new FollowController(this, followAdapter);
         followController.GetFollow(true, curPage++, this);
         // Inflate the layout for this fragment
 
@@ -87,6 +104,7 @@ public class FollowingFragment extends Fragment {
             }
         });
 
+
         return rootView;
     }
 
@@ -94,11 +112,21 @@ public class FollowingFragment extends Fragment {
         this.followMembers = followMembers;
         if (followMembers.size() > 0) {
             areaNoData.setVisibility(View.GONE);
-            followAdapter = new FollowAdapter(getActivity(), followMembers, true);
+            followAdapter = new FollowAdapter(this, followMembers, true);
             recyclerView.setAdapter(followAdapter);
             recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         } else {
             areaNoData.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void onEvent(String con) {
+        /* Do something */
+        if (!con.contains("FollowingFragment")){
+            followMembers.clear();
+            curPage = 1;
+            swipeRefreshLayout.setRefreshing(false);
+            followController.GetFollow(true, curPage++, FollowingFragment.this);
         }
     }
 

@@ -1,8 +1,8 @@
 package xyz.sangcomz.open_sns.ui.main.fragments.friends;
 
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -22,7 +22,8 @@ import xyz.sangcomz.open_sns.ui.main.MainActivity;
 public class FriendsFragment extends Fragment {
     ViewPager viewPager;
     MainActivity mainActivity;
-    FollowFragmentAdapter followFragmentAdapter;
+    protected FollowFragmentAdapter followFragmentAdapter;
+
 
     public FriendsFragment() {
         // Required empty public constructor
@@ -82,5 +83,6 @@ public class FriendsFragment extends Fragment {
             return mFragmentTitles.get(position);
         }
     }
+
 
 }

@@ -43,6 +43,7 @@ import xyz.sangcomz.open_sns.R;
 import xyz.sangcomz.open_sns.core.common.BaseActivity;
 import xyz.sangcomz.open_sns.core.common.GlobalApplication;
 import xyz.sangcomz.open_sns.core.common.view.DeclareView;
+import xyz.sangcomz.open_sns.define.RequeDefine;
 import xyz.sangcomz.open_sns.define.SharedDefine;
 import xyz.sangcomz.open_sns.gcm.RegistrationIntentService;
 import xyz.sangcomz.open_sns.ui.main.fragments.friends.FriendsFragment;
@@ -378,7 +379,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         switch (id) {
             case R.id.fab:
                 Intent i = new Intent(MainActivity.this, AddPostActivity.class);
-                startActivity(i);
+                timeLineFragment.startActivityForResult(i, RequeDefine.REQUEST_CODE_CREATE_POST);
                 break;
 
         }
@@ -405,4 +406,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         return true;
     }
 
+//
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        System.out.println("Main :::: requesteCode : " + requestCode);
+//        System.out.println("Main :::: resultCode : " + resultCode);
+//    }
 }

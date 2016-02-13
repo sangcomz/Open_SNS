@@ -1,9 +1,13 @@
 package xyz.sangcomz.open_sns.ui.post.add;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.view.Window;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -12,9 +16,11 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.lang.reflect.Type;
 
 import cz.msebera.android.httpclient.Header;
 import xyz.sangcomz.open_sns.R;
+import xyz.sangcomz.open_sns.bean.Post;
 import xyz.sangcomz.open_sns.core.SharedPref.SharedPref;
 import xyz.sangcomz.open_sns.core.http.HttpClient;
 import xyz.sangcomz.open_sns.define.SharedDefine;
@@ -62,10 +68,19 @@ public class AddPostController {
                 progressDialog.dismiss();
                 System.out.println("onSuccess JSONObject :::: " + response.toString());
                 try {
-                    JSONObject jsonObject = response.getJSONObject("response");
+                    JSONObject jsonObject = response.getJSONObject("post");
+                    Gson gson = new Gson();
+                    String jsonOutput = jsonObject.toString();
 
+                    Type type = new TypeToken<Post>() {
+                    }.getType();
+                    final Post post = gson.fromJson(jsonOutput, type);
                     file.delete();
 
+
+                    Intent i = new Intent();
+                    i.putExtra("post", post);
+                    addPostActivity.setResult(Activity.RESULT_OK, i);
                     addPostActivity.finish();
                 } catch (JSONException e) {
                     e.printStackTrace();
