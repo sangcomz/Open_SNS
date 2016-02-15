@@ -59,6 +59,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final String TAG = "MainActivity";
 
+
+
     @DeclareView(id = R.id.appbar)
     AppBarLayout appBarLayout;
     @DeclareView(id = R.id.toolbar)
@@ -99,6 +101,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main, true);
+
+
 
         if (checkPlayServices()) {
             // Start IntentService to register this application with GCM.

@@ -25,6 +25,7 @@ import xyz.sangcomz.open_sns.core.http.HttpClient;
 import xyz.sangcomz.open_sns.define.SharedDefine;
 import xyz.sangcomz.open_sns.define.UrlDefine;
 import xyz.sangcomz.open_sns.event.DelPostEvent;
+import xyz.sangcomz.open_sns.ui.main.fragments.timeline.TimeLineFragment;
 
 /**
  * Created by sangcomz on 1/28/16.
@@ -84,7 +85,7 @@ public class PostController {
     }
 
 
-    public static void deletePost(final Context context, String postSrl, final int position) {
+    public static void deletePost(final Context context, final String postSrl, final int position) {
 
         // 프로그레스
         final ProgressDialog progressDialog = new ProgressDialog(context, R.style.MyProgressBarDialog);
@@ -113,6 +114,7 @@ public class PostController {
                     PostActivity postActivity = (PostActivity) context;
                     Intent i = new Intent();
                     i.putExtra("position", position);
+                    TimeLineFragment.delPostPublishSubject.onNext(postSrl);
                     postActivity.setResult(Activity.RESULT_OK, i);
                     postActivity.finish();
                 }

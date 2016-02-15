@@ -95,24 +95,6 @@ public class CommentAdapter
                                     materialDialog.dismiss();
                                 }
                             }).show();
-//                    MaterialDialog mMaterialDialog = new MaterialDialog(this)
-//                            .setTitle("MaterialDialog")
-//                            .setMessage("Hello world!")
-//                            .setPositiveButton("OK", new View.OnClickListener() {
-//                                @Override
-//                                public void onClick(View v) {
-//                                    mMaterialDialog.dismiss();
-//                                    ...
-//                                }
-//                            })
-//                            .setNegativeButton("CANCEL", new View.OnClickListener() {
-//                                @Override
-//                                public void onClick(View v) {
-//                                    mMaterialDialog.dismiss();
-//                                    ...
-//                                }
-//                            });
-
 
                     return false;
                 }

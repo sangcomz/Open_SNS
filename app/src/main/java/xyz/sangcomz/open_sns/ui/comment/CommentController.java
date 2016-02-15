@@ -1,6 +1,8 @@
 package xyz.sangcomz.open_sns.ui.comment;
 
+import android.app.ProgressDialog;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 
 import com.google.gson.Gson;
@@ -17,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
+import xyz.sangcomz.open_sns.R;
 import xyz.sangcomz.open_sns.adapter.CommentAdapter;
 import xyz.sangcomz.open_sns.bean.Comment;
 import xyz.sangcomz.open_sns.core.SharedPref.SharedPref;
@@ -44,6 +47,12 @@ public class CommentController {
 
     public void addComment(String postSrl, String commentContent) {
 
+        // 프로그레스
+        final ProgressDialog progressDialog = new ProgressDialog(commentActivity, R.style.MyProgressBarDialog);
+        progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        progressDialog.setProgressStyle(android.R.style.Widget_Material_ProgressBar_Small);
+        progressDialog.show();
+
         RequestParams params = new RequestParams();
 
 
@@ -57,6 +66,7 @@ public class CommentController {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
+                progressDialog.dismiss();
                 System.out.println("addComment onSuccess JSONObject :::: " + response.toString());
                 try {
                     JSONObject jsonObject = response.getJSONObject("comments");
@@ -80,6 +90,7 @@ public class CommentController {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
+                progressDialog.dismiss();
                 System.out.println("addComment onFailure responseString :::: " + throwable.toString());
             }
         });
