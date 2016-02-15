@@ -1,5 +1,6 @@
 # Open_SNS
 Open SNS is simple SNS app.
+
 You can study.
 
 # Screenshot
