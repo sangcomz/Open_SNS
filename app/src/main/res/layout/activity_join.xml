@@ -26,7 +26,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/default_profile2"
+            android:src="@drawable/default_profile"
             app:border_color="#ffffff"
             app:border_width="1dp"
             app:corner_radius="30dp"

@@ -17,6 +17,9 @@ import android.widget.RelativeLayout;
 import java.util.ArrayList;
 
 import de.greenrobot.event.EventBus;
+import rx.Observer;
+import rx.Subscription;
+import rx.subjects.PublishSubject;
 import xyz.sangcomz.open_sns.R;
 import xyz.sangcomz.open_sns.adapter.PostAdapter;
 import xyz.sangcomz.open_sns.bean.Post;
@@ -37,6 +40,9 @@ public class TimeLineFragment extends BaseFragment {
     NoDataController noDataController;
     PostAdapter postAdapter;
     ArrayList<Post> posts = new ArrayList<>();
+
+    public static PublishSubject<String> delPostPublishSubject;
+    public static PublishSubject<ArrayList<String>> refreshPostPublishSubject;
 
     @DeclareView(id = R.id.recyclerview)
     RecyclerView recyclerView;
@@ -59,7 +65,6 @@ public class TimeLineFragment extends BaseFragment {
         // Required empty public constructor
 
     }
-
 
 
     @Override
@@ -107,33 +112,66 @@ public class TimeLineFragment extends BaseFragment {
 
             }
         });
+
+        delPostPublishSubject = PublishSubject.create();
+
+        Subscription delSubscription = delPostPublishSubject.subscribe(new Observer<String>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(String postSrl) {
+                for (int i = 0; i < posts.size(); i++) {
+                    if (posts.get(i).getPostSrl().equals(postSrl)) {
+                        posts.remove(i);
+                        postAdapter.notifyItemRemoved(i);
+                        postAdapter.notifyItemRangeChanged(i, posts.size());
+                    }
+
+                }
+            }
+        });
+
+        refreshPostPublishSubject = PublishSubject.create();
+
+        Subscription refreshSubscription = refreshPostPublishSubject.subscribe(new Observer<ArrayList<String>>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(ArrayList<String> infos) {
+                if (Integer.parseInt(infos.get(0)) != -1) {
+                    posts.get(Integer.parseInt(infos.get(0))).setPostCommentCount(infos.get(1));
+                    postAdapter.notifyItemChanged(Integer.parseInt(infos.get(0)));
+                } else {
+                    for (int i = 0; i < posts.size(); i++) {
+                        if (posts.get(i).getPostSrl().equals(infos.get(2))) {
+                            posts.get(i).setPostCommentCount(infos.get(1));
+                            postAdapter.notifyItemChanged(i);
+                        }
+
+                    }
+                }
+            }
+
+        });
+
         return rootView;
     }
-
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//
-//        System.out.println("GlobalApplication.refreshObservable.count() :::: " + GlobalApplication.refreshObservable.count());
-//
-//        GlobalApplication.refreshObservable
-//                .subscribe(new Subscriber<Post>() {
-//            @Override
-//            public void onCompleted() {
-//                Log.d(TAG, "complete!");
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//                Log.e(TAG, "error: " + e.getMessage());
-//            }
-//
-//            @Override
-//            public void onNext(Post post) {
-//                Log.d(TAG, "onNext: " + post.toString());
-//            }
-//        });
-//    }
 
 
     @Override
@@ -149,16 +187,16 @@ public class TimeLineFragment extends BaseFragment {
                 }
             });
         }
-        if (requestCode == RequeDefine.REQUEST_CODE_CHANGE_COMMENT && resultCode == Activity.RESULT_OK) {
-            int position = data.getIntExtra("position", -1);
-            int commentCount = data.getIntExtra("comment_count", -1);
-            System.out.println("position : " + position);
-            System.out.println("commentCount : " + commentCount);
-            if (position != -1 && commentCount != -1) {
-                posts.get(position).setPostCommentCount(String.valueOf(commentCount));
-                postAdapter.notifyItemChanged(position);
-            }
-        }
+//        if (requestCode == RequeDefine.REQUEST_CODE_CHANGE_COMMENT && resultCode == Activity.RESULT_OK) {
+//            int position = data.getIntExtra("position", -1);
+//            int commentCount = data.getIntExtra("comment_count", -1);
+//            System.out.println("position : " + position);
+//            System.out.println("commentCount : " + commentCount);
+//            if (position != -1 && commentCount != -1) {
+//                posts.get(position).setPostCommentCount(String.valueOf(commentCount));
+//                postAdapter.notifyItemChanged(position);
+//            }
+//        }
     }
 
     protected void initAreaNoData() {

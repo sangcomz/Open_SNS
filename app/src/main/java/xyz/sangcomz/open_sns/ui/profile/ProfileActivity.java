@@ -53,7 +53,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     @DeclareView(id = R.id.appbar)
     AppBarLayout appBarLayout;
 
-    @DeclareView(id = R.id.profile_img)
+    @DeclareView(id = R.id.profile_img, click = "this")
     RoundedImageView rivProfile;
 
     @DeclareView(id = R.id.txt_member_name)
@@ -268,6 +268,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         Glide.with(this)
                 .load(member.getProfilePath())
                 .centerCrop()
+                .error(R.drawable.default_profile)
                 .into(rivProfile);
 
         Glide.with(this)
@@ -344,6 +345,16 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             case R.id.fab:
                 profileController.Follow(memberSrl, !isFollow);
                 break;
+
+            case R.id.riv_profile:
+                FishBun
+                        .with(ProfileActivity.this)
+                        .setCamera(true)
+                        .setActionBarColor(Color.parseColor("#009688"), Color.parseColor("#00796B"))
+                        .setPickerCount(1)
+                        .startAlbum();
+                break;
+
         }
     }
 }

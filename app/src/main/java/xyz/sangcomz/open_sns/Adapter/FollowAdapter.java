@@ -63,7 +63,11 @@ public class FollowAdapter
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        Glide.with(fragment).load(followMembers.get(position).getProfilePath()).centerCrop().into(holder.rivProfile);
+        Glide
+                .with(fragment)
+                .load(followMembers.get(position).getProfilePath())
+                .error(R.drawable.default_profile)
+                .centerCrop().into(holder.rivProfile);
         holder.txtMemberName.setText(followMembers.get(position).getMemberName());
         setBtnColor(followMembers.get(position).getFollowYN(), holder.btnFollow);
         holder.btnFollow.setOnClickListener(new View.OnClickListener() {

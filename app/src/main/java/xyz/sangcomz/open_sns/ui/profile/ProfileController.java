@@ -255,4 +255,76 @@ public class ProfileController {
             }
         });
     }
+
+    public void setProfile(final Bitmap bitmap) {
+
+//        // 프로그레스
+//        final ProgressDialog progressDialog = new ProgressDialog(profileActivity, R.style.MyProgressBarDialog);
+//        progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        progressDialog.setProgressStyle(android.R.style.Widget_Material_ProgressBar_Small);
+//        progressDialog.show();
+
+        RequestParams params = new RequestParams();
+
+
+        params.put("member_srl", (new SharedPref(profileActivity)).getStringPref(SharedDefine.SHARED_MEMBER_SRL));
+
+        final File file = Utils.BitmapToFileCache(bitmap);
+
+        try {
+            params.put("member_profile", file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+        HttpClient.syncPost(UrlDefine.URL_ACCOUNT_SET_PROFILE_BG, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+//                progressDialog.dismiss();
+                System.out.println("onSuccess JSONObject :::: " + response.toString());
+
+                try {
+                    JSONObject jsonObject = response.getJSONObject("response");
+
+                    (new SharedPref(profileActivity)).setMemberPref(jsonObject.getString("member_srl"),
+                            jsonObject.getString("member_name"),
+                            jsonObject.getString("member_profile"),
+                            jsonObject.getString("member_profile_bg"));
+
+                    GlobalApplication.setDrawableBg((Utils.drawableFromUrl(profileActivity,
+                            (new SharedPref(profileActivity)).getStringPref(SharedDefine.SHARED_MEMBER_PROFILE_BG))));
+
+                    Gson gson = new Gson();
+                    String jsonOutput = jsonObject.toString();
+
+                    Type type = new TypeToken<Member>() {
+                    }.getType();
+                    final Member member = gson.fromJson(jsonOutput, type);
+                    file.delete();
+                    profileActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            profileActivity.setProfileView(member);
+                        }
+                    });
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+//                progressDialog.dismiss();
+                System.out.println("onFailure responseString :::: " + throwable.toString());
+            }
+        });
+    }
 }

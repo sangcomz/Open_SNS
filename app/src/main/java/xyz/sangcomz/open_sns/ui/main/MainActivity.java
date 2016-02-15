@@ -59,6 +59,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final String TAG = "MainActivity";
 
+
     @DeclareView(id = R.id.appbar)
     AppBarLayout appBarLayout;
     @DeclareView(id = R.id.toolbar)
@@ -100,6 +101,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main, true);
 
+
         if (checkPlayServices()) {
             // Start IntentService to register this application with GCM.
             Intent intent = new Intent(this, RegistrationIntentService.class);
@@ -123,8 +125,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         // Create a few sample profile
         // NOTE you have to define the loader logic too. See the CustomApplication for more details
         try {
-            profile = new ProfileDrawerItem().withName(URLDecoder.decode(sharedPref.getStringPref(SharedDefine.SHARED_MEMBER_NAME), "UTF-8"))
-                    .withIcon(sharedPref.getStringPref(SharedDefine.SHARED_MEMBER_PROFILE));
+
+            if (sharedPref.getStringPref(SharedDefine.SHARED_MEMBER_PROFILE).equals(""))
+                profile = new ProfileDrawerItem().withName(URLDecoder.decode(sharedPref.getStringPref(SharedDefine.SHARED_MEMBER_NAME), "UTF-8"))
+                        .withIcon(R.drawable.default_profile);
+            else
+                profile = new ProfileDrawerItem().withName(URLDecoder.decode(sharedPref.getStringPref(SharedDefine.SHARED_MEMBER_NAME), "UTF-8"))
+                        .withIcon(sharedPref.getStringPref(SharedDefine.SHARED_MEMBER_PROFILE));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -188,20 +195,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 .withOnMiniDrawerItemClickListener(new BaseDrawerAdapter.OnClickListener() {
                     @Override
                     public void onClick(View v, int position, IDrawerItem item) {
-//                        System.out.println("mini :::: " + position);
                         result.setSelectionAtPosition(position);
-//                        setFragment(position);
 
                         crossfadeDrawerLayout.closeDrawers();
                         if (position != 0) {
                             crossfadeDrawerLayout.closeDrawers();
                         }
-//                        if (position == 0) {
-//                            crossfadeDrawerLayout.crossfade();
-//                        } else {
-//                            crossfadeDrawerLayout.closeDrawers();
-//                        }
-
                     }
                 })
                 .withAccountHeader(headerResult);
@@ -243,8 +242,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         animFab(1);
 
                 }
-
-
 
 
             }

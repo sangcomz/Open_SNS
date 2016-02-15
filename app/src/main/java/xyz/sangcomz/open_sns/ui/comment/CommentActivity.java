@@ -1,6 +1,5 @@
 package xyz.sangcomz.open_sns.ui.comment;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,6 +19,7 @@ import xyz.sangcomz.open_sns.adapter.CommentAdapter;
 import xyz.sangcomz.open_sns.bean.Comment;
 import xyz.sangcomz.open_sns.core.common.BaseActivity;
 import xyz.sangcomz.open_sns.core.common.view.DeclareView;
+import xyz.sangcomz.open_sns.ui.main.fragments.timeline.TimeLineFragment;
 import xyz.sangcomz.open_sns.util.ItemDecoration.DividerItemDecoration;
 import xyz.sangcomz.open_sns.util.NoDataController;
 
@@ -117,10 +117,16 @@ public class CommentActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void finish() {
-        Intent i = new Intent();
-        i.putExtra("position", position);
-        i.putExtra("comment_count", totalCommentCount);
-        setResult(RESULT_OK, i);
+//        Intent i = new Intent();
+//        i.putExtra("position", position);
+//        i.putExtra("comment_count", totalCommentCount);
+//        setResult(RESULT_OK, i);
+        ArrayList<String> post = new ArrayList<>();
+        post.add(String.valueOf(position));
+        post.add(String.valueOf(totalCommentCount));
+        post.add(postSrl);
+
+        TimeLineFragment.refreshPostPublishSubject.onNext(post);
         super.finish();
         setAreaBackgroundColor(Color.TRANSPARENT);
         overridePendingTransition(R.anim.slide_bottom_to_top, R.anim.slide_bottom_to_top);

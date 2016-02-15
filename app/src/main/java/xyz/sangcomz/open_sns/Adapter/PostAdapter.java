@@ -36,7 +36,7 @@ public class PostAdapter
         extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     ArrayList<Post> posts = new ArrayList<>();
-//    Context context;
+    //    Context context;
     TimeLineFragment timeLineFragment;
 
 
@@ -85,7 +85,7 @@ public class PostAdapter
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        Glide.with(timeLineFragment).load(posts.get(position).getMemberProfile()).centerCrop().into(holder.rivProfile);
+        Glide.with(timeLineFragment).load(posts.get(position).getMemberProfile()).error(R.drawable.default_profile).centerCrop().into(holder.rivProfile);
         Glide.with(timeLineFragment).load(posts.get(position).getPostImage()).centerCrop().into(holder.sivPostImage);
         holder.txtMemberName.setText(posts.get(position).getMemberName());
         holder.txtContent.setText(posts.get(position).getPostContent());
@@ -135,7 +135,7 @@ public class PostAdapter
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         int id = item.getItemId();
-                        switch (id){
+                        switch (id) {
                             case R.id.action_delete:
                                 PostController.deletePost(timeLineFragment.getContext(), posts.get(position).getPostSrl(), position);
                                 break;

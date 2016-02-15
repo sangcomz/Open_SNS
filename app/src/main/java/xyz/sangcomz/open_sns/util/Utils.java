@@ -67,9 +67,9 @@ public class Utils {
     public static Drawable drawableFromUrl(Context context, String url) throws IOException {
         if (url == null || url.equals("")) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                return context.getResources().getDrawable(R.drawable.bg_drawer, null);
+                return context.getResources().getDrawable(R.drawable.bg_drawer_drawable, null);
             } else {
-                return context.getResources().getDrawable(R.drawable.bg_drawer);
+                return context.getResources().getDrawable(R.drawable.bg_drawer_drawable);
             }
         } else {
             Bitmap myBitmap = null;

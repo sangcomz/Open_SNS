@@ -67,7 +67,12 @@ public class CommentAdapter
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        Glide.with(context).load(comments.get(position).getMemberProfile()).centerCrop().into(holder.rivProfile);
+        Glide
+                .with(context)
+                .load(comments.get(position).getMemberProfile())
+                .error(R.drawable.default_profile)
+                .centerCrop()
+                .into(holder.rivProfile);
 //        Glide.with(context).load(posts.get(position).getPostImage()).centerCrop().into(holder.sivPostImage);
         holder.txtMemberName.setText(comments.get(position).getMemberName());
         holder.txtContent.setText(comments.get(position).getCommentContent());
@@ -95,24 +100,6 @@ public class CommentAdapter
                                     materialDialog.dismiss();
                                 }
                             }).show();
-//                    MaterialDialog mMaterialDialog = new MaterialDialog(this)
-//                            .setTitle("MaterialDialog")
-//                            .setMessage("Hello world!")
-//                            .setPositiveButton("OK", new View.OnClickListener() {
-//                                @Override
-//                                public void onClick(View v) {
-//                                    mMaterialDialog.dismiss();
-//                                    ...
-//                                }
-//                            })
-//                            .setNegativeButton("CANCEL", new View.OnClickListener() {
-//                                @Override
-//                                public void onClick(View v) {
-//                                    mMaterialDialog.dismiss();
-//                                    ...
-//                                }
-//                            });
-
 
                     return false;
                 }
