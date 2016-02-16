@@ -14,7 +14,7 @@ You can study.
 <img src="/img/8.png" width=20%">
 
 # PlayStore
-Beta - 
+Beta - https://play.google.com/apps/testing/xyz.sangcomz.open_sns
 
 #License
 
