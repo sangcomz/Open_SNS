@@ -16,6 +16,7 @@ public class UrlDefine {
     public static final String URL_ACCOUNT_GET_APP_VERSION = HTTP + SERVER_HOST + "/account/get_app_version.php";
     public static final String URL_ACCOUNT_GET_ACCOUNT = HTTP + SERVER_HOST + "/account/get_account.php";
     public static final String URL_ACCOUNT_SET_PROFILE_BG = HTTP + SERVER_HOST + "/account/set_profile_bg.php";
+    public static final String URL_ACCOUNT_SET_PROFILE = HTTP + SERVER_HOST + "/account/set_profile.php";
     public static final String URL_GET_MY_POSTS = HTTP + SERVER_HOST + "/account/get_my_posts.php";
     public static final String URL_PHONE_INFO = HTTP + SERVER_HOST + "/account/phone_info.php";
 

@@ -235,6 +235,32 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                 }
                 break;
 
+            case RequeDefine.REQUEST_CODE_GET_PROFILE:
+                if (resultCode == RESULT_OK) {
+                    final ArrayList<String> path = data.getStringArrayListExtra(Define.INTENT_PATH);
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                Bitmap bmProfile = Glide.with(getApplicationContext())
+                                        .load(path.get(0))
+                                        .asBitmap()
+                                        .override(600, 600)
+                                        .into(600, 600)
+                                        .get();
+                                profileController.setProfile(bmProfile);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            } catch (ExecutionException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }).start();
+
+                    //You can get image path(ArrayList<String>
+                }
+                break;
+
             case RequeDefine.REQUEST_CODE_DELETE_POST:
                 if (resultCode == RESULT_OK) {
                     int position = data.getIntExtra("position", -1);
@@ -346,14 +372,15 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                 profileController.Follow(memberSrl, !isFollow);
                 break;
 
-            case R.id.riv_profile:
+            case R.id.profile_img:
                 FishBun
                         .with(ProfileActivity.this)
                         .setCamera(true)
                         .setActionBarColor(Color.parseColor("#009688"), Color.parseColor("#00796B"))
                         .setPickerCount(1)
+                        .setRequestCode(RequeDefine.REQUEST_CODE_GET_PROFILE)
                         .startAlbum();
-                break;
+
 
         }
     }

@@ -85,6 +85,9 @@
             android:exported="false"></service>
 
         <activity android:name=".ui.post.PostActivity"></activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="05c92a7e8e6bbe359e28d6c7d01711eb32aed266" />
     </application>
 
 </manifest>

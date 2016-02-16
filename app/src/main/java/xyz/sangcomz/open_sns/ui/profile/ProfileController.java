@@ -143,6 +143,8 @@ public class ProfileController {
                         }
                     });
 
+//                    MainActivity.refreshDrawerPublishSubject.onNext("success");
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -194,6 +196,8 @@ public class ProfileController {
 
                     profileActivity.setTotalPage(page.getInt("total_page"));
                     profileActivity.setPosts((ArrayList<Post>) posts);
+
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -278,7 +282,7 @@ public class ProfileController {
         }
 
 
-        HttpClient.syncPost(UrlDefine.URL_ACCOUNT_SET_PROFILE_BG, params, new JsonHttpResponseHandler() {
+        HttpClient.syncPost(UrlDefine.URL_ACCOUNT_SET_PROFILE, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -309,6 +313,8 @@ public class ProfileController {
                             profileActivity.setProfileView(member);
                         }
                     });
+
+//                    MainActivity.refreshDrawerPublishSubject.onNext("success");
 
                 } catch (JSONException e) {
                     e.printStackTrace();
