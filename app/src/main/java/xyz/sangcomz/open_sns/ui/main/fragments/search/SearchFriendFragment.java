@@ -12,6 +12,8 @@ import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
+import rx.Observer;
+import rx.subjects.PublishSubject;
 import xyz.sangcomz.open_sns.R;
 import xyz.sangcomz.open_sns.adapter.FollowAdapter;
 import xyz.sangcomz.open_sns.bean.FollowMember;
@@ -44,6 +46,8 @@ public class SearchFriendFragment extends BaseFragment {
 
     String query = "";
 
+    public static PublishSubject<ArrayList<Integer>> refreshFollowPublishSubject;
+
     public SearchFriendFragment() {
         // Required empty public constructor
     }
@@ -54,6 +58,7 @@ public class SearchFriendFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_search_friend, container, false);
         bindView(rootView);
+
         seachController = new SeachController(getActivity(), this);
         noDataController = new NoDataController(areaNoData, getActivity());
         noDataController.setNodata(R.drawable.ic_search_black_24dp, getString(R.string.msg_no_search));
@@ -72,6 +77,38 @@ public class SearchFriendFragment extends BaseFragment {
                     if (curPage <= totalPage) {
                         searchMember(query);
                     }
+                }
+
+            }
+        });
+
+        refreshFollowPublishSubject = PublishSubject.create();
+
+        /**
+         * data - >0 == position , 1 == true or false
+         */
+        refreshFollowPublishSubject.subscribe(new Observer<ArrayList<Integer>>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(ArrayList<Integer> data) {
+                System.out.println((followMembers != null) + " :::: " + data.get(0));
+
+                if (followMembers != null && followMembers.size() > data.get(0)) {
+                    if (data.get(1) == 1)
+                        followMembers.get(data.get(0)).setFollowYN("Y");
+                    else
+                        followMembers.get(data.get(0)).setFollowYN("N");
+
+                    followAdapter.notifyItemChanged(data.get(0));
                 }
 
             }

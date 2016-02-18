@@ -104,6 +104,8 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
 
     boolean isFollow;
 
+    int position;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +129,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
 
         memberSrl = getIntent().getStringExtra("member_srl");
+        position = getIntent().getIntExtra("position", -1);
         profileController.getMember(memberSrl);
 
 
@@ -369,7 +372,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         int id = v.getId();
         switch (id) {
             case R.id.fab:
-                profileController.Follow(memberSrl, !isFollow);
+                profileController.Follow(memberSrl, !isFollow, position);
                 break;
 
             case R.id.profile_img:

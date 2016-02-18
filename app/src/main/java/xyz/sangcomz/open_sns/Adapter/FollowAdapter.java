@@ -88,6 +88,7 @@ public class FollowAdapter
                 final Intent intent = new Intent(fragment.getContext(), ProfileActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 intent.putExtra("member_srl", followMembers.get(position).getMemberSrl());
+                intent.putExtra("position", position);
                 fragment.getContext().startActivity(intent);
             }
         });
