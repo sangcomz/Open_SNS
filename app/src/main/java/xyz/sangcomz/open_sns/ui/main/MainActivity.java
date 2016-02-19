@@ -84,20 +84,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private IProfile profile = null;
 
     int curPosition = 1;
-//    Fragment curFragment = null;
-
-//    SearchView searchView;
 
     MainController mainController;
+    ;
 
     @Override
     protected void onResume() {
         super.onResume();
-        headerResult.setBackground(GlobalApplication.getDrawableBg());
+
+//        headerResult.setBackground(GlobalApplication.getDrawableBg());
+
+        setDrawer();
+
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main, true);
 
@@ -116,121 +118,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         friendsFragment = new FriendsFragment();
         searchFriendFragment = new SearchFriendFragment();
         settingFragment = new SettingFragment();
-//        profileFragment = new ProfileFragment();
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getString(R.string.txt_timeline));
 
 
         setFragment(1);
-        // Create a few sample profile
-        // NOTE you have to define the loader logic too. See the CustomApplication for more details
-        try {
 
-            if (sharedPref.getStringPref(SharedDefine.SHARED_MEMBER_PROFILE).equals(""))
-                profile = new ProfileDrawerItem().withName(URLDecoder.decode(sharedPref.getStringPref(SharedDefine.SHARED_MEMBER_NAME), "UTF-8"))
-                        .withIcon(R.drawable.default_profile);
-            else
-                profile = new ProfileDrawerItem().withName(URLDecoder.decode(sharedPref.getStringPref(SharedDefine.SHARED_MEMBER_NAME), "UTF-8"))
-                        .withIcon(sharedPref.getStringPref(SharedDefine.SHARED_MEMBER_PROFILE));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        // Create the AccountHeader
-        headerResult = new AccountHeaderBuilder()
-                .withActivity(this)
-//                .withHeaderBackground(GlobalApplication.getDrawableBg()) //펼쳤을때 백그라운드 색
-                .addProfiles(profile)
-                .withSelectionListEnabledForSingleProfile(false)
-                .withSavedInstance(savedInstanceState)
-                .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
-                    @Override
-                    public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
-                        redirectProfileActivity(sharedPref.getStringPref(SharedDefine.SHARED_MEMBER_SRL));
-                        return false;
-                    }
-                })
-                .build();
-
-        //create the CrossfadeDrawerLayout which will be used as alternative DrawerLayout for the Drawer
-        crossfadeDrawerLayout = new CrossfadeDrawerLayout(this);
-
-        //Create the drawer
-        result = new DrawerBuilder()
-                .withActivity(this)
-                .withToolbar(toolbar)
-                .withDrawerLayout(crossfadeDrawerLayout)
-                .withHasStableIds(true)
-                .withDrawerWidthDp(72)
-                .withAccountHeader(headerResult) //set the AccountHeader we created earlier for the header
-                .addDrawerItems(
-                        new PrimaryDrawerItem().withName(getString(R.string.txt_timeline)).withIcon(R.drawable.ic_public_black_24dp).withIdentifier(1),
-                        new PrimaryDrawerItem().withName(getString(R.string.txt_friends)).withIcon(R.drawable.ic_people_black_24dp).withIdentifier(2),
-                        new PrimaryDrawerItem().withName(getString(R.string.txt_search_friend)).withIcon(R.drawable.ic_search_black_24dp).withIdentifier(3),
-                        new PrimaryDrawerItem().withName(getString(R.string.txt_setting)).withIcon(R.drawable.ic_settings_black_24dp).withIdentifier(4)
-                ) // add the items we want to use with our Drawer
-                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                    @Override
-                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-
-//                        System.out.println("position :::: " + position);
-                        setFragment(position);
-//                        if (drawerItem instanceof Nameable) {
-//                            Toast.makeText(MainActivity.this, ((Nameable) drawerItem).getName().getText(MainActivity.this), Toast.LENGTH_SHORT).show();
-//                        }
-
-                        //IMPORTANT notify the MiniDrawer about the onItemClick
-                        return miniResult.onItemClick(drawerItem);
-                    }
-                })
-                .withSavedInstance(savedInstanceState)
-                .withShowDrawerOnFirstLaunch(true)
-                .build();
-
-        //define maxDrawerWidth
-        crossfadeDrawerLayout.setMaxWidthPx(DrawerUIUtils.getOptimalDrawerWidth(this));
-        //add second view (which is the miniDrawer)
-        miniResult = new MiniDrawer()
-                .withDrawer(result)
-                .withOnMiniDrawerItemClickListener(new BaseDrawerAdapter.OnClickListener() {
-                    @Override
-                    public void onClick(View v, int position, IDrawerItem item) {
-                        result.setSelectionAtPosition(position);
-
-                        crossfadeDrawerLayout.closeDrawers();
-                        if (position != 0) {
-                            crossfadeDrawerLayout.closeDrawers();
-                        }
-                    }
-                })
-                .withAccountHeader(headerResult);
-        //build the view for the MiniDrawer
-        View view = miniResult.build(this);
-        //set the background of the MiniDrawer as this would be transparent
-        view.setBackgroundColor(UIUtils.getThemeColorFromAttrOrRes(this, com.mikepenz.materialdrawer.R.attr.material_drawer_background, com.mikepenz.materialdrawer.R.color.material_drawer_background));
-        //we do not have the MiniDrawer view during CrossfadeDrawerLayout creation so we will add it here
-        crossfadeDrawerLayout.getSmallView().addView(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-
-        //define the crossfader to be used with the miniDrawer. This is required to be able to automatically toggle open / close
-        miniResult.withCrossFader(new ICrossfader() {
-            @Override
-            public void crossfade() {
-                boolean isFaded = isCrossfaded();
-                crossfadeDrawerLayout.crossfade(400);
-
-                //only close the drawer if we were already faded and want to close it now
-                if (isFaded) {
-                    result.getDrawerLayout().closeDrawer(GravityCompat.START);
-                }
-            }
-
-            @Override
-            public boolean isCrossfaded() {
-                return crossfadeDrawerLayout.isCrossfaded();
-            }
-        });
-
-//        handleIntent(getIntent());
 
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
@@ -248,16 +141,38 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         });
 
 
+//        refreshDrawerPublishSubject = PublishSubject.create();
+//
+//        Subscription refreshSubscription = refreshDrawerPublishSubject.subscribe(new Observer<String>() {
+//            @Override
+//            public void onCompleted() {
+//
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//
+//            }
+//
+//            @Override
+//            public void onNext(String s) {
+//                System.out.println("refreshDrawerPublishSubject :::: " + s);
+//                setDrawer(savedInstanceState);
+//            }
+//
+//
+//        });
+
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        //add the values which need to be saved from the drawer to the bundle
-        outState = result.saveInstanceState(outState);
-        //add the values which need to be saved from the accountHeader to the bundle
-        outState = headerResult.saveInstanceState(outState);
-        super.onSaveInstanceState(outState);
-    }
+//    @Override
+//    protected void onSaveInstanceState(Bundle outState) {
+//        //add the values which need to be saved from the drawer to the bundle
+////        outState = result.saveInstanceState(outState);
+////        //add the values which need to be saved from the accountHeader to the bundle
+////        outState = headerResult.saveInstanceState(outState);
+//        super.onSaveInstanceState(outState);
+//    }
 
     @Override
     public void onBackPressed() {
@@ -403,11 +318,105 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         return true;
     }
 
-//
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        System.out.println("Main :::: requesteCode : " + requestCode);
-//        System.out.println("Main :::: resultCode : " + resultCode);
-//    }
+    protected void setDrawer(){
+        try {
+
+            if (sharedPref.getStringPref(SharedDefine.SHARED_MEMBER_PROFILE).equals(""))
+                profile = new ProfileDrawerItem().withName(URLDecoder.decode(sharedPref.getStringPref(SharedDefine.SHARED_MEMBER_NAME), "UTF-8"))
+                        .withIcon(R.drawable.default_profile);
+            else
+                profile = new ProfileDrawerItem().withName(URLDecoder.decode(sharedPref.getStringPref(SharedDefine.SHARED_MEMBER_NAME), "UTF-8"))
+                        .withIcon(sharedPref.getStringPref(SharedDefine.SHARED_MEMBER_PROFILE));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        // Create the AccountHeader
+        headerResult = new AccountHeaderBuilder()
+                .withActivity(this)
+                .withHeaderBackground(GlobalApplication.getDrawableBg()) //펼쳤을때 백그라운드 색
+                .addProfiles(profile)
+                .withSelectionListEnabledForSingleProfile(false)
+//                .withSavedInstance(savedInstanceState)
+                .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+                    @Override
+                    public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
+                        redirectProfileActivity(sharedPref.getStringPref(SharedDefine.SHARED_MEMBER_SRL));
+                        return false;
+                    }
+                })
+                .build();
+
+        //create the CrossfadeDrawerLayout which will be used as alternative DrawerLayout for the Drawer
+        crossfadeDrawerLayout = new CrossfadeDrawerLayout(this);
+
+        //Create the drawer
+        result = new DrawerBuilder()
+                .withActivity(this)
+                .withToolbar(toolbar)
+                .withDrawerLayout(crossfadeDrawerLayout)
+                .withHasStableIds(true)
+                .withDrawerWidthDp(72)
+                .withAccountHeader(headerResult) //set the AccountHeader we created earlier for the header
+                .addDrawerItems(
+                        new PrimaryDrawerItem().withName(getString(R.string.txt_timeline)).withIcon(R.drawable.ic_public_black_24dp).withIdentifier(1),
+                        new PrimaryDrawerItem().withName(getString(R.string.txt_friends)).withIcon(R.drawable.ic_people_black_24dp).withIdentifier(2),
+                        new PrimaryDrawerItem().withName(getString(R.string.txt_search_friend)).withIcon(R.drawable.ic_search_black_24dp).withIdentifier(3),
+                        new PrimaryDrawerItem().withName(getString(R.string.txt_setting)).withIcon(R.drawable.ic_settings_black_24dp).withIdentifier(4)
+                ) // add the items we want to use with our Drawer
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        setFragment(position);
+                        //IMPORTANT notify the MiniDrawer about the onItemClick
+                        return miniResult.onItemClick(drawerItem);
+                    }
+                })
+//                .withSavedInstance(savedInstanceState)
+                .withShowDrawerOnFirstLaunch(true)
+                .build();
+
+        //define maxDrawerWidth
+        crossfadeDrawerLayout.setMaxWidthPx(DrawerUIUtils.getOptimalDrawerWidth(this));
+        //add second view (which is the miniDrawer)
+        miniResult = new MiniDrawer()
+                .withDrawer(result)
+                .withOnMiniDrawerItemClickListener(new BaseDrawerAdapter.OnClickListener() {
+                    @Override
+                    public void onClick(View v, int position, IDrawerItem item) {
+                        result.setSelectionAtPosition(position);
+
+                        crossfadeDrawerLayout.closeDrawers();
+                        if (position != 0) {
+                            crossfadeDrawerLayout.closeDrawers();
+                        }
+                    }
+                })
+                .withAccountHeader(headerResult);
+        //build the view for the MiniDrawer
+        View view = miniResult.build(this);
+        //set the background of the MiniDrawer as this would be transparent
+        view.setBackgroundColor(UIUtils.getThemeColorFromAttrOrRes(this, com.mikepenz.materialdrawer.R.attr.material_drawer_background, com.mikepenz.materialdrawer.R.color.material_drawer_background));
+        //we do not have the MiniDrawer view during CrossfadeDrawerLayout creation so we will add it here
+        crossfadeDrawerLayout.getSmallView().addView(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+        //define the crossfader to be used with the miniDrawer. This is required to be able to automatically toggle open / close
+        miniResult.withCrossFader(new ICrossfader() {
+            @Override
+            public void crossfade() {
+                boolean isFaded = isCrossfaded();
+                crossfadeDrawerLayout.crossfade(400);
+
+                //only close the drawer if we were already faded and want to close it now
+                if (isFaded) {
+                    result.getDrawerLayout().closeDrawer(GravityCompat.START);
+                }
+            }
+
+            @Override
+            public boolean isCrossfaded() {
+                return crossfadeDrawerLayout.isCrossfaded();
+            }
+        });
+    }
 }

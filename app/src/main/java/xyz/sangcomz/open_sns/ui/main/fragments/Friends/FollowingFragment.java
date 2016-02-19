@@ -15,6 +15,8 @@ import android.widget.RelativeLayout;
 import java.util.ArrayList;
 
 import de.greenrobot.event.EventBus;
+import rx.Observer;
+import rx.subjects.PublishSubject;
 import xyz.sangcomz.open_sns.adapter.FollowAdapter;
 import xyz.sangcomz.open_sns.R;
 import xyz.sangcomz.open_sns.bean.FollowMember;
@@ -43,6 +45,8 @@ public class FollowingFragment extends Fragment {
     int totalPage;
     int pastVisiblesItems, visibleItemCount, totalItemCount;
 
+    public static PublishSubject<FollowMember> refreshFollowPublishSubject;
+
     public FollowingFragment() {
         // Required empty public constructor
     }
@@ -69,6 +73,8 @@ public class FollowingFragment extends Fragment {
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh);
         linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+
         areaNoData = (RelativeLayout) rootView.findViewById(R.id.area_nodata);
         noDataController = new NoDataController(areaNoData, getActivity());
         noDataController.setNodata(R.drawable.ic_people_black_24dp, getString(R.string.msg_no_following));
@@ -104,7 +110,45 @@ public class FollowingFragment extends Fragment {
             }
         });
 
+        refreshFollowPublishSubject = PublishSubject.create();
 
+        /**
+         * data - >0 == memberSrl , 1 == true or false
+         */
+        refreshFollowPublishSubject.subscribe(new Observer<FollowMember>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(FollowMember followMember) {
+                if (followMember.getFollowYN().equals("Y")) {
+                    followMembers.add(0, followMember);
+                    followAdapter.notifyDataSetChanged();
+                    if (areaNoData.getVisibility() == View.VISIBLE)
+                        areaNoData.setVisibility(View.GONE);
+                } else {
+                    for (int i = 0; i < followMembers.size(); i++) {
+                        if (followMembers.get(i).getMemberSrl().equals(followMember.getMemberSrl())) {
+                            followMembers.remove(i);
+                            followAdapter.notifyItemRemoved(i);
+                            followAdapter.notifyItemRangeChanged(i, followMembers.size());
+                            if (!(followMembers.size() > 0))
+                                areaNoData.setVisibility(View.VISIBLE);
+                            break;
+                        }
+                    }
+                }
+
+
+            }
+        });
         return rootView;
     }
 
@@ -114,7 +158,7 @@ public class FollowingFragment extends Fragment {
             areaNoData.setVisibility(View.GONE);
             followAdapter = new FollowAdapter(this, followMembers, true);
             recyclerView.setAdapter(followAdapter);
-            recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+
         } else {
             areaNoData.setVisibility(View.VISIBLE);
         }
@@ -122,7 +166,7 @@ public class FollowingFragment extends Fragment {
 
     public void onEvent(String con) {
         /* Do something */
-        if (!con.contains("FollowingFragment")){
+        if (!con.contains("FollowingFragment")) {
             followMembers.clear();
             curPage = 1;
             swipeRefreshLayout.setRefreshing(false);

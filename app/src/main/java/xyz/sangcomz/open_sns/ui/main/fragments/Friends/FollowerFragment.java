@@ -15,6 +15,8 @@ import android.widget.RelativeLayout;
 import java.util.ArrayList;
 
 import de.greenrobot.event.EventBus;
+import rx.Observer;
+import rx.subjects.PublishSubject;
 import xyz.sangcomz.open_sns.R;
 import xyz.sangcomz.open_sns.adapter.FollowAdapter;
 import xyz.sangcomz.open_sns.bean.FollowMember;
@@ -40,6 +42,8 @@ public class FollowerFragment extends BaseFragment {
     int curPage = 1;
     int totalPage;
     int pastVisiblesItems, visibleItemCount, totalItemCount;
+
+    public static PublishSubject<ArrayList<String>> refreshFollowPublishSubject;
 
     public FollowerFragment() {
         // Required empty public constructor
@@ -68,7 +72,7 @@ public class FollowerFragment extends BaseFragment {
         linearLayoutManager = new LinearLayoutManager(getActivity());
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh);
         recyclerView.setLayoutManager(linearLayoutManager);
-
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
 //        followAdapter = new FollowAdapter(getActivity(), followMembers, false);
         followController = new FollowController(this, followAdapter);
         followController.GetFollow(false, 1, this);
@@ -104,6 +108,38 @@ public class FollowerFragment extends BaseFragment {
 
             }
         });
+
+        refreshFollowPublishSubject = PublishSubject.create();
+
+        /**
+         * data - >0 == memberSrl , 1 == true or false
+         */
+        refreshFollowPublishSubject.subscribe(new Observer<ArrayList<String>>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(ArrayList<String> data) {
+
+                if (followMembers != null && followMembers.size() > 0) {
+                    for (int i = 0; i < followMembers.size(); i++) {
+                        if (followMembers.get(i).getMemberSrl().equals(data.get(0))) {
+                            followMembers.get(i).setFollowYN(data.get(1));
+                            followAdapter.notifyItemChanged(i);
+                            break;
+                        }
+                    }
+                }
+
+            }
+        });
         return rootView;
     }
 
@@ -113,7 +149,6 @@ public class FollowerFragment extends BaseFragment {
             areaNoData.setVisibility(View.GONE);
             followAdapter = new FollowAdapter(this, followMembers, false);
             recyclerView.setAdapter(followAdapter);
-            recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         } else {
             areaNoData.setVisibility(View.VISIBLE);
         }

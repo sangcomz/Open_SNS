@@ -22,6 +22,7 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 import xyz.sangcomz.open_sns.R;
+import xyz.sangcomz.open_sns.bean.FollowMember;
 import xyz.sangcomz.open_sns.bean.Member;
 import xyz.sangcomz.open_sns.bean.Post;
 import xyz.sangcomz.open_sns.core.SharedPref.SharedPref;
@@ -29,6 +30,9 @@ import xyz.sangcomz.open_sns.core.common.GlobalApplication;
 import xyz.sangcomz.open_sns.core.http.HttpClient;
 import xyz.sangcomz.open_sns.define.SharedDefine;
 import xyz.sangcomz.open_sns.define.UrlDefine;
+import xyz.sangcomz.open_sns.ui.main.fragments.friends.FollowerFragment;
+import xyz.sangcomz.open_sns.ui.main.fragments.friends.FollowingFragment;
+import xyz.sangcomz.open_sns.ui.main.fragments.search.SearchFriendFragment;
 import xyz.sangcomz.open_sns.util.Utils;
 
 /**
@@ -143,6 +147,8 @@ public class ProfileController {
                         }
                     });
 
+//                    MainActivity.refreshDrawerPublishSubject.onNext("success");
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -195,6 +201,7 @@ public class ProfileController {
                     profileActivity.setTotalPage(page.getInt("total_page"));
                     profileActivity.setPosts((ArrayList<Post>) posts);
 
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -210,7 +217,7 @@ public class ProfileController {
         });
     }
 
-    public void Follow(String followMemberSrl, final boolean isFollow) {
+    public void Follow(final String followMemberSrl, final boolean isFollow, final int position) {
 
         // 프로그레스
         final ProgressDialog progressDialog = new ProgressDialog(profileActivity, R.style.MyProgressBarDialog);
@@ -236,6 +243,47 @@ public class ProfileController {
                 System.out.println("onSuccess JSONObject :::: " + response.toString());
                 progressDialog.dismiss();
                 profileActivity.setFollowStatus(isFollow);
+
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = response.getJSONObject("follow_member");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                Gson gson = new Gson();
+                String jsonOutput = jsonObject.toString();
+
+                Type listType = new TypeToken<FollowMember>() {
+                }.getType();
+                FollowMember followMember = (FollowMember) gson.fromJson(jsonOutput, listType);
+
+
+                ArrayList<Integer> integers = new ArrayList<Integer>();
+                integers.add(position);
+
+                ArrayList<String> strings = new ArrayList<String>();
+                strings.add(followMemberSrl);
+
+                if (isFollow) {
+                    integers.add(1);
+                    strings.add("Y");
+                    followMember.setFollowYN("Y");
+                }
+                else {
+                    integers.add(0);
+                    strings.add("N");
+                    followMember.setFollowYN("N");
+                }
+
+
+
+                if (SearchFriendFragment.refreshFollowPublishSubject != null)
+                    SearchFriendFragment.refreshFollowPublishSubject.onNext(integers);
+                if (FollowerFragment.refreshFollowPublishSubject != null)
+                    FollowerFragment.refreshFollowPublishSubject.onNext(strings);
+                if (FollowingFragment.refreshFollowPublishSubject != null)
+                    FollowingFragment.refreshFollowPublishSubject.onNext(followMember);
 
 //                EventBus.getDefault().post(fragment.toString());
 //
@@ -278,7 +326,7 @@ public class ProfileController {
         }
 
 
-        HttpClient.syncPost(UrlDefine.URL_ACCOUNT_SET_PROFILE_BG, params, new JsonHttpResponseHandler() {
+        HttpClient.syncPost(UrlDefine.URL_ACCOUNT_SET_PROFILE, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -309,6 +357,8 @@ public class ProfileController {
                             profileActivity.setProfileView(member);
                         }
                     });
+
+//                    MainActivity.refreshDrawerPublishSubject.onNext("success");
 
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -104,6 +104,8 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
 
     boolean isFollow;
 
+    int position;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +129,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
 
         memberSrl = getIntent().getStringExtra("member_srl");
+        position = getIntent().getIntExtra("position", -1);
         profileController.getMember(memberSrl);
 
 
@@ -223,6 +226,32 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                                         .into(1200, 600)
                                         .get();
                                 profileController.setProfileBg(bmProfileBg);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            } catch (ExecutionException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }).start();
+
+                    //You can get image path(ArrayList<String>
+                }
+                break;
+
+            case RequeDefine.REQUEST_CODE_GET_PROFILE:
+                if (resultCode == RESULT_OK) {
+                    final ArrayList<String> path = data.getStringArrayListExtra(Define.INTENT_PATH);
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                Bitmap bmProfile = Glide.with(getApplicationContext())
+                                        .load(path.get(0))
+                                        .asBitmap()
+                                        .override(600, 600)
+                                        .into(600, 600)
+                                        .get();
+                                profileController.setProfile(bmProfile);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             } catch (ExecutionException e) {
@@ -343,17 +372,18 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         int id = v.getId();
         switch (id) {
             case R.id.fab:
-                profileController.Follow(memberSrl, !isFollow);
+                profileController.Follow(memberSrl, !isFollow, position);
                 break;
 
-            case R.id.riv_profile:
+            case R.id.profile_img:
                 FishBun
                         .with(ProfileActivity.this)
                         .setCamera(true)
                         .setActionBarColor(Color.parseColor("#009688"), Color.parseColor("#00796B"))
                         .setPickerCount(1)
+                        .setRequestCode(RequeDefine.REQUEST_CODE_GET_PROFILE)
                         .startAlbum();
-                break;
+
 
         }
     }
