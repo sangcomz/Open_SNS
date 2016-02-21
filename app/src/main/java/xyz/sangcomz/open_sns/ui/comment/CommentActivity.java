@@ -126,7 +126,9 @@ public class CommentActivity extends BaseActivity implements View.OnClickListene
         post.add(String.valueOf(totalCommentCount));
         post.add(postSrl);
 
-        TimeLineFragment.refreshPostPublishSubject.onNext(post);
+        if(TimeLineFragment.refreshPostPublishSubject!=null)
+            TimeLineFragment.refreshPostPublishSubject.onNext(post);
+
         super.finish();
         setAreaBackgroundColor(Color.TRANSPARENT);
         overridePendingTransition(R.anim.slide_bottom_to_top, R.anim.slide_bottom_to_top);
