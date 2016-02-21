@@ -126,7 +126,7 @@ public class CommentActivity extends BaseActivity implements View.OnClickListene
         post.add(String.valueOf(totalCommentCount));
         post.add(postSrl);
 
-        if(TimeLineFragment.refreshPostPublishSubject!=null)
+        if(TimeLineFragment.refreshPostPublishSubject != null)
             TimeLineFragment.refreshPostPublishSubject.onNext(post);
 
         super.finish();
