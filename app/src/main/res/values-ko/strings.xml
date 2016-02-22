@@ -22,6 +22,7 @@
     <string name="txt_done">확인</string>
     <string name="txt_delete">삭제</string>
     <string name="txt_share">공유</string>
+    <string name="txt_do_share">공유하기</string>
     <string name="txt_pic_change">사진 변경</string>
     <string name="txt_cancel">취소</string>
     <string name="msg_insert_image_or_content">이미지 혹은 내용을 입력해주세요.</string>
@@ -53,5 +54,6 @@
     <string name="msg_no_comment">댓글이 없습니다.</string>
     <string name="msg_no_follower">팔로잉한 회원이 없습니다.</string>
     <string name="msg_no_following">팔로우한 회원이 없습니다.</string>
+    <string name="text_deny_permission">권한 거부</string>
 
 </resources>

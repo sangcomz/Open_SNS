@@ -60,4 +60,11 @@
         <item name="android:topBright">@android:color/transparent</item>
         <item name="android:topDark">@android:color/transparent</item>
     </style>
+
+    <style name="ShareAppTheme" parent="Theme.AppCompat.Translucent">
+        <item name="colorPrimary">@android:color/transparent</item>
+        <item name="colorPrimaryDark">@android:color/transparent</item>
+        <item name="colorAccent">@android:color/transparent</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 </resources>

@@ -25,6 +25,7 @@ import xyz.sangcomz.open_sns.ui.comment.CommentActivity;
 import xyz.sangcomz.open_sns.ui.main.fragments.timeline.TimeLineFragment;
 import xyz.sangcomz.open_sns.ui.post.PostController;
 import xyz.sangcomz.open_sns.ui.profile.ProfileActivity;
+import xyz.sangcomz.open_sns.ui.share.ShareActivity;
 import xyz.sangcomz.open_sns.util.Utils;
 import xyz.sangcomz.open_sns.util.custom.RoundedImageView;
 import xyz.sangcomz.open_sns.util.custom.SquareImageView;
@@ -140,6 +141,10 @@ public class PostAdapter
                                 PostController.deletePost(timeLineFragment.getContext(), posts.get(position).getPostSrl(), position);
                                 break;
                             case R.id.action_share:
+                                Intent i = new Intent(holder.areaMore.getContext(), ShareActivity.class);
+                                i.putExtra("file_path", posts.get(position).getPostImage());
+                                i.putExtra("content", posts.get(position).getPostContent());
+                                holder.areaMore.getContext().startActivity(i);
                                 break;
                         }
                         return false;

@@ -82,12 +82,16 @@
         <!-- [END instanceId_listener] -->
         <service
             android:name=".gcm.RegistrationIntentService"
-            android:exported="false"></service>
+            android:exported="false" />
 
-        <activity android:name=".ui.post.PostActivity"></activity>
+        <activity android:name=".ui.post.PostActivity" />
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="05c92a7e8e6bbe359e28d6c7d01711eb32aed266" />
+
+        <activity android:name=".ui.share.ShareActivity"
+            android:theme="@style/ShareAppTheme"/>
     </application>
 
 </manifest>

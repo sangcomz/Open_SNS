@@ -21,6 +21,7 @@
     <string name="txt_done">done</string>
     <string name="txt_delete">delete</string>
     <string name="txt_share">share</string>
+    <string name="txt_do_share">Do share</string>
     <string name="txt_pic_change">change picture</string>
     <string name="txt_cancel">cancel</string>
     <string name="msg_insert_image_or_content">Please input image or content.</string>
@@ -52,5 +53,6 @@
     <string name="msg_no_comment">don\'t have any comment</string>
     <string name="msg_no_follower">don\'t have any following member</string>
     <string name="msg_no_following">don\'t have any follow member</string>
+    <string name="text_deny_permission">permission deny</string>
 
 </resources>
