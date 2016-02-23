@@ -49,11 +49,6 @@ public class AddPostActivity extends BaseActivity implements View.OnClickListene
         addPostController = new AddPostController(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        imgPost = (ImageView) findViewById(R.id.img_post);
-
-        etContent = (EditText) findViewById(R.id.et_content);
-
-        areaPhoto = (RelativeLayout) findViewById(R.id.area_photo);
     }
 
     protected void onActivityResult(int requestCode, int resultCode,
