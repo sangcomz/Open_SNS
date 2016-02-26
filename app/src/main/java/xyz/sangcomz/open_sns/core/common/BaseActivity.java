@@ -26,7 +26,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void setContentView(int layoutResID, boolean isViewMap) {
-        if (isViewMap == true) {
+        if (isViewMap) {
             setContentView(layoutResID);
             ViewMapper.mapLayout(this, getWindow().getDecorView());
         } else {

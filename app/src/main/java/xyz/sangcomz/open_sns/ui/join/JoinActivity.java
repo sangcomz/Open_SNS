@@ -111,9 +111,6 @@ public class JoinActivity extends BaseActivity {
             return false;
         } else if (etRePassword.getText().toString().equals("")) {
             return false;
-        } else if (!(etPassword.getText().toString().equals(etRePassword.getText().toString()))) {
-            return false;
-        } else
-            return true;
+        } else return etPassword.getText().toString().equals(etRePassword.getText().toString());
     }
 }

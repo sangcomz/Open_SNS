@@ -15,7 +15,7 @@ public class SharedPref {
 
     public SharedPref(Context context) {
         this.context = context;
-        pref = context.getSharedPreferences(SharedDefine.SHARED_INFO, context.MODE_PRIVATE);
+        pref = context.getSharedPreferences(SharedDefine.SHARED_INFO, Context.MODE_PRIVATE);
         editor = pref.edit();
 
 

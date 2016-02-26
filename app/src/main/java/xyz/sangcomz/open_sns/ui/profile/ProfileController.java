@@ -152,8 +152,7 @@ public class ProfileController {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
-
-
+                    e.printStackTrace();
                 }
 
             }
@@ -363,8 +362,7 @@ public class ProfileController {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
-
-
+                    e.printStackTrace();
                 }
 
             }

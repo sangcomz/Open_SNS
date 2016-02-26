@@ -145,7 +145,7 @@ public class CommentController {
 
                     Type listType = new TypeToken<List<Comment>>() {
                     }.getType();
-                    List<Comment> comments = (List<Comment>) gson.fromJson(jsonOutput, listType);
+                    List<Comment> comments = gson.fromJson(jsonOutput, listType);
 
 
                     commentActivity.setComments((ArrayList<Comment>) comments, isReset);
