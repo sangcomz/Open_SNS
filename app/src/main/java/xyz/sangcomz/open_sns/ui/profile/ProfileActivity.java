@@ -84,27 +84,29 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     SwipeRefreshLayout swipeRefreshLayout;
 
 
-    ProfileController profileController;
+    private ProfileController profileController;
 
-    String memberSrl;
+    private String memberSrl;
 
 
-    FollowController followController;
-    NoDataController noDataController;
-    GridPostImageAdapter gridPostImageAdapter;
-    ArrayList<Post> posts = new ArrayList<>();
+    private FollowController followController;
+    private NoDataController noDataController;
+    private GridPostImageAdapter gridPostImageAdapter;
+    private ArrayList<Post> posts = new ArrayList<>();
 
-    GridLayoutManager gridLayoutManager;
+    private GridLayoutManager gridLayoutManager;
 
-    int pastVisiblesItems, visibleItemCount, totalItemCount;
+    private int pastVisiblesItems, visibleItemCount, totalItemCount;
 
-    int curPage = 1;
+    private int curPage = 1;
 
     private int totalPage;
 
-    boolean isFollow;
+    private boolean isFollow;
 
-    int position;
+    private String isMyProfile;
+
+    private int position;
 
 
     @Override
@@ -284,7 +286,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     }
 
     protected void setProfileView(Member member) {
-        String isMyProfile = member.getIsMyProfile();
+        isMyProfile = member.getIsMyProfile();
         String isFollow = member.getFollowYN();
 
 
@@ -310,7 +312,6 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         } else {
             setFabGravity(isFollow);
             fab.setAlpha(1f);
-
         }
 
 
@@ -376,13 +377,14 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                 break;
 
             case R.id.profile_img:
-                FishBun
-                        .with(ProfileActivity.this)
-                        .setCamera(true)
-                        .setActionBarColor(Color.parseColor("#009688"), Color.parseColor("#00796B"))
-                        .setPickerCount(1)
-                        .setRequestCode(RequeDefine.REQUEST_CODE_GET_PROFILE)
-                        .startAlbum();
+                if (isMyProfile.equals("Y"))
+                    FishBun
+                            .with(ProfileActivity.this)
+                            .setCamera(true)
+                            .setActionBarColor(Color.parseColor("#009688"), Color.parseColor("#00796B"))
+                            .setPickerCount(1)
+                            .setRequestCode(RequeDefine.REQUEST_CODE_GET_PROFILE)
+                            .startAlbum();
 
 
         }
