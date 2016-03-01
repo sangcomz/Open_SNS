@@ -228,9 +228,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                                         .into(1200, 600)
                                         .get();
                                 profileController.setProfileBg(bmProfileBg);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            } catch (ExecutionException e) {
+                            } catch (InterruptedException | ExecutionException e) {
                                 e.printStackTrace();
                             }
                         }
@@ -254,9 +252,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                                         .into(600, 600)
                                         .get();
                                 profileController.setProfile(bmProfile);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            } catch (ExecutionException e) {
+                            } catch (InterruptedException | ExecutionException e) {
                                 e.printStackTrace();
                             }
                         }

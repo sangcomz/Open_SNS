@@ -90,9 +90,7 @@ public class SettingController {
                         settingFragment.setCurVer(jsonObject.getString("version"));
 
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (PackageManager.NameNotFoundException e) {
+                } catch (JSONException | PackageManager.NameNotFoundException e) {
                     e.printStackTrace();
                 }
             }

@@ -107,10 +107,9 @@ public class JoinActivity extends BaseActivity {
     private boolean checkEt() {
         if (etNickName.getText().toString().equals("")) {
             return false;
-        } else if (etPassword.getText().toString().equals("")) {
-            return false;
-        } else if (etRePassword.getText().toString().equals("")) {
-            return false;
-        } else return etPassword.getText().toString().equals(etRePassword.getText().toString());
+        } else
+            return !etPassword.getText().toString().equals("") &&
+                    !etRePassword.getText().toString().equals("") &&
+                    etPassword.getText().toString().equals(etRePassword.getText().toString());
     }
 }

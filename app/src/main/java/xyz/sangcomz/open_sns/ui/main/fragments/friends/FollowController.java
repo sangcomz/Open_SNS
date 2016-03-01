@@ -107,7 +107,7 @@ public class FollowController {
 
                     Type listType = new TypeToken<List<FollowMember>>() {
                     }.getType();
-                    List<FollowMember> followMembers = (List<FollowMember>) gson.fromJson(jsonOutput, listType);
+                    List<FollowMember> followMembers = gson.fromJson(jsonOutput, listType);
 
                     if (isFollow)
                         ((FollowingFragment) fragment).setFollowMembers((ArrayList<FollowMember>) followMembers);

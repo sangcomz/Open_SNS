@@ -67,7 +67,7 @@ public class TimeLineController {
 
                     Type listType = new TypeToken<List<Post>>() {
                     }.getType();
-                    List<Post> posts = (List<Post>) gson.fromJson(jsonOutput, listType);
+                    List<Post> posts = gson.fromJson(jsonOutput, listType);
 
                     timeLineFragment.setTotalPage(page.getInt("total_page"));
 

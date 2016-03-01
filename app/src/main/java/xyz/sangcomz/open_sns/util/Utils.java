@@ -80,9 +80,7 @@ public class Utils {
                         .asBitmap()
                         .into(800, 400)
                         .get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
+            } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
             return new BitmapDrawable(null, myBitmap);

@@ -66,7 +66,7 @@ public class SeachController {
 
                     Type listType = new TypeToken<List<FollowMember>>() {
                     }.getType();
-                    List<FollowMember> followMembers = (List<FollowMember>) gson.fromJson(jsonOutput, listType);
+                    List<FollowMember> followMembers = gson.fromJson(jsonOutput, listType);
 
                     searchFriendFragment.setFollowMembers((ArrayList<FollowMember>) followMembers);
                 } catch (JSONException e) {

@@ -149,9 +149,7 @@ public class ProfileController {
 
 //                    MainActivity.refreshDrawerPublishSubject.onNext("success");
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
+                } catch (JSONException | IOException e) {
                     e.printStackTrace();
                 }
 
@@ -195,7 +193,7 @@ public class ProfileController {
 
                     Type listType = new TypeToken<List<Post>>() {
                     }.getType();
-                    List<Post> posts = (List<Post>) gson.fromJson(jsonOutput, listType);
+                    List<Post> posts = gson.fromJson(jsonOutput, listType);
 
                     profileActivity.setTotalPage(page.getInt("total_page"));
                     profileActivity.setPosts((ArrayList<Post>) posts);
@@ -255,13 +253,13 @@ public class ProfileController {
 
                 Type listType = new TypeToken<FollowMember>() {
                 }.getType();
-                FollowMember followMember = (FollowMember) gson.fromJson(jsonOutput, listType);
+                FollowMember followMember = gson.fromJson(jsonOutput, listType);
 
 
-                ArrayList<Integer> integers = new ArrayList<Integer>();
+                ArrayList<Integer> integers = new ArrayList<>();
                 integers.add(position);
 
-                ArrayList<String> strings = new ArrayList<String>();
+                ArrayList<String> strings = new ArrayList<>();
                 strings.add(followMemberSrl);
 
                 if (isFollow) {
@@ -359,9 +357,7 @@ public class ProfileController {
 
 //                    MainActivity.refreshDrawerPublishSubject.onNext("success");
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
+                } catch (JSONException | IOException e) {
                     e.printStackTrace();
                 }
 
