@@ -31,8 +31,6 @@ public class GridPostImageAdapter
 
         public final SquareImageView sivPostImage;
 
-
-
         public ViewHolder(View view) {
             super(view);
 
@@ -68,28 +66,6 @@ public class GridPostImageAdapter
                 profileActivity.startActivityForResult(i, RequeDefine.REQUEST_CODE_DELETE_POST);
             }
         });
-
-
-
-//        setBtnColor(followMembers.get(position).getFollowYN(), holder.btnFollow);
-//        holder.btnFollow.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (followMembers.get(position).getFollowYN().equals("Y")) {
-//                    followController.Follow(followMembers.get(position).getMemberSrl(), false, position);
-//                } else {
-//                    followController.Follow(followMembers.get(position).getMemberSrl(), true, position);
-//                }
-//            }
-//        });
-
-    }
-
-
-    public void deleteMember(int position) {
-        posts.remove(position);
-        notifyItemRemoved(position);
-//        notifyDataSetChanged();
     }
 
 

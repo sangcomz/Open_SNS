@@ -124,11 +124,12 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
 
 
         profileController = new ProfileController(this);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent, null));
-        else
+        }
+        else {
             collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
+        }
 
         memberSrl = getIntent().getStringExtra("member_srl");
         position = getIntent().getIntExtra("position", -1);
