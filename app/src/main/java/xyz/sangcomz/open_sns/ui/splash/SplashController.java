@@ -57,34 +57,6 @@ public class SplashController {
                     int stat = response.getInt("stat");
                     if (stat == 1) {
                         setProfile(response);
-//                        new Thread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                try {
-//
-//                                    JSONObject jsonObject = null;
-//
-//                                    jsonObject = response.getJSONObject("response");
-//                                    (new SharedPref(splashActivity)).setMemberPref(jsonObject.getString("member_srl"),
-//                                            jsonObject.getString("member_name"),
-//                                            jsonObject.getString("member_profile"),
-//                                            jsonObject.getString("member_profile_bg"));
-//
-//                                    (new SharedPref(splashActivity)).setSettings(jsonObject.getString("setting_push_on_off"),
-//                                            jsonObject.getString("setting_searchable"));
-//
-//                                    GlobalApplication.setDrawableBg((Utils.drawableFromUrl(splashActivity,
-//                                            (new SharedPref(splashActivity)).getStringPref(SharedDefine.SHARED_MEMBER_PROFILE_BG))));
-//
-//                                    splashActivity.redirectMainActivity();
-//                                    splashActivity.finish();
-//                                } catch (IOException e) {
-//                                    e.printStackTrace();
-//                                } catch (JSONException e) {
-//                                    e.printStackTrace();
-//                                }
-//                            }
-//                        }).start();
                     } else {
                         splashActivity.animLogo();
                     }
