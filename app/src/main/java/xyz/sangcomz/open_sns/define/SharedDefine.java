@@ -15,5 +15,6 @@ public class SharedDefine {
     public static final String SHARED_SEARCHABLE = "shared_searchable";
 
     //test test test
+    //test test test
 }
 
