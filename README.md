@@ -14,7 +14,10 @@ You can study.
 <img src="/img/8.png" width=20%">
 
 # PlayStore
-Beta - https://play.google.com/apps/testing/xyz.sangcomz.open_sns
+https://play.google.com/store/apps/details?id=xyz.sangcomz.open_sns
+
+# ServerSource
+https://github.com/sangcomz/Open_Sns_Server
 
 #License
 
