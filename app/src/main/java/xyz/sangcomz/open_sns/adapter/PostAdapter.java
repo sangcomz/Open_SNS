@@ -66,11 +66,6 @@ public class PostAdapter
         }
     }
 
-//    public PostAdapter(Context context, ArrayList<Post> posts) {
-//        this.context = context;
-//        this.posts = posts;
-//    }
-
     public PostAdapter(ArrayList<Post> posts, TimeLineFragment timeLineFragment) {
         this.posts = posts;
         this.timeLineFragment = timeLineFragment;

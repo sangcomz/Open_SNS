@@ -3,6 +3,9 @@ Open SNS is simple SNS app.
 
 You can study.
 
+# Setting 
+Add Google-Service.json
+
 # Screenshot
 <img src="/img/1.png" width=20%">
 <img src="/img/2.png" width=20%">
