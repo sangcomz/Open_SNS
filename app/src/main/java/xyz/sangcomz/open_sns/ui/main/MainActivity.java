@@ -318,7 +318,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         return true;
     }
 
-    protected void setDrawer(){
+    protected void setDrawer() {
         try {
 
             if (sharedPref.getStringPref(SharedDefine.SHARED_MEMBER_PROFILE).equals(""))
