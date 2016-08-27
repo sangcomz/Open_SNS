@@ -6,3 +6,6 @@
 .DS_Store
 /build
 /captures
+/key
+*.p12
+/app/src/main/play

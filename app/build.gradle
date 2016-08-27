@@ -15,7 +15,12 @@ repositories {
 }
 
 
+
+
 android {
+
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
     compileSdkVersion 24
     buildToolsVersion '24.0.2'
 
@@ -37,14 +42,25 @@ android {
         applicationId "xyz.sangcomz.open_sns"
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 7
-        versionName "0.3.2"
+        versionCode 9
+        versionName "0.3.4"
         multiDexEnabled true
     }
+
+    signingConfigs {
+        release {
+            keyAlias properties.get("alias")
+            keyPassword properties.get("password")
+            storeFile rootProject.file(properties.get("keyFilePath"))
+            storePassword properties.get("password")
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 
@@ -54,6 +70,7 @@ android {
         // 앱 구동 시 자바 할당 힙을 지정
         javaMaxHeapSize "4g"
     }
+
 }
 
 dependencies {
@@ -82,4 +99,12 @@ dependencies {
 }
 
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.github.triplet.play'
 
+
+play {
+    track = 'production' // or 'rollout' or 'beta' or 'alpha'
+//    userFraction = 0.2 // only necessary for 'rollout', in this case default is 0.1 (10% of the target)
+    serviceAccountEmail = 'sangcomz@api-7858738176702086869-278518.iam.gserviceaccount.com'
+    pk12File = file('key.p12')
+}
