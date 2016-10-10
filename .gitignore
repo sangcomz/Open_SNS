@@ -2,6 +2,6 @@
 *.json
 .gradle
 /local.properties
-.idea
+.idea/
 /build
 /key
