@@ -137,8 +137,7 @@ github {
 
     name = 'v0.3.8'
     assets = [
-            'app/build/outputs/apk/app-debug.apk',
-            'app/build/outputs/apk/app-release.apk',
+            'app/build/outputs/apk/app-prod-release.apk',
             'app/build/outputs/mapping/release/mapping.txt'
     ]
 }
