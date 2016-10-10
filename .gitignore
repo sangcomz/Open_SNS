@@ -3,8 +3,5 @@
 .gradle
 /local.properties
 .idea
-.DS_Store
 /build
-/captures
 /key
-/app/src/main/play

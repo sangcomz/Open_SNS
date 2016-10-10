@@ -90,7 +90,6 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
 
 
     private FollowController followController;
-    private NoDataController noDataController;
     private GridPostImageAdapter gridPostImageAdapter;
     private ArrayList<Post> posts = new ArrayList<>();
 
@@ -316,7 +315,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
 
 
     protected void initAreaNoData() {
-        noDataController = new NoDataController(areaNoData, this);
+        NoDataController noDataController = new NoDataController(areaNoData, this);
         noDataController.setNodata(R.drawable.ic_public_black_24dp, getString(R.string.msg_no_post));
     }
 

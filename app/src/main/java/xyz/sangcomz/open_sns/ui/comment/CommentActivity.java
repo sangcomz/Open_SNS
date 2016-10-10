@@ -48,7 +48,7 @@ public class CommentActivity extends BaseActivity implements View.OnClickListene
     NoDataController noDataController;
     LinearLayoutManager linearLayoutManager;
 
-    int pastVisiblesItems, visibleItemCount, totalItemCount;
+    int pastVisibleItems, visibleItemCount, totalItemCount;
 
     int curPage = 1;
 
@@ -63,7 +63,6 @@ public class CommentActivity extends BaseActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment, true);
 
-        setAreaBackgroundColor(Color.BLACK);
 
 
         linearLayoutManager = new LinearLayoutManager(this);
@@ -96,10 +95,10 @@ public class CommentActivity extends BaseActivity implements View.OnClickListene
 
                 visibleItemCount = linearLayoutManager.getChildCount();
                 totalItemCount = linearLayoutManager.getItemCount();
-                pastVisiblesItems = linearLayoutManager.findFirstVisibleItemPosition();
+                pastVisibleItems = linearLayoutManager.findFirstVisibleItemPosition();
 
 
-                if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
                     if (curPage <= totalPage) {
                         commentController.getComment(postSrl, curPage++, false);
                     }
@@ -126,7 +125,7 @@ public class CommentActivity extends BaseActivity implements View.OnClickListene
         post.add(String.valueOf(totalCommentCount));
         post.add(postSrl);
 
-        if(TimeLineFragment.refreshPostPublishSubject != null)
+        if (TimeLineFragment.refreshPostPublishSubject != null)
             TimeLineFragment.refreshPostPublishSubject.onNext(post);
 
         super.finish();

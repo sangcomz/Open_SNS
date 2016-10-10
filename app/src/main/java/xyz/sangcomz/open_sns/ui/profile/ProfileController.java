@@ -164,7 +164,7 @@ public class ProfileController {
         });
     }
 
-    public void getMyPost(int page, String member_srl) {
+    void getMyPost(int page, String member_srl) {
 
         // 프로그레스
         final ProgressDialog progressDialog = new ProgressDialog(profileActivity, R.style.MyProgressBarDialog);
@@ -184,7 +184,6 @@ public class ProfileController {
                 super.onSuccess(statusCode, headers, response);
 
                 progressDialog.dismiss();
-                System.out.println("GetMyPost JSONObject :::: " + response.toString());
                 try {
                     JSONArray jsonArray = response.getJSONArray("posts");
                     JSONObject page = response.getJSONObject("page");
@@ -209,12 +208,11 @@ public class ProfileController {
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
                 progressDialog.dismiss();
-                System.out.println("onFailure responseString :::: " + throwable.toString());
             }
         });
     }
 
-    public void Follow(final String followMemberSrl, final boolean isFollow, final int position) {
+    void Follow(final String followMemberSrl, final boolean isFollow, final int position) {
 
         // 프로그레스
         final ProgressDialog progressDialog = new ProgressDialog(profileActivity, R.style.MyProgressBarDialog);
@@ -266,13 +264,11 @@ public class ProfileController {
                     integers.add(1);
                     strings.add("Y");
                     followMember.setFollowYN("Y");
-                }
-                else {
+                } else {
                     integers.add(0);
                     strings.add("N");
                     followMember.setFollowYN("N");
                 }
-
 
 
                 if (SearchFriendFragment.refreshFollowPublishSubject != null)
@@ -282,20 +278,11 @@ public class ProfileController {
                 if (FollowingFragment.refreshFollowPublishSubject != null)
                     FollowingFragment.refreshFollowPublishSubject.onNext(followMember);
 
-//                EventBus.getDefault().post(fragment.toString());
-//
-//                progressDialog.dismiss();
-//                if (isFollow)
-//                    followAdapter.refreshFollowYn(position, "Y");
-//                else
-//                    followAdapter.refreshFollowYn(position, "N");
-
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
-                System.out.println("onFailure responseString :::: " + throwable.toString());
                 progressDialog.dismiss();
             }
         });
