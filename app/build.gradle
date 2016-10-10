@@ -30,20 +30,19 @@ android {
 
 
     defaultConfig {
-        applicationId "xyz.sangcomz.open_sns"
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 12
-        versionName "0.3.7"
+        versionCode 13
+        versionName "0.3.8"
         multiDexEnabled true
     }
 
     signingConfigs {
         release {
-            keyAlias signProp.get("alias")
-            keyPassword signProp.get("password")
-            storeFile rootProject.file(signProp.get("keyFilePath"))
-            storePassword signProp.get("password")
+            keyAlias signProp.get("alias") ? signProp.get("alias") : ""
+            keyPassword signProp.get("password") ? signProp.get("password") : ""
+            storeFile rootProject.file("key/key.jks")
+            storePassword signProp.get("password") ? signProp.get("password") : ""
         }
     }
 
@@ -54,21 +53,26 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
+        debug {
+
+        }
     }
 
-//    productFlavors {
-//        // Define separate dev and prod product flavors.
-//        dev {
-//            // dev utilizes minSDKVersion = 21 to allow the Android gradle plugin
-//            // to pre-dex each module and produce an APK that can be tested on
-//            // Android Lollipop without time consuming dex merging processes.
-//            minSdkVersion 21
-//        }
-//        prod {
-//            // The actual minSdkVersion for the application.
-//            minSdkVersion 15
-//        }
-//    }
+    productFlavors {
+        // Define separate dev and prod product flavors.
+        dev {
+            applicationId "xyz.sangcomz.open_sns.dev"
+            // dev utilizes minSDKVersion = 21 to allow the Android gradle plugin
+            // to pre-dex each module and produce an APK that can be tested on
+            // Android Lollipop without time consuming dex merging processes.
+            minSdkVersion 21
+        }
+        prod {
+            applicationId "xyz.sangcomz.open_sns"
+            // The actual minSdkVersion for the application.
+            minSdkVersion 15
+        }
+    }
 
 
     dexOptions {
@@ -121,16 +125,17 @@ play {
 github {
     Properties localProp = new Properties()
     localProp.load(project.rootProject.file('local.properties').newDataInputStream())
+
     owner = 'sangcomz'
     repo = 'Open_SNS'
-    token = localProp.get("github_access_tokens")
-    tagName = '0.3.7'
+    token = localProp.get("github_access_tokens") ? localProp.get("github_access_tokens") : ""
+    tagName = '0.3.8'
     targetCommitish = 'master'
     body = """## Release Note
-*Comment Background fix
+*GCM API KEY insert
 """
 
-    name = 'v0.3.7'
+    name = 'v0.3.8'
     assets = [
             'app/build/outputs/apk/app-debug.apk',
             'app/build/outputs/apk/app-release.apk',

@@ -17,7 +17,42 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "YOUR_API_KEY"
+          "current_key": "AIzaSyCwljML_U8ZN-ykU2QINiub_28z7N2FIng"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 2,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 1
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:609093502879:android:61dfac8ce2c1ddb4",
+        "client_id": "android:xyz.sangcomz.open_sns.dev",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "xyz.sangcomz.open_sns.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwljML_U8ZN-ykU2QINiub_28z7N2FIng"
         }
       ],
       "services": {
