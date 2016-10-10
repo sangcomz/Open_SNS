@@ -1,14 +1,17 @@
 buildscript {
     repositories {
+        jcenter()
         maven { url 'https://maven.fabric.io/public' }
     }
 
     dependencies {
         classpath 'io.fabric.tools:gradle:1.+'
+        classpath 'co.riiid:gradle-github-plugin:0.4.2'
     }
 }
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
+apply plugin: 'co.riiid.gradle'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
@@ -19,8 +22,8 @@ repositories {
 
 android {
 
-    Properties properties = new Properties()
-    properties.load(project.rootProject.file('key/sign.properties').newDataInputStream())
+    Properties signProp = new Properties()
+    signProp.load(project.rootProject.file('key/sign.properties').newDataInputStream())
     compileSdkVersion 24
     buildToolsVersion '24.0.2'
 
@@ -37,10 +40,10 @@ android {
 
     signingConfigs {
         release {
-            keyAlias properties.get("alias")
-            keyPassword properties.get("password")
-            storeFile rootProject.file(properties.get("keyFilePath"))
-            storePassword properties.get("password")
+            keyAlias signProp.get("alias")
+            keyPassword signProp.get("password")
+            storeFile rootProject.file(signProp.get("keyFilePath"))
+            storePassword signProp.get("password")
         }
     }
 
@@ -66,8 +69,6 @@ android {
 //            minSdkVersion 15
 //        }
 //    }
-
-
 
 
     dexOptions {
@@ -102,14 +103,37 @@ dependencies {
     compile 'com.google.android.gms:play-services-gcm:9.6.1'
     compile 'io.reactivex:rxandroid:1.1.0'
     compile 'de.greenrobot:eventbus:2.4.0'
+
 }
 
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.github.triplet.play'
 
 
+
 play {
     track = 'production' // or 'rollout' or 'beta' or 'alpha'
 //    userFraction = 0.2 // only necessary for 'rollout', in this case default is 0.1 (10% of the target)
     jsonFile = rootProject.file('key.json')
+}
+
+
+github {
+    Properties localProp = new Properties()
+    localProp.load(project.rootProject.file('local.properties').newDataInputStream())
+    owner = 'sangcomz'
+    repo = 'Open_SNS'
+    token = localProp.get("github_access_tokens")
+    tagName = '0.3.7'
+    targetCommitish = 'master'
+    body = """## Release Note
+*Comment Background fix
+"""
+
+    name = 'v0.3.7'
+    assets = [
+            'app/build/outputs/apk/app-debug.apk',
+            'app/build/outputs/apk/app-release.apk',
+            'app/build/outputs/mapping/release/mapping.txt'
+    ]
 }
