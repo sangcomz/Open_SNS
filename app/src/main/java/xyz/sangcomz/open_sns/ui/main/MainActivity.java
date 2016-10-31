@@ -91,11 +91,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
-
-//        headerResult.setBackground(GlobalApplication.getDrawableBg());
-
         setDrawer();
-
     }
 
     @Override
@@ -139,40 +135,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
             }
         });
-
-
-//        refreshDrawerPublishSubject = PublishSubject.create();
-//
-//        Subscription refreshSubscription = refreshDrawerPublishSubject.subscribe(new Observer<String>() {
-//            @Override
-//            public void onCompleted() {
-//
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//
-//            }
-//
-//            @Override
-//            public void onNext(String s) {
-//                System.out.println("refreshDrawerPublishSubject :::: " + s);
-//                setDrawer(savedInstanceState);
-//            }
-//
-//
-//        });
-
     }
 
-//    @Override
-//    protected void onSaveInstanceState(Bundle outState) {
-//        //add the values which need to be saved from the drawer to the bundle
-////        outState = result.saveInstanceState(outState);
-////        //add the values which need to be saved from the accountHeader to the bundle
-////        outState = headerResult.saveInstanceState(outState);
-//        super.onSaveInstanceState(outState);
-//    }
 
     @Override
     public void onBackPressed() {
