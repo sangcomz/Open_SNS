@@ -67,15 +67,6 @@ public class GlobalApplication extends Application {
         return drawableBg;
     }
 
-//    /**
-//     * singleton 애플리케이션 객체를 얻는다.
-//     * @return singleton 애플리케이션 객체
-//     */
-//    public static GlobalApplication getGlobalApplicationContext() {
-//        if (instance == null)
-//            throw new IllegalStateException("this application does not inherit com.kakao.GlobalApplication");
-//        return instance;
-//    }
 
     /**
      * 이미지 로더, 이미지 캐시, 요청 큐를 초기화한다.
@@ -87,14 +78,12 @@ public class GlobalApplication extends Application {
         Fabric.with(this, new Crashlytics());
 
 
-
         refreshObservable = Observable.create(new Observable.OnSubscribe<Post>() {
             @Override
             public void call(Subscriber<? super Post> subscriber) {
 
             }
         });
-
 
 
         DrawerImageLoader.init(new AbstractDrawerImageLoader() {
@@ -124,7 +113,7 @@ public class GlobalApplication extends Application {
                 //we use the default one for
                 //DrawerImageLoader.Tags.PROFILE_DRAWER_ITEM.name()
 
-                return super        .placeholder(ctx, tag);
+                return super.placeholder(ctx, tag);
             }
         });
     }

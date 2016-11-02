@@ -19,18 +19,30 @@ import java.util.ArrayList;
 
 import xyz.sangcomz.open_sns.R;
 import xyz.sangcomz.open_sns.core.common.BaseActivity;
+import xyz.sangcomz.open_sns.core.common.view.DeclareView;
 import xyz.sangcomz.open_sns.util.custom.RoundedImageView;
 
 public class JoinActivity extends BaseActivity {
-//    Toolbar toolbar;
-
     JoinController joinController;
+
+    @DeclareView(id = R.id.riv_profile)
     RoundedImageView roundedImageView;
+
+    @DeclareView(id = R.id.et_nick_name)
     EditText etNickName;
+
+    @DeclareView(id = R.id.et_password)
     EditText etPassword;
+
+    @DeclareView(id = R.id.et_repassword)
     EditText etRePassword;
+
+    @DeclareView(id = R.id.btn_join)
     Button btnJoin;
+
+    @DeclareView(id = R.id.btn_back)
     ImageButton btnBack;
+
     Bitmap bitProfile;
 
 
@@ -39,13 +51,6 @@ public class JoinActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
         joinController = new JoinController(this);
-
-        roundedImageView = (RoundedImageView) findViewById(R.id.riv_profile);
-        etNickName = (EditText) findViewById(R.id.et_nick_name);
-        etPassword = (EditText) findViewById(R.id.et_password);
-        etRePassword = (EditText) findViewById(R.id.et_repassword);
-        btnJoin = (Button) findViewById(R.id.btn_join);
-        btnBack = (ImageButton) findViewById(R.id.btn_back);
 
         roundedImageView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -108,7 +108,7 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener 
                     // permission was granted, yay! do the
                     // calendar task you need to do.
                 } else {
-                    permissionCheck.showPermissionDialog(recyclerView);
+                    permissionCheck.showPermissionDialog();
                     finish();
                 }
                 return;
