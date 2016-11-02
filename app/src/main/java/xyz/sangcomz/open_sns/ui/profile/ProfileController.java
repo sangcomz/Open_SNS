@@ -222,7 +222,6 @@ public class ProfileController {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                System.out.println("onSuccess JSONObject :::: " + response.toString());
                 progressDialog.dismiss();
                 profileActivity.setFollowStatus(isFollow);
 
@@ -256,15 +255,13 @@ public class ProfileController {
                     strings.add("N");
                     followMember.setFollowYN("N");
                 }
-
-
+                
                 if (SearchFriendFragment.refreshFollowPublishSubject != null)
                     SearchFriendFragment.refreshFollowPublishSubject.onNext(integers);
                 if (FollowerFragment.refreshFollowPublishSubject != null)
                     FollowerFragment.refreshFollowPublishSubject.onNext(strings);
                 if (FollowingFragment.refreshFollowPublishSubject != null)
                     FollowingFragment.refreshFollowPublishSubject.onNext(followMember);
-
             }
 
             @Override

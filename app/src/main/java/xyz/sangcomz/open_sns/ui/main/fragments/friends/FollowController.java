@@ -62,7 +62,6 @@ public class FollowController {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                System.out.println("onSuccess JSONObject :::: " + response.toString());
 
                 EventBus.getDefault().post(fragment.toString());
 
@@ -77,7 +76,6 @@ public class FollowController {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
-                System.out.println("onFailure responseString :::: " + throwable.toString());
                 progressDialog.dismiss();
             }
         });
@@ -99,7 +97,6 @@ public class FollowController {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                System.out.println("onSuccess JSONObject :::: " + response.toString());
                 try {
                     JSONArray jsonArray = response.getJSONArray("follow_members");
                     Gson gson = new Gson();
@@ -123,7 +120,6 @@ public class FollowController {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
-                System.out.println("onFailure responseString :::: " + throwable.toString());
             }
         });
     }

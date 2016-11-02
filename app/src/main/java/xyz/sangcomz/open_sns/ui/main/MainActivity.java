@@ -86,7 +86,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     int curPosition = 1;
 
     MainController mainController;
-    ;
 
     @Override
     protected void onResume() {
@@ -129,14 +128,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         animFab(0);
                     else
                         animFab(1);
-
                 }
-
-
             }
         });
     }
-
 
     @Override
     public void onBackPressed() {
@@ -232,7 +227,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-//                    System.out.println("onQueryTextSubmit :::: " + query);
                     ((SearchFriendFragment) searchFriendFragment).searchMember(query);
                     return false;
                 }
