@@ -1,5 +1,6 @@
 package xyz.sangcomz.open_sns.ui.profile;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
@@ -18,6 +19,8 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -112,6 +115,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile, true);
+        setTranslucentStatusBar(getWindow());
         setSupportActionBar(toolbar);
 //        getSupportActionBar().setTitle(getString(R.string.txt_timeline));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -125,8 +129,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         profileController = new ProfileController(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent, null));
-        }
-        else {
+        } else {
             collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
         }
 
@@ -384,5 +387,28 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
 
 
         }
+    }
+
+    public static void setTranslucentStatusBar(Window window) {
+        if (window == null) return;
+        int sdkInt = Build.VERSION.SDK_INT;
+        if (sdkInt >= Build.VERSION_CODES.LOLLIPOP) {
+            setTranslucentStatusBarLollipop(window);
+        } else if (sdkInt >= Build.VERSION_CODES.KITKAT) {
+            setTranslucentStatusBarKiKat(window);
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private static void setTranslucentStatusBarLollipop(Window window) {
+        window.setStatusBarColor(
+                window.getContext()
+                        .getResources()
+                        .getColor(R.color.colorStatusTrans));
+    }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    private static void setTranslucentStatusBarKiKat(Window window) {
+        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
     }
 }

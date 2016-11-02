@@ -9,15 +9,15 @@
     </style>
 
     <!-- Base application theme. -->
-    <style name="OnlyTranslucentStatusAppTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="ProfileAppTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <!--<item name="colorPrimaryDark">@android:color/transparent</item>-->
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <!--<item name="windowNoTitle">true</item>-->
-    </style>
 
+        <item name="windowNoTitle">true</item>
+    </style>
 
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -30,7 +30,7 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.AppCompat.Translucent"  parent="Theme.AppCompat.NoActionBar">
+    <style name="Theme.AppCompat.Translucent" parent="Theme.AppCompat.NoActionBar">
         <!--<item name="android:windowNoTitle">false</item>-->
         <item name="colorPrimary">@android:color/transparent</item>
         <item name="colorPrimaryDark">@android:color/transparent</item>

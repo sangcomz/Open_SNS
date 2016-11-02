@@ -46,7 +46,7 @@
             android:theme="@style/Theme.AppCompat.Translucent" />
         <activity
             android:name=".ui.profile.ProfileActivity"
-            android:theme="@style/OnlyTranslucentStatusAppTheme" />
+            android:theme="@style/ProfileAppTheme" />
 
         <!-- [START gcm_receiver] -->
         <receiver
