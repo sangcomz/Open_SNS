@@ -1,1 +1,4 @@
 include ':app'
+
+gradle.ext.versionCode = 14
+gradle.ext.versionName = '0.3.9'

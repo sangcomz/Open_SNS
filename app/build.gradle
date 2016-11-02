@@ -32,8 +32,8 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 13
-        versionName "0.3.8"
+        versionCode gradle.versionCode
+        versionName gradle.versionName
         multiDexEnabled true
     }
 
@@ -129,13 +129,13 @@ github {
     owner = 'sangcomz'
     repo = 'Open_SNS'
     token = localProp.get("github_access_tokens") ? localProp.get("github_access_tokens") : ""
-    tagName = '0.3.8'
+    tagName = gradle.versionName
     targetCommitish = 'master'
     body = """## Release Note
-*GCM API KEY insert
+* 프로필 화면 수정
 """
 
-    name = 'v0.3.8'
+    name = 'v' + gradle.versionName
     assets = [
             'app/build/outputs/apk/app-prod-release.apk',
             'app/build/outputs/mapping/release/mapping.txt'
