@@ -123,12 +123,12 @@ play {
 
 
 github {
-    Properties localProp = new Properties()
-    localProp.load(project.rootProject.file('local.properties').newDataInputStream())
+    Properties signProp = new Properties()
+    signProp.load(project.rootProject.file('key/sign.properties').newDataInputStream())
 
     owner = 'sangcomz'
     repo = 'Open_SNS'
-    token = localProp.get("github_access_tokens") ? localProp.get("github_access_tokens") : ""
+    token = signProp.get("github_access_tokens") ? signProp.get("github_access_tokens") : ""
     tagName = gradle.versionName
     targetCommitish = 'master'
     body = """## Release Note
