@@ -4,8 +4,6 @@ package xyz.sangcomz.open_sns.define;
  * Created by sangc on 2015-12-23.
  */
 public class UrlDefine {
-
-    ///////////////
     public static final String HTTP = "http://";
 
     public static final String SERVER_HOST = "sangcomz.xyz/open_sns";

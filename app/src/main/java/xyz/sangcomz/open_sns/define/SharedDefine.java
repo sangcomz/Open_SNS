@@ -13,8 +13,5 @@ public class SharedDefine {
     //settings
     public static final String SHARED_PUSH_ON_OFF = "shared_push_on_off";
     public static final String SHARED_SEARCHABLE = "shared_searchable";
-
-    //test test test
-    //test test test
 }
 

@@ -64,7 +64,6 @@ public class ProfileController {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 progressDialog.dismiss();
-                System.out.println("onSuccess JSONObject :::: " + response.toString());
 
                 try {
                     JSONObject jsonObject = response.getJSONObject("members");
@@ -75,8 +74,6 @@ public class ProfileController {
                     }.getType();
                     Member member = gson.fromJson(jsonOutput, type);
                     profileActivity.setProfileView(member);
-
-//                    searchFriendFragment.setFollowMembers((ArrayList<FollowMember>) followMembers);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -87,19 +84,12 @@ public class ProfileController {
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
                 progressDialog.dismiss();
-                System.out.println("onFailure responseString :::: " + throwable.toString());
             }
         });
     }
 
 
-    public void setProfileBg(final Bitmap bitmap) {
-
-//        // 프로그레스
-//        final ProgressDialog progressDialog = new ProgressDialog(profileActivity, R.style.MyProgressBarDialog);
-//        progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        progressDialog.setProgressStyle(android.R.style.Widget_Material_ProgressBar_Small);
-//        progressDialog.show();
+    void setProfileBg(final Bitmap bitmap) {
 
         RequestParams params = new RequestParams();
 
@@ -119,9 +109,6 @@ public class ProfileController {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-//                progressDialog.dismiss();
-                System.out.println("onSuccess JSONObject :::: " + response.toString());
-
                 try {
                     JSONObject jsonObject = response.getJSONObject("response");
 
@@ -235,7 +222,6 @@ public class ProfileController {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                System.out.println("onSuccess JSONObject :::: " + response.toString());
                 progressDialog.dismiss();
                 profileActivity.setFollowStatus(isFollow);
 
@@ -269,15 +255,13 @@ public class ProfileController {
                     strings.add("N");
                     followMember.setFollowYN("N");
                 }
-
-
+                
                 if (SearchFriendFragment.refreshFollowPublishSubject != null)
                     SearchFriendFragment.refreshFollowPublishSubject.onNext(integers);
                 if (FollowerFragment.refreshFollowPublishSubject != null)
                     FollowerFragment.refreshFollowPublishSubject.onNext(strings);
                 if (FollowingFragment.refreshFollowPublishSubject != null)
                     FollowingFragment.refreshFollowPublishSubject.onNext(followMember);
-
             }
 
             @Override

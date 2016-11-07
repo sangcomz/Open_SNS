@@ -100,40 +100,6 @@ public class RegistrationIntentService extends IntentService {
     private void sendRegistrationToServer(final String token) {
         // Add custom implementation, as needed.
 
-//        new Handler().post(new Runnable() {
-//            @Override
-//            public void run() {
-//                RequestParams params = new RequestParams();
-//
-//                params.put("member_srl", (new SharedPref(getApplication())).getStringPref(SharedDefine.SHARED_MEMBER_SRL));
-//                params.put("member_device_token", token);
-//
-//                System.out.println("params :::: " + params.toString());
-//
-//                HttpClient.syncPost(UrlDefine.URL_PHONE_INFO, params, new JsonHttpResponseHandler() {
-//                    @Override
-//                    public void onSuccess(int statusCode, Header[] headers, final JSONObject response) {
-//                        super.onSuccess(statusCode, headers, response);
-//                        System.out.println("sendRegistrationToServer onSuccess JSONObject :::: " + response.toString());
-//                        try {
-//                            int stat = response.getInt("stat");
-//                            if (stat == 1) {
-//                            } else {
-//                            }
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//
-//                    }
-//
-//                    @Override
-//                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-//                        super.onFailure(statusCode, headers, responseString, throwable);
-//                    }
-//                });
-//            }
-//        });
-
         RequestParams params = new RequestParams();
 
         params.put("member_srl", (new SharedPref(getApplication())).getStringPref(SharedDefine.SHARED_MEMBER_SRL));

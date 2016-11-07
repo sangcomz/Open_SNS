@@ -10,7 +10,4 @@ public class MainController {
     MainController(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
     }
-
-
-
 }
