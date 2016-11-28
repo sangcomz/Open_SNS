@@ -135,7 +135,7 @@ github {
     tagName = gradle.versionName
     targetCommitish = 'master'
     body = """## Release Note
-* 프로필 화면 수정
+* Url 수정
 """
     name = 'v' + gradle.versionName
     assets = [
