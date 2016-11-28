@@ -6,7 +6,7 @@ package xyz.sangcomz.open_sns.define;
 public class UrlDefine {
     public static final String HTTP = "http://";
 
-    public static final String SERVER_HOST = "sangcomz.xyz/open_sns";
+    public static final String SERVER_HOST = "sangcomz.cafe24.com/open_sns";
 
     public static final String URL_ACCOUNT_JOIN = HTTP + SERVER_HOST + "/account/join.php";
     public static final String URL_ACCOUNT_LOGIN = HTTP + SERVER_HOST + "/account/login.php";
