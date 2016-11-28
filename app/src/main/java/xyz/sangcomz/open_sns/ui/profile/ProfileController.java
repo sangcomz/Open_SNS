@@ -255,7 +255,6 @@ public class ProfileController {
                     strings.add("N");
                     followMember.setFollowYN("N");
                 }
-                
                 if (SearchFriendFragment.refreshFollowPublishSubject != null)
                     SearchFriendFragment.refreshFollowPublishSubject.onNext(integers);
                 if (FollowerFragment.refreshFollowPublishSubject != null)

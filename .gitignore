@@ -39,4 +39,4 @@ proguard/
 *.iml
 *.json
 
-/key
+/key/*
