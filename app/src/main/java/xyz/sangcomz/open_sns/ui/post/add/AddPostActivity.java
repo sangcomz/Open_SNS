@@ -3,6 +3,7 @@ package xyz.sangcomz.open_sns.ui.post.add;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
@@ -57,7 +58,7 @@ public class AddPostActivity extends BaseActivity implements View.OnClickListene
         switch (requestCode) {
             case Define.ALBUM_REQUEST_CODE:
                 if (resultCode == RESULT_OK) {
-                    ArrayList<String> path = imageData.getStringArrayListExtra(Define.INTENT_PATH);
+                    ArrayList<Uri> path = imageData.getParcelableArrayListExtra(Define.INTENT_PATH);
                     Glide
                             .with(this)
                             .load(path.get(0))
