@@ -7,14 +7,15 @@ You can study.
 Add Google-Service.json
 
 # Screenshot
-<img src="/img/1.png" width=20%">
-<img src="/img/2.png" width=20%">
-<img src="/img/3.png" width=20%">
-<img src="/img/4.png" width=20%">
-<img src="/img/5.png" width=20%">
-<img src="/img/6.png" width=20%">
-<img src="/img/7.png" width=20%">
-<img src="/img/8.png" width=20%">
+
+<img src="/img/1.png" width=20%>
+<img src="/img/2.png" width=20%>
+<img src="/img/3.png" width=20%>
+<img src="/img/4.png" width=20%>
+<img src="/img/5.png" width=20%>
+<img src="/img/6.png" width=20%>
+<img src="/img/7.png" width=20%>
+<img src="/img/8.png" width=20%>
 
 # PlayStore
 https://play.google.com/store/apps/details?id=xyz.sangcomz.open_sns
